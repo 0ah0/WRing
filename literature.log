@@ -1,0 +1,41 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdftex 2017.12.25)  4 JAN 2018 02:30
+entering extended mode
+**"D:/Master Thesis/laTeX/myStart/literature.bib"
+("D:/Master Thesis/laTeX/myStart/literature.bib"
+Overfull \hbox (102.24289pt too wide) in paragraph at lines 1--5
+[]\tenrm @ONLINEW3C:Validation:Online, ti-tle = W3C RDF val-i-da-tion Ser-vice 
+@ON-LINE , url = http://www.w3.org/RDF/Validator/|
+
+\hbox(7.5+2.5)x469.75499, glue set - 1.0
+.\hbox(0.0+0.0)x20.0
+.\tenrm @
+.\tenrm O
+.\tenrm N
+.\tenrm L
+.etc.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--5
+
+
+\hbox(0.0+0.0)x469.75499
+.\glue(\rightskip) 0.0
+
+! Missing $ inserted.
+<inserted text> 
+                $
+<to be read again> 
+                   _
+l.36 doi="10.1007/978-3-319-49004-5_
+                                    20",
+? 
+! Emergency stop.
+<inserted text> 
+                $
+<to be read again> 
+                   _
+l.36 doi="10.1007/978-3-319-49004-5_
+                                    20",
+End of file on the terminal!
+
+!  ==> Fatal error occurred, no output PDF file produced!
