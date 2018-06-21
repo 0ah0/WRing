@@ -1,0 +1,7 @@
+\section{Motivation} \label{Sec:Motivation}
+
+This study was motivated by various scenarios which require verifying of valid RDF input and ensuring of RDF data quality. To mention one of them, let's consider an example where there is a collaboration system for machine learning exists. Of course, a valid data input to the system must be verified for further data processing. Most of the current existing systems which ensure syntax-error-free RDF data stop parsing at the first syntax error occurrence, as will be followed in Section \ref{Sec:Review}.
+\par
+This behavior of limiting the continuation of parsing when the first syntax error is found complicates our scenario. Assuming, the input RDF data contains, for example, 10 syntax errors. Normally what is happing, if an error found, it should be corrected by the user, then after correction data will be send back for re-verification. Imagine that the user will do such process for 10 times. what if then data contains hundreds of errors. 
+
+In seeking of finding a suitable solution for the explained scenario, this study has produce a software program that can detect almost syntax errors found in the input. 
