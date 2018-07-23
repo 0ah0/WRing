@@ -1,0 +1,28 @@
+\begin{thebibliography}{1}
+
+\bibitem{McBride:2002:JSW:613357.613755}
+B.~McBride, ``Jena: A semantic web toolkit,'' {\em IEEE Internet Computing},
+  vol.~6, pp.~55--59, Nov. 2002.
+
+\bibitem{karsten:Thesis:2000}
+K.~Tolle, ``{Analyzing and Parsing RDF},'' Master's thesis, 2000.
+
+\bibitem{W3C:Validation:Online}
+``{W3C RDF validation Service @ONLINE }.''
+
+\bibitem{Mybluemix:Validation:Online}
+``{RDF Validator and Converter @ONLINE }.''
+
+\bibitem{IDLab:Validation:Online}
+M.~V. Sande, ``{IDLab Turtle Validator @ONLINE }.''
+
+\bibitem{petersenturtleeditor}
+N.~Petersen, G.~Coskun, and C.~Lange, ``{TurtleEditor}: An ontology-aware
+  web-editor for collaborative ontology development,''
+
+\bibitem{prud2014shape}
+E.~Prud'hommeaux, J.~E. Labra~Gayo, and H.~Solbrig, ``Shape expressions: an rdf
+  validation and transformation language,'' in {\em Proceedings of the 10th
+  International Conference on Semantic Systems}, pp.~32--40, ACM, 2014.
+
+\end{thebibliography}

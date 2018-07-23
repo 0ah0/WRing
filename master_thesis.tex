@@ -1,0 +1,49 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage{graphicx}
+
+\usepackage{./uni-bonn-style/thesisstyle}
+
+\begin{document}
+
+\input{title}
+\makeatletter
+\let\newtitle\@title
+\let\newauthor\@authornew
+\let\newdate\@date
+\makeatother
+
+\maketitle
+
+\pagenumbering{gobble}
+\include{declaration}
+\include{acknowledgements}
+
+\pagenumbering{roman}
+\tableofcontents
+\listoffigures
+
+% Abstract
+\include{./chapters/0_abstract}
+\pagenumbering{gobble}
+
+\pagenumbering{arabic}
+
+% Chapters
+\include{./chapters/1_introduction}
+\include{./chapters/2_related_work}
+\include{./chapters/3_preliminaries}
+\include{./chapters/5_approach}
+\include{./chapters/6_implementation}
+\include{./chapters/7_evaluation}
+\include{./chapters/8_conclusions}
+
+
+
+% Bibliography
+\clearpage
+\bibliographystyle{ieeetr}
+\bibliography{bibliography}
+
+% Appendix
+\include{./chapters/appendix}
+\end{document}

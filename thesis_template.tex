@@ -10,7 +10,8 @@
 \usepackage[square,numbers]{natbib}
 \bibliographystyle{plainnat}
 \usepackage{enumitem}
-
+% text formating
+\usepackage{verbatim} 
 % -------------------------------
 % --- some layout definitions ---
 % -------------------------------
@@ -38,6 +39,7 @@
 
 % define second level for `itemizing'
 \renewcommand{\labelitemii}{-}
+
 
 
 
@@ -148,17 +150,13 @@
 
 \input{intro}
 \newpage
-\input{motivation}
-\newpage
-\input{problem}
+\input{background}
 \newpage
 \input{review}
 \newpage
-\input{methods}
+\input{approach}
 \newpage
-\input{data}
-\newpage
-\input{results}
+\input{implementation}
 \newpage
 \input{evaluation}
 \newpage
@@ -166,15 +164,20 @@
 
 
 
-% ----------------
-% --- appendix ---
-% ----------------
-\appendix
+
+
 
 % literature
 \newpage
 \addcontentsline{toc}{section}{References}
 \bibliography{literature}
+
+% ----------------
+% --- appendix ---
+% ----------------
+\appendix
+\newpage
+\input{appendix}
 
 %% figures (not mandatory)
 %\newpage

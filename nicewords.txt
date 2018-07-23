@@ -1,2 +1,0 @@
- The remainder of this reading will get you started with Antlr
-
