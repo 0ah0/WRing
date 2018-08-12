@@ -6,7 +6,7 @@
 The "Semantic Web" \cite{W3C:SemanticWebTerm:Online} term  has appeared during the transformation process of Web Development from "Web of documents" to "Web of data", similar to those data are found in databases. W3C defines it as "the Web of linked data" . {\it Figure \ref{Fig:semanticWebStack} describes the Semantic Web Stack, proposed by W3C. It can be seen, that it contains several technologies to enable users of creating their own data stores on web, building vocabularies, and enforcing processing rules on such data.   
 \vspace{5mm} %5mm vertical space
 \par
-In order to make data more and machine-readable, and easier for interchange, RDF Model has been proposed. RDF Model plays the role of data interchange in the layered Semantic Web Stack and leverages the high-level with low-level semantic web tools. 
+In order to make data more and machine-readable, and easier for interchange, RDF Model \cite{W3C:RDF-Primer:Online} has been proposed. RDF Model plays the role of data interchange in the layered Semantic Web Stack and leverages the high-level with low-level semantic web tools as it is shown in {\it Figure \ref{Fig:semanticWebStack}. 
 
 	\begin{figure}[ht]
 	\begin{center}
@@ -17,7 +17,8 @@ In order to make data more and machine-readable, and easier for interchange, RDF
 \end{figure}
 \vspace{12mm} %5mm vertical space
 \par
-RDF Model represents data in triples. A triple is defined by 3 main players: subject, predicate, and object. It has a common similarity of a basic structure of simple sentence which consists of a subject, an object, and a verb. As the verb shows a relation or an event between the other two entities, similar, the predicate connects both subject and object in a certain relation. 
+{\it Figure \ref{Fig:rdfModel}(a) exhibits RDF Model's representation of data in triples. A triple is defined by 3 main players: subject, predicate, and object. It has a common similarity of a basic structure of simple sentence which consists of a subject, an object, and a verb. As the verb shows a relation or an event between the other two entities, similar, the predicate connects both subject and object in a certain relation. 
+	
 \begin{figure}[ht]
 	\begin{center}
 		\includegraphics[scale=0.4,angle=0]{images/RDF-Model}
@@ -25,6 +26,11 @@ RDF Model represents data in triples. A triple is defined by 3 main players: sub
 		\label{Fig:rdfModel}
 	\end{center}
 \end{figure}
+ 
+A similar Resource-Property-Value structure to Subject-Predicate-Object of RDF Model's representation is drawn in {\it Figure \ref{Fig:rdfModel}(b). It is same representation but Subject, Predicate, and Object are replaced with Resource, Property, and Value in sequence.  
+\subsection{Simple RDF Model Example}
+
+To make it more clear, a simple example of RDF Modeling is giving in {\it Figure \ref{Fig:rdfModel}(c). To represent a fact that "German has The Rhein river", Ex:Germany is Subject/Resource, Ex:hasRiver is Predicate/Property, and "Rhein" is Object/Value. The first two value are Uniform Resource Identifiers (URIs) where "Ex:" is a defined path in RDF files and the following part is an extension of the path. The last value "Rhein" is a literal or a string. More examples can be viewed at \cite{W3C:RDF-Primer:Online}
 
 \section{Parsing and Error Recovery}
 \subsection{Parsing and Grammar Definitions}

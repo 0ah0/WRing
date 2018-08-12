@@ -1,4 +1,4 @@
-\begin{thebibliography}{11}
+\begin{thebibliography}{12}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -9,12 +9,16 @@
 {RDF Validator and Converter @ONLINE }.
 \newblock URL \url{http://rdfvalidator.mybluemix.net/}.
 
-\bibitem[W3C({\natexlab{a}})]{W3C:SemanticWebTerm:Online}
-{W3C Semantic Web @ONLINE }, {\natexlab{a}}.
+\bibitem[W3C({\natexlab{a}})]{W3C:RDF-Primer:Online}
+{W3C RDF Primer @ONLINE }, {\natexlab{a}}.
+\newblock URL \url{https://www.w3.org/TR/2004/REC-rdf-primer-20040210/}.
+
+\bibitem[W3C({\natexlab{b}})]{W3C:SemanticWebTerm:Online}
+{W3C Semantic Web @ONLINE }, {\natexlab{b}}.
 \newblock URL \url{https://www.w3.org/standards/semanticweb/}.
 
-\bibitem[W3C({\natexlab{b}})]{W3C:Validation:Online}
-{W3C RDF validation Service @ONLINE }, {\natexlab{b}}.
+\bibitem[W3C({\natexlab{c}})]{W3C:Validation:Online}
+{W3C RDF validation Service @ONLINE }, {\natexlab{c}}.
 \newblock URL \url{http://www.w3.org/RDF/Validator/}.
 
 \bibitem[Aho et~al.(2006)Aho, Lam, Sethi, and Ullman]{Aho2006}

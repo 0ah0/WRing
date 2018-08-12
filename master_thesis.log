@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.4.17)  12 AUG 2018 18:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.4.17)  12 AUG 2018 21:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -723,7 +723,7 @@ l.5 \newpage
 
 LaTeX Warning: Reference `Sec:Review' on page 2 undefined on input line 56.
 
-<images/motivation.pdf, id=203, pagebox=cropbox, 840.13875pt x 626.34pt>
+<images/motivation.pdf, id=208, pagebox=cropbox, 840.13875pt x 626.34pt>
 File: images/motivation.pdf Graphic file (type pdf)
 <use images/motivation.pdf>
 Package pdftex.def Info: images/motivation.pdf  used on input line 63. on input
@@ -763,49 +763,50 @@ Chapter 2.
 
 
 ]
-<images/semanticWebStack.png, id=248, 547.04375pt x 585.18625pt>
+<images/semanticWebStack.png, id=255, 547.04375pt x 585.18625pt>
 File: images/semanticWebStack.png Graphic file (type png)
 <use images/semanticWebStack.png>
 Package pdftex.def Info: images/semanticWebStack.png  used on input line 13. on
  input line 13.
 Package pdftex.def Info: Requested size: 273.5212pt x 292.5924pt on input line 
 13.
-<images/RDF-Model.png, id=252, 571.38469pt x 322.20375pt>
+ [6 <./images/semanticWebStack.png>]
+<images/RDF-Model.png, id=267, 571.38469pt x 322.20375pt>
 File: images/RDF-Model.png Graphic file (type png)
 <use images/RDF-Model.png>
-Package pdftex.def Info: images/RDF-Model.png  used on input line 23. on input 
-line 23.
+Package pdftex.def Info: images/RDF-Model.png  used on input line 24. on input 
+line 24.
 Package pdftex.def Info: Requested size: 228.54982pt x 128.87921pt on input lin
-e 23.
- [6 <./images/semanticWebStack.png>] [7 <./images/RDF-Model.png>]
-<images/ParserRole.png, id=267, 697.8572pt x 201.00093pt>
+e 24.
+ [7 <./images/RDF-Model.png>]
+<images/ParserRole.png, id=279, 697.8572pt x 201.00093pt>
 File: images/ParserRole.png Graphic file (type png)
 <use images/ParserRole.png>
-Package pdftex.def Info: images/ParserRole.png  used on input line 42. on input
- line 42.
+Package pdftex.def Info: images/ParserRole.png  used on input line 48. on input
+ line 48.
 Package pdftex.def Info: Requested size: 348.92773pt x 100.50021pt on input lin
-e 42.
+e 48.
+ [8 <./images/ParserRole.png>]
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 55.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 61.
 
-Overfull \hbox (2.8756pt too wide) in paragraph at lines 55--56
+Overfull \hbox (2.8756pt too wide) in paragraph at lines 61--62
 []\OT1/cmr/bx/it/12 Panic-Mode Re-cov-ery\OT1/cmr/m/it/12 : Once an er-ror has 
 been dis-cov-ered, the parser
  []
 
-[8 <./images/ParserRole.png>]
-<images/ANTLR.png, id=274, 944.52875pt x 454.69875pt>
+[9]
+<images/ANTLR.png, id=292, 944.52875pt x 454.69875pt>
 File: images/ANTLR.png Graphic file (type png)
 <use images/ANTLR.png>
-Package pdftex.def Info: images/ANTLR.png  used on input line 71. on input line
- 71.
+Package pdftex.def Info: images/ANTLR.png  used on input line 77. on input line
+ 77.
 Package pdftex.def Info: Requested size: 377.80481pt x 181.87627pt on input lin
-e 71.
- [9]) [10 <./images/ANTLR.png>]
+e 77.
+) [10 <./images/ANTLR.png>]
 \openout2 = `./chapters/2_related_work.aux'.
 
-
-(./chapters/2_related_work.tex
+ (./chapters/2_related_work.tex
 Chapter 3.
 [11
 
@@ -868,17 +869,17 @@ Underfull \hbox (badness 4859) in paragraph at lines 9--11
 m/it/12 http : / /
  []
 
-
-Underfull \hbox (badness 2698) in paragraph at lines 64--69
-\OT1/cmr/m/it/12 mi-nol-ogy.  Septem-ber 2017.  URL []$\OT1/cmtt/m/it/12 https 
-: / / tomassetti . me /
- []
-
 [22
 
 
 
-]) [23]
+]
+Underfull \hbox (badness 2698) in paragraph at lines 68--73
+\OT1/cmr/m/it/12 mi-nol-ogy.  Septem-ber 2017.  URL []$\OT1/cmtt/m/it/12 https 
+: / / tomassetti . me /
+ []
+
+) [23]
 \openout2 = `./chapters/appendix.aux'.
 
  (./chapters/appendix.tex
@@ -905,28 +906,32 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 73.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 73.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 73.
 Package rerunfilecheck Info: File `master_thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 9FA7D1E0A744F7F88B641FC0B4813A38;1604.
+(rerunfilecheck)             Checksum: 7C58B7F3D63909B41D04E1588CB81F46;1682.
 
 
 LaTeX Warning: There were undefined references.
 
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 73.
  )
-(\end occurred inside a group at level 4)
+(\end occurred inside a group at level 8)
 
+### simple group (level 8) entered at line 33 ({)
+### simple group (level 7) entered at line 30 ({)
+### simple group (level 6) entered at line 20 ({)
+### simple group (level 5) entered at line 9 ({)
 ### simple group (level 4) entered at line 6 ({)
 ### simple group (level 3) entered at line 70 ({)
 ### simple group (level 2) entered at line 70 ({)
 ### simple group (level 1) entered at line 56 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 7775 strings out of 494931
- 115870 string characters out of 6180851
- 205578 words of memory out of 5000000
- 10836 multiletter control sequences out of 15000+600000
+ 7781 strings out of 494931
+ 116017 string characters out of 6180851
+ 205597 words of memory out of 5000000
+ 10840 multiletter control sequences out of 15000+600000
  10281 words of font info for 36 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 49i,9n,47p,1355b,636s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 49i,8n,47p,1355b,766s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti1
 0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
@@ -935,10 +940,10 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on master_thesis.pdf (35 pages, 330363 bytes).
+Output written on master_thesis.pdf (35 pages, 332195 bytes).
 PDF statistics:
- 436 PDF objects out of 1000 (max. 8388607)
- 379 compressed objects within 4 object streams
- 91 named destinations out of 1000 (max. 500000)
- 234 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 450 PDF objects out of 1000 (max. 8388607)
+ 393 compressed objects within 4 object streams
+ 93 named destinations out of 1000 (max. 500000)
+ 242 words of extra memory for PDF output out of 10000 (max. 10000000)
 

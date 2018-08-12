@@ -20,17 +20,21 @@ A level-1 auxiliary file: ./chapters/appendix.aux
 Database file #1: bibliography.bib
 Warning--entry type for "W3C:Validation:Online" isn't style-file defined
 --line 1 of file bibliography.bib
+Warning--entry type for "W3C:RDF-Primer:Online" isn't style-file defined
+--line 7 of file bibliography.bib
 Warning--entry type for "W3C:SemanticWebTerm:Online" isn't style-file defined
---line 6 of file bibliography.bib
+--line 13 of file bibliography.bib
 Warning--entry type for "Mybluemix:Validation:Online" isn't style-file defined
---line 11 of file bibliography.bib
+--line 18 of file bibliography.bib
 Warning--entry type for "IDLab:Validation:Online" isn't style-file defined
---line 16 of file bibliography.bib
+--line 23 of file bibliography.bib
 Warning--I didn't find a database entry for "bibid"
 Warning--to sort, need author or key in W3C:SemanticWebTerm:Online
+Warning--to sort, need author or key in W3C:RDF-Primer:Online
 Warning--to sort, need author or key in W3C:Validation:Online
 Warning--to sort, need author or key in Mybluemix:Validation:Online
 Warning--empty year in Mybluemix:Validation:Online
+Warning--empty year in W3C:RDF-Primer:Online
 Warning--empty year in W3C:SemanticWebTerm:Online
 Warning--empty year in W3C:Validation:Online
 Warning--empty chapter and pages in Aho2006
@@ -40,45 +44,45 @@ Warning--empty year in petersenturtleeditor
 Warning--empty year in IDLab:Validation:Online
 Warning--empty school in karsten:Thesis:2000
 Warning--empty note in parsingGuide2017
-You've used 11 entries,
+You've used 12 entries,
             2773 wiz_defined-function locations,
-            670 strings with 6890 characters,
-and the built_in function-call counts, 3788 in all, are:
-= -- 348
+            674 strings with 7008 characters,
+and the built_in function-call counts, 4034 in all, are:
+= -- 372
 > -- 149
 < -- 6
-+ -- 57
++ -- 59
 - -- 45
-* -- 283
-:= -- 554
-add.period$ -- 36
-call.type$ -- 11
-change.case$ -- 47
+* -- 302
+:= -- 573
+add.period$ -- 38
+call.type$ -- 12
+change.case$ -- 50
 chr.to.int$ -- 10
-cite$ -- 38
-duplicate$ -- 194
-empty$ -- 354
+cite$ -- 43
+duplicate$ -- 209
+empty$ -- 389
 format.name$ -- 53
-if$ -- 802
-int.to.chr$ -- 2
+if$ -- 862
+int.to.chr$ -- 3
 int.to.str$ -- 1
 missing$ -- 5
-newline$ -- 65
+newline$ -- 69
 num.names$ -- 32
-pop$ -- 124
+pop$ -- 137
 preamble$ -- 1
-purify$ -- 37
+purify$ -- 39
 quote$ -- 0
-skip$ -- 145
+skip$ -- 158
 stack$ -- 0
-substring$ -- 68
-swap$ -- 19
+substring$ -- 71
+swap$ -- 21
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 116
-warning$ -- 13
+type$ -- 127
+warning$ -- 15
 while$ -- 29
 width$ -- 0
-write$ -- 143
+write$ -- 153
 (There was 1 error message)

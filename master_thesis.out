@@ -6,21 +6,22 @@
 \BOOKMARK [1][-]{section.1.4}{Thesis Structure}{chapter.1}% 6
 \BOOKMARK [0][-]{chapter.2}{Preliminaries}{}% 7
 \BOOKMARK [1][-]{section.2.1}{RDF Model}{chapter.2}% 8
-\BOOKMARK [1][-]{section.2.2}{Parsing and Error Recovery}{chapter.2}% 9
-\BOOKMARK [2][-]{subsection.2.2.1}{Parsing and Grammar Definitions}{section.2.2}% 10
-\BOOKMARK [2][-]{subsection.2.2.2}{Parser's Role}{section.2.2}% 11
-\BOOKMARK [2][-]{subsection.2.2.3}{Parser's Constructions}{section.2.2}% 12
-\BOOKMARK [2][-]{subsection.2.2.4}{Error Recovery Methodologies in Parsers}{section.2.2}% 13
-\BOOKMARK [1][-]{section.2.3}{ANTLR Parser Generator }{chapter.2}% 14
-\BOOKMARK [0][-]{chapter.3}{Related Work}{}% 15
-\BOOKMARK [0][-]{chapter.4}{Approach}{}% 16
-\BOOKMARK [1][-]{section.4.1}{Proposed Solution}{chapter.4}% 17
-\BOOKMARK [0][-]{chapter.5}{Implementation}{}% 18
-\BOOKMARK [1][-]{section.5.1}{Architecture}{chapter.5}% 19
-\BOOKMARK [1][-]{section.5.2}{Modules}{chapter.5}% 20
-\BOOKMARK [0][-]{chapter.6}{Evaluation}{}% 21
-\BOOKMARK [1][-]{subsection.6.0.1}{Experimental Setup}{chapter.6}% 22
-\BOOKMARK [2][-]{subsection.6.0.2}{Preliminary Results}{subsection.6.0.1}% 23
-\BOOKMARK [0][-]{chapter.7}{Conclusions and Future Work}{}% 24
-\BOOKMARK [0][-]{appendix.A}{Parser Rules}{}% 25
-\BOOKMARK [0][-]{appendix.B}{ANTLR Compiler Tutorial }{}% 26
+\BOOKMARK [2][-]{subsection.2.1.1}{Simple RDF Model Example}{section.2.1}% 9
+\BOOKMARK [1][-]{section.2.2}{Parsing and Error Recovery}{chapter.2}% 10
+\BOOKMARK [2][-]{subsection.2.2.1}{Parsing and Grammar Definitions}{section.2.2}% 11
+\BOOKMARK [2][-]{subsection.2.2.2}{Parser's Role}{section.2.2}% 12
+\BOOKMARK [2][-]{subsection.2.2.3}{Parser's Constructions}{section.2.2}% 13
+\BOOKMARK [2][-]{subsection.2.2.4}{Error Recovery Methodologies in Parsers}{section.2.2}% 14
+\BOOKMARK [1][-]{section.2.3}{ANTLR Parser Generator }{chapter.2}% 15
+\BOOKMARK [0][-]{chapter.3}{Related Work}{}% 16
+\BOOKMARK [0][-]{chapter.4}{Approach}{}% 17
+\BOOKMARK [1][-]{section.4.1}{Proposed Solution}{chapter.4}% 18
+\BOOKMARK [0][-]{chapter.5}{Implementation}{}% 19
+\BOOKMARK [1][-]{section.5.1}{Architecture}{chapter.5}% 20
+\BOOKMARK [1][-]{section.5.2}{Modules}{chapter.5}% 21
+\BOOKMARK [0][-]{chapter.6}{Evaluation}{}% 22
+\BOOKMARK [1][-]{subsection.6.0.1}{Experimental Setup}{chapter.6}% 23
+\BOOKMARK [2][-]{subsection.6.0.2}{Preliminary Results}{subsection.6.0.1}% 24
+\BOOKMARK [0][-]{chapter.7}{Conclusions and Future Work}{}% 25
+\BOOKMARK [0][-]{appendix.A}{Parser Rules}{}% 26
+\BOOKMARK [0][-]{appendix.B}{ANTLR Compiler Tutorial }{}% 27
