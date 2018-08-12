@@ -1,4 +1,4 @@
-\begin{thebibliography}{9}
+\begin{thebibliography}{11}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -16,6 +16,12 @@
 \bibitem[W3C({\natexlab{b}})]{W3C:Validation:Online}
 {W3C RDF validation Service @ONLINE }, {\natexlab{b}}.
 \newblock URL \url{http://www.w3.org/RDF/Validator/}.
+
+\bibitem[Aho et~al.(2006)Aho, Lam, Sethi, and Ullman]{Aho2006}
+Alfred~V. Aho, Monica~S. Lam, Ravi Sethi, and Jeffrey~D. Ullman.
+\newblock \emph{Compilers: Principles, Techniques, and Tools (2Nd Edition)}.
+\newblock Addison-Wesley Longman Publishing Co., Inc., Boston, MA, USA, 2006.
+\newblock ISBN 0321486811.
 
 \bibitem[Bratt(2007)]{Bratt2007}
 Steve Bratt.
@@ -53,5 +59,12 @@ Miel~Vander Sande.
 Karsten Tolle.
 \newblock {Analyzing and Parsing RDF}.
 \newblock Master's thesis, 2000.
+
+\bibitem[Tomassetti(2017)]{parsingGuide2017}
+Gabriele Tomassetti.
+\newblock {A Guide to Parsing: Algorithms and Terminology}.
+\newblock September 2017.
+\newblock URL
+  \url{https://tomassetti.me/guide-parsing-algorithms-terminology/}.
 
 \end{thebibliography}

@@ -6,12 +6,16 @@ A level-1 auxiliary file: declaration.aux
 A level-1 auxiliary file: acknowledgements.aux
 A level-1 auxiliary file: ./chapters/0_abstract.aux
 A level-1 auxiliary file: ./chapters/1_introduction.aux
-A level-1 auxiliary file: ./chapters/2_related_work.aux
 A level-1 auxiliary file: ./chapters/3_preliminaries.aux
+A level-1 auxiliary file: ./chapters/2_related_work.aux
 A level-1 auxiliary file: ./chapters/5_approach.aux
 A level-1 auxiliary file: ./chapters/6_implementation.aux
 A level-1 auxiliary file: ./chapters/7_evaluation.aux
 A level-1 auxiliary file: ./chapters/8_conclusions.aux
+Illegal, another \bibstyle command---line 31 of file master_thesis.aux
+ : \bibstyle
+ :          {ieeetr}
+I'm skipping whatever remains of this command
 A level-1 auxiliary file: ./chapters/appendix.aux
 Database file #1: bibliography.bib
 Warning--entry type for "W3C:Validation:Online" isn't style-file defined
@@ -23,56 +27,58 @@ Warning--entry type for "Mybluemix:Validation:Online" isn't style-file defined
 Warning--entry type for "IDLab:Validation:Online" isn't style-file defined
 --line 16 of file bibliography.bib
 Warning--I didn't find a database entry for "bibid"
+Warning--to sort, need author or key in W3C:SemanticWebTerm:Online
 Warning--to sort, need author or key in W3C:Validation:Online
 Warning--to sort, need author or key in Mybluemix:Validation:Online
-Warning--to sort, need author or key in W3C:SemanticWebTerm:Online
 Warning--empty year in Mybluemix:Validation:Online
 Warning--empty year in W3C:SemanticWebTerm:Online
 Warning--empty year in W3C:Validation:Online
+Warning--empty chapter and pages in Aho2006
 Warning--empty journal in petersenturtleeditor
 Warning--empty year in petersenturtleeditor
 Warning--empty year in petersenturtleeditor
 Warning--empty year in IDLab:Validation:Online
 Warning--empty school in karsten:Thesis:2000
-You've used 9 entries,
+Warning--empty note in parsingGuide2017
+You've used 11 entries,
             2773 wiz_defined-function locations,
-            656 strings with 6511 characters,
-and the built_in function-call counts, 3029 in all, are:
-= -- 284
-> -- 100
-< -- 5
-+ -- 40
-- -- 30
-* -- 219
-:= -- 425
-add.period$ -- 28
-call.type$ -- 9
-change.case$ -- 37
-chr.to.int$ -- 8
-cite$ -- 32
-duplicate$ -- 159
-empty$ -- 299
-format.name$ -- 36
-if$ -- 652
+            670 strings with 6890 characters,
+and the built_in function-call counts, 3788 in all, are:
+= -- 348
+> -- 149
+< -- 6
++ -- 57
+- -- 45
+* -- 283
+:= -- 554
+add.period$ -- 36
+call.type$ -- 11
+change.case$ -- 47
+chr.to.int$ -- 10
+cite$ -- 38
+duplicate$ -- 194
+empty$ -- 354
+format.name$ -- 53
+if$ -- 802
 int.to.chr$ -- 2
 int.to.str$ -- 1
-missing$ -- 3
-newline$ -- 53
-num.names$ -- 24
-pop$ -- 101
+missing$ -- 5
+newline$ -- 65
+num.names$ -- 32
+pop$ -- 124
 preamble$ -- 1
-purify$ -- 28
+purify$ -- 37
 quote$ -- 0
-skip$ -- 123
+skip$ -- 145
 stack$ -- 0
-substring$ -- 64
-swap$ -- 17
+substring$ -- 68
+swap$ -- 19
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 99
-warning$ -- 11
-while$ -- 23
+type$ -- 116
+warning$ -- 13
+while$ -- 29
 width$ -- 0
-write$ -- 115
-(There were 16 warnings)
+write$ -- 143
+(There was 1 error message)

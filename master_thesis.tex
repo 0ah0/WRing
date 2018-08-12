@@ -1,9 +1,17 @@
 \documentclass[12pt,a4paper]{report}
 \usepackage{graphicx}
-
 \usepackage{./uni-bonn-style/thesisstyle}
-%\usepackage{hyperref}
 \usepackage[square,numbers]{natbib}
+
+\newenvironment{abbrevlist}
+{%
+	\chapter*{List of Abbreviations}
+	\newcommand\entry[2]{\item[##1] ##2}%
+	\begin{description}%
+	}
+	{\end{description}}
+
+
 \bibliographystyle{plainnat}
 \begin{document}
 
@@ -26,6 +34,16 @@
 \pagenumbering{roman}
 \tableofcontents
 \listoffigures
+\listoftables
+
+
+% Generate the glossary
+\newpage
+\begin{abbrevlist}
+	\entry{RDF}{Resource Description Framework}
+	\entry{OWL}{Web Ontology Language}
+
+\end{abbrevlist}
 
 % Abstract
 \include{./chapters/0_abstract}
@@ -35,8 +53,8 @@
 
 % Chapters
 \include{./chapters/1_introduction}
-\include{./chapters/2_related_work}
 \include{./chapters/3_preliminaries}
+\include{./chapters/2_related_work}
 \include{./chapters/5_approach}
 \include{./chapters/6_implementation}
 \include{./chapters/7_evaluation}
@@ -47,7 +65,7 @@
 % Bibliography
 \clearpage
 
-%\bibliographystyle{ieeetr}
+\bibliographystyle{ieeetr}
 \bibliography{bibliography}
 
 % Appendix
