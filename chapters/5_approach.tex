@@ -1,5 +1,45 @@
 \chapter{Approach}
 \label{ch:approach}
 \newpage
+\section{Challenges Before }
+Before reaching the proposed solution, different methods have been tired to reach the objective. The main strategy was the continuation of parsing after error detection with reporting the detected error. The following 3 tools were individually tested:
+\begin{enumerate}
+	
+	\item  {\bf Jena RIOT API} %todo{required ref}
+	\item {\bf RDF4J RIO API} %todo{required ref}
+	\item {\bf N3 Parser} %todo{required ref}
+\end{enumerate}
+In the first 2 tools, the focus were to handling the error and continue based on predefined error messages but unfortunately the error message sometime are unexpected and not from the predefined ones. The last tool handles errors of lexer and parser in different methods, that results in inability to collect them altogether in one method.    
 
+   
 \section{Proposed Solution}
+
+\subsection{Algorithmic Representation }
+\begin{algorithm} 
+	\caption{The algorithmic representation of the proposed solution} 
+	\label{Algorithm} 
+	\algsetup{indent=2em}
+	\begin{algorithmic}[1]
+		\STATE $syntaxRules \leftarrow correctSyntaxRules \& uncorrectSyntaxRules$  	
+		\WHILE{token in inputText \&\& $inputText \neq EOF$}
+		\STATE tokenToBeMatched += token
+		\IF{ syntaxRules contains tokenToBeMatched}
+		\IF{ uncorrectSyntaxRules contains tokenToBeMatched}
+		\STATE Save this syntax error with tokenToBeMatched string to the error report 
+		\IF{ CorrectionIsSelected}
+		\IF{ ThisErrorCanBeRecovered}
+		\STATE  Recover the wrong syntax with a correct one 
+		\STATE  Save This correction to the output report
+		\ENDIF
+		\ENDIF
+		\ENDIF
+		\STATE $tokenToBeMatched \leftarrow ""$  
+		\STATE $token \leftarrow ""$  		
+		\ENDIF
+		\ENDWHILE
+	\end{algorithmic}
+\end{algorithm}
+ 
+\section{Challenges After }
+The semantic web serializations still in the changing age, the syntax could not be same for the next few years to fit the future requirements. That has been said, then the grammar of this study needs to be modified to meet the new changes of such new syntax. 
+It could be also there are some errors which went unseen during testing phase, then also the grammar should be adjusted to find such errors. Our main strength here is the ability to change the grammar to match the expected error and provide a healing method if it is needed.   

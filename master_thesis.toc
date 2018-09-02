@@ -13,17 +13,25 @@
 \contentsline {subsection}{\numberline {2.2.3}Parser's Constructions}{8}{subsection.2.2.3}
 \contentsline {subsection}{\numberline {2.2.4}Error Recovery Methodologies in Parsers}{9}{subsection.2.2.4}
 \contentsline {section}{\numberline {2.3}ANTLR Parser Generator }{9}{section.2.3}
-\contentsline {chapter}{\numberline {3}Related Work}{11}{chapter.3}
-\contentsline {chapter}{\numberline {4}Approach}{15}{chapter.4}
-\contentsline {section}{\numberline {4.1}Proposed Solution}{16}{section.4.1}
-\contentsline {chapter}{\numberline {5}Implementation}{17}{chapter.5}
-\contentsline {section}{\numberline {5.1}Architecture}{18}{section.5.1}
-\contentsline {section}{\numberline {5.2}Modules}{18}{section.5.2}
-\contentsline {chapter}{\numberline {6}Evaluation}{19}{chapter.6}
-\contentsline {subsection}{\numberline {6.0.1}Experimental Setup}{20}{subsection.6.0.1}
-\contentsline {subsection}{\numberline {6.0.2}Preliminary Results}{20}{subsection.6.0.2}
-\contentsline {subsubsection}{Accuracy}{20}{section*.12}
-\contentsline {subsubsection}{Scalability}{20}{section*.13}
-\contentsline {chapter}{\numberline {7}Conclusions and Future Work}{21}{chapter.7}
-\contentsline {chapter}{\numberline {A}Parser Rules}{24}{appendix.A}
-\contentsline {chapter}{\numberline {B}ANTLR Compiler Tutorial }{25}{appendix.B}
+\contentsline {chapter}{\numberline {3}Related Work}{12}{chapter.3}
+\contentsline {chapter}{\numberline {4}Approach}{16}{chapter.4}
+\contentsline {section}{\numberline {4.1}Challenges Before }{17}{section.4.1}
+\contentsline {section}{\numberline {4.2}Proposed Solution}{17}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Algorithmic Representation }{17}{subsection.4.2.1}
+\contentsline {section}{\numberline {4.3}Challenges After }{17}{section.4.3}
+\contentsline {chapter}{\numberline {5}Implementation}{19}{chapter.5}
+\contentsline {section}{\numberline {5.1}Architecture}{20}{section.5.1}
+\contentsline {section}{\numberline {5.2}Modules}{20}{section.5.2}
+\contentsline {section}{\numberline {5.3}Tools}{20}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Hardware}{20}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Software}{20}{subsection.5.3.2}
+\contentsline {section}{\numberline {5.4}Installation and Configurations}{20}{section.5.4}
+\contentsline {chapter}{\numberline {6}Evaluation}{21}{chapter.6}
+\contentsline {section}{\numberline {6.1}Experiments and Results}{22}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Testing with RDF SuiteTest}{22}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}Comparing the Proposed solution and Xturtle}{22}{subsection.6.1.2}
+\contentsline {subsection}{\numberline {6.1.3}Validation against arbitrary large RDF files }{22}{subsection.6.1.3}
+\contentsline {section}{\numberline {6.2}Accuracy}{22}{section.6.2}
+\contentsline {section}{\numberline {6.3}Scalability}{22}{section.6.3}
+\contentsline {chapter}{\numberline {7}Conclusions and Future Work}{23}{chapter.7}
+\contentsline {chapter}{\numberline {A}Parser Rules}{26}{appendix.A}
