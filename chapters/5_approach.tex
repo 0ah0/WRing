@@ -1,13 +1,6 @@
 \chapter{Approach}
 \label{ch:approach}
 
-\section{Challenges Before }
-Before reaching the proposed solution, different methods have been tired to reach the objective. The main strategy was the continuation of parsing after error detection with reporting the detected error. The following 3 tools were individually tested:
-\begin{enumerate}
-	
-	\item  {\bf Jena RIOT API} %todo{required ref}
-	\item {\bf RDF4J RIO API} %todo{required ref}
-	\item {\bf N3 Parser} %todo{required ref}
 \end{enumerate}
 In the first 2 tools, the focus were to handling the error and continue based on predefined error messages but unfortunately the error message sometime are unexpected and not from the predefined ones. The last tool handles errors of lexer and parser in different methods, that results in inability to collect them altogether in one method.    
 
@@ -16,28 +9,33 @@ In the first 2 tools, the focus were to handling the error and continue based on
 
 
 \subsection{Algorithmic Representation }
-\begin{algorithm} 
-	\caption{The algorithmic representation of the proposed solution} 
-	\label{Algorithm} 
-	\algsetup{indent=2em}
-	\begin{algorithmic}[1]
-		\STATE $syntaxRules \leftarrow correctSyntaxRules \& uncorrectSyntaxRules$  	
-		\WHILE{token in inputText \&\& $inputText \neq EOF$}
-		\STATE tokenToBeMatched += token
-		\IF{ syntaxRules contains tokenToBeMatched}
-		\IF{ uncorrectSyntaxRules contains tokenToBeMatched}
-		\STATE Save this syntax error with tokenToBeMatched string to the error report 
-		\IF{ CorrectionIsSelected}
-		\IF{ ThisErrorCanBeRecovered}
-		\STATE  Recover the wrong syntax with a correct one 
-		\STATE  Save This correction to the output report
-		\ENDIF
-		\ENDIF
-		\ENDIF
-		\STATE $tokenToBeMatched \leftarrow ""$  
-		\STATE $token \leftarrow ""$  		
-		\ENDIF
-		\ENDWHILE
-	\end{algorithmic}
+\begin{algorithm}[H] 
+ %\KwData{correctSyntaxRules AT, operation OP, dataset DS , molecule M}
+% \KwResult{authorized and/or alternatives operations}
+% S = subject(M)\;
+%  authorizations = [ ]\;
+% alternatives
+$syntaxRules \leftarrow correctSyntaxRules + uncorrectSyntaxRules$\\
+		\While{token in inputText \&\& $inputText \neq EOF$}{
+tokenToBeMatched += token\\
+		\uIf{ syntaxRules contains tokenToBeMatched}{
+		\uIf{ uncorrectSyntaxRules contains tokenToBeMatched}{
+		 Save this syntax error with tokenToBeMatched string to the error report\\
+		\uIf{ CorrectionIsSelected}{
+		\uIf{ ThisErrorCanBeRecovered}{
+		  1 - Recover the wrong syntax with a correct one \\
+		  2 - Save This correction to the output report\\
+		}
+		}
+		}
+		 $tokenToBeMatched \leftarrow ""$  \\
+		 $token \leftarrow ""$  	\\	
+		}
+}
+ \caption{The algorithmic representation of the proposed solution}}
+ \label{alg:algorithm-main}
 \end{algorithm}
+
+
+
  
