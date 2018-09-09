@@ -1,0 +1,268 @@
+%% ----------------------------------------------------------------
+%% Thesis.tex -- MAIN FILE (the one that you compile with LaTeX) XD
+%% ---------------------------------------------------------------- 
+
+% Set up the document
+\documentclass[a4paper, 11pt, oneside]{Thesis}
+
+\usepackage[utf8]{inputenc}
+\usepackage[nonumberlist, seeautonumberlist]{glossaries}
+\newglossarystyle{mystyle}{%
+  \glossarystyle{long}%
+  \renewenvironment{theglossary}%
+     {\begin{longtable}{p{3cm}p{\glsdescwidth}}}%
+     {\end{longtable}}%
+}
+\usepackage[square, numbers, comma, sort&compress]{natbib}  % Use the "Natbib" style for the references in the Bibliography
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+
+\usepackage{verbatim}  % Needed for the "comment" environment to make LaTeX comments
+\usepackage{float}
+\usepackage[refpage]{nomencl}
+\usepackage{listings}
+\usepackage{tabularx,ragged2e,booktabs,caption, makecell}
+\usepackage{lipsum}
+\usepackage{todonotes}
+\usepackage[linesnumbered,algoruled,boxed,lined]{algorithm2e}
+\usepackage{eurosym}      %<-- For EURO symbol 
+\usepackage{filecontents}
+\usepackage{enumitem}
+\usepackage{placeins}
+
+\usepackage[toc,page]{appendix}
+
+
+
+\makeatletter
+\def\setChapterprefix#1{\gdef\@Prefix{#1}}
+\setChapterprefix{}
+\renewcommand*\l@chapter[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      \@Prefix 
+      #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+      \penalty\@highpenalty
+    \endgroup
+  \fi}
+    \makeatother
+
+
+\makeatletter
+\renewcommand\fps@figure{!htb}
+\setlength\@fptop{0pt} 
+\makeatother
+\renewcommand{\floatpagefraction}{.6}% before: .5 
+\renewcommand{\textfraction}{.15} % before: .2 
+\renewcommand{\topfraction}{.8}     % before: .7 
+\renewcommand{\bottomfraction}{.5}  % before: .3 
+\setcounter{topnumber}{3} % before: 2 
+\setcounter{bottomnumber}{1} % before: 1 
+\setcounter{totalnumber}{5} % before: 3 
+
+\usepackage{url}
+
+\usepackage{dirtytalk}
+\usepackage{notoccite}
+\usepackage{comment}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{afterpage}
+\usepackage{subfig}
+\graphicspath{ {images/} }
+
+\setlist{nolistsep}
+\lstset{basicstyle=\ttfamily,
+	showstringspaces=false,
+	commentstyle=\color{red},
+	keywordstyle=\color{blue}
+}
+\lstset{aboveskip=20pt,belowskip=20pt}
+
+
+\newcommand\blankpage{%
+	\null
+	\thispagestyle{empty}%
+	\addtocounter{page}{-1}%
+	\newpage}
+
+\SetKwProg{Fn}{Function}{}{}
+
+% Make a glossary and a list of acronyms
+\makeglossaries
+% Glossary entries
+\input{acronyms.tex}
+\glsaddall
+
+%------------------------------------------------------------------------------
+
+%% ----------------------------------------------------------------
+
+\begin{document}
+\frontmatter      % Begin Roman style (i, ii, iii, iv...) page numbering
+% Set up the Title Page
+\title{RDF Doctor: Holistic RDF Syntax Validation and Error Correction}
+\authors  {\texorpdfstring
+            {{Ahmad Hemid}}
+            {Ahmad Hemid}
+            }
+\addresses  {\groupname \deptname \univname}  % Do not change this here, instead these must be set in the "Thesis.cls" file, please look through it instead
+\date       {\today}
+\subject    {}
+\keywords   {Access Control}
+\maketitle
+\blankpage
+%% ----------------------------------------------------------------
+
+\setstretch{1.3}  % It is better to have smaller font and larger line spacing than the other way round--
+
+% Define the page headers using the FancyHdr package and set up for one-sided printing
+  % Clears all page headers and footers
+\rhead{\thepage}  % Sets the right side header to show the page number
+  % Clears the left side page header
+
+\pagestyle{fancy}  % Finally, use the "fancy" page style to implement the FancyHdr headers
+
+%% ----------------------------------------------------------------
+% Declaration Page required for the Thesis, your institution may give you a different text to place here
+\Declaration{
+
+% \addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+
+
+I, Ahmed Hemid, declare that this thesis, titled ``RDF Doctor: Holistic RDF Syntax Validation and Error Correction'', and the work presented in it are my own. I confirm that:
+
+\begin{itemize} 
+\item This work was done wholly or mainly while in candidature for a research degree at this University.
+\item Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
+\item Where I have consulted the published work of others, this is always clearly attributed.
+\item Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
+\item I have acknowledged all main sources of help.
+\end{itemize}
+
+Ahmed Hemid
+  
+Signature:\\
+\rule[1em]{25em}{0.5pt}  % This prints a line for the signature
+ 
+Date:\\
+\rule[1em]{25em}{0.5pt}  % This prints a line to write the date
+}
+\clearpage  % Declaration ended, now start a new page
+
+%--------------------------------------------------------------
+
+%% ----------------------------------------------------------------
+% The "Quote Page"
+%\pagestyle{empty}  % No headers or footers for the following pages
+%
+%\null\vfill
+%
+%\textit{``What we do in life ... echoes in eternity``}
+%
+%\begin{flushright}
+%	`Gladiator` movie (2000)\\
+%\end{flushright}
+%
+%\vfill\vfill\vfill\vfill\vfill\vfill\null
+%\clearpage  %Quote page ended, start a new page
+%% ----------------------------------------------------------------
+
+%\acknowledgements{
+%	% \addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+%	
+%I would like to express my gratitude to every individual who assisted me with completing this scientific work, namely \textit{Prof. Dr. Maria-Esther Vidal} and \textit{Dr. Ioanna Lytra} for their continuous support and valuable directions.
+%
+%\hfill
+%Zuhair
+%}
+
+\newenvironment{acknowledgements}%
+{\cleardoublepage\thispagestyle{empty}\null\vfill\begin{center}%
+		\bfseries Acknowledgements\end{center}}%
+{\vfill\null}
+
+I would like to thank
+
+\begin{itemize}
+	\item My parents
+	\item My wife 
+	\item My children
+\end{itemize}
+
+
+% \clearpage  % End of the Acknowledgements
+\afterpage{\blankpage}
+%% ----------------------------------------------------------------
+
+\pagestyle{fancy}  %The page style headers have been "empty" all this time, now use the "fancy" headers as defined before to bring them back
+
+%% ----------------------------------------------------------------
+
+\tableofcontents  % Write out the Table of Contents
+
+%% ----------------------------------------------------------------
+%\lhead{\emph{List of Figures}}  % Set the left side page header to "List of Figures"
+\listoffigures  % Write out the List of Figures
+
+%% ----------------------------------------------------------------
+%\lhead{\emph{List of Tables}}  % Set the left side page header to "List of Tables"
+\listoftables  % Write out the List of Tables
+
+\printglossary[style=mystyle, title=Abbreviations, sort=standard]
+
+%% ----------------------------------------------------------------
+%\lhead{\emph{List of Listings}}  % Set the left side page header to "List of Listings"
+%\lstlistoflistings  % Write out the List of Listings
+
+%% ----------------------------------------------------------------
+\mainmatter	  % Begin normal, numeric (1,2,3...) page numbering
+
+
+% The Abstract Page
+%\addtotoc{Abstract}  % Add the "Abstract" page entry to the Contents
+\abstract{
+	% \addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+%Information privacy in the digital space has become a serious concern as huge volumes of private data is being collected, processed, and stored on an ongoing basis. Nowadays, more research is being conducted on the matter of information privacy and that is because any possible exposure of this private information, e.g. medical or financial records, may lead to unwanted consequences. Therefore, it is of high importance to keep access to personal information under control.  Our study investigates a novel solution to support personal information privacy by enabling a level of access control in an open linked data environment. We propose a framework to enforce data access policies in federations of RDF datasets. The proposed framework is typically integrated with SPARQL query engines as an access control layer. Our contribution comprises the design of an RDFS/OWL access control ontology used to model the access authorizations, and the development of an access enforcement mechanism based on the RDFS inference capabilities. The framework provides RESTful APIs for the management and validation of access authorizations. We empirically evaluated our framework in terms of completeness and effectiveness using the BSBM benchmark and MULDER query engine. The evaluation results prove the applicability of our approach in imposing access control without causing information loss or adding a considerable overhead to the overall query execution time.
+%
+%\textit{\small{Keywords: Access Control, Authorization, Linked Data, RDFS, RDF Molecule}}
+%}	
+\clearpage  % Abstract ended, start a new page
+ %% ----------------------------------------------------------------
+
+
+%% ----------------------------------------------------------------
+
+%\input{chapters/introduction}
+%\input{chapters/background}
+%\input{chapters/related-work}
+%%\input{chapters/motivating-example}
+%\input{chapters/datamodel_approach}
+%\input{chapters/implementation}
+%\input{chapters/experimental-study}
+%\input{chapters/conclustion-and-future-work}
+%\input{chapters/appendices}
+\input{chapters/1_introduction}
+\input{chapters/3_preliminaries}
+\input{chapters/2_related_work}
+\input{chapters/5_approach}
+\input{chapters/6_implementation}
+\input{chapters/7_evaluation}
+\input{chapters/8_conclusions}
+%% ----------------------------------------------------------------
+\clearpage
+%------------------------------------------------------------------------------
+\label{Bibliography}
+\bibliographystyle{unsrtnat}  % Use the "unsrtnat" BibTeX style for formatting the Bibliography
+\bibliography{literature}  % The references (bibliography) information are stored in the file named "Bibliography.bib"
+
+\end{document}  % The End
+%% ----------------------------------------------------------------
