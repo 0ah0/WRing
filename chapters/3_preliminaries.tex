@@ -3,21 +3,21 @@
 
 
 \section{RDF Model}
-The "Semantic Web" \cite{W3C:SemanticWebTerm:Online} term  has appeared during the transformation process of Web Development from "Web of documents" to "Web of data", similar to those data are found in databases. W3C defines it as "the Web of linked data" . {\it Figure \ref{Fig:semanticWebStack} describes the Semantic Web Stack, proposed by W3C. It can be seen, that it contains several technologies to enable users of creating their own data stores on web, building vocabularies, and enforcing processing rules on such data.   
+The "Semantic Web" \cite{W3C:SemanticWebTerm:Online} term  has appeared during the transformation process of Web Development from "Web of documents" to "Web of data", similar to those data are found in databases. W3C defines it as "the Web of linked data" . {\it Figure \ref{Fig:semanticWebStack}} describes the Semantic Web Stack, proposed by W3C. It can be seen, that it contains several technologies to enable users of creating their own data stores on web, building vocabularies, and enforcing processing rules on such data.   
 \vspace{5mm} %5mm vertical space
 \par
-In order to make data more and machine-readable, and easier for interchange, RDF Model \cite{W3C:RDF-Primer:Online} has been proposed. RDF Model plays the role of data interchange in the layered Semantic Web Stack and leverages the high-level with low-level semantic web tools as it is shown in {\it Figure \ref{Fig:semanticWebStack}. 
+In order to make data more and machine-readable, and easier for interchange, RDF Model \cite{W3C:RDF-Primer:Online} has been proposed. RDF Model plays the role of data interchange in the layered Semantic Web Stack and leverages the high-level with low-level semantic web tools as it is shown in {\it Figure \ref{Fig:semanticWebStack}}. 
 
 	\begin{figure}[ht]
 	\begin{center}
 		\includegraphics[scale=0.5,angle=0]{images/semanticWebStack}
-		\caption{The Semantic Web Stack \cite{Bratt2007}}
+		\caption{The Semantic Web Stack \cite{W3C:SemanticStack:Online}}
 		\label{Fig:semanticWebStack}
 	\end{center}
 \end{figure}
 \vspace{12mm} %5mm vertical space
 \par
-{\it Figure \ref{Fig:rdfModel}(a) exhibits RDF Model's representation of data in triples. A triple is defined by 3 main players: subject, predicate, and object. It has a common similarity of a basic structure of simple sentence which consists of a subject, an object, and a verb. As the verb shows a relation or an event between the other two entities, similar, the predicate connects both subject and object in a certain relation. 
+{\it Figure \ref{Fig:rdfModel}}(a) exhibits RDF Model's representation of data in triples. A triple is defined by 3 main players: subject, predicate, and object. It has a common similarity of a basic structure of simple sentence which consists of a subject, an object, and a verb. As the verb shows a relation or an event between the other two entities, similar, the predicate connects both subject and object in a certain relation. 
 	
 \begin{figure}[ht]
 	\begin{center}
@@ -27,10 +27,10 @@ In order to make data more and machine-readable, and easier for interchange, RDF
 	\end{center}
 \end{figure}
  
-A similar Resource-Property-Value structure to Subject-Predicate-Object of RDF Model's representation is drawn in {\it Figure \ref{Fig:rdfModel}(b). It is same representation but Subject, Predicate, and Object are replaced with Resource, Property, and Value in sequence.  
+A similar Resource-Property-Value structure to Subject-Predicate-Object of RDF Model's representation is drawn in {\it Figure \ref{Fig:rdfModel}}(b). It is same representation but Subject, Predicate, and Object are replaced with Resource, Property, and Value in sequence.  
 \subsection{Simple RDF Model Example}
 
-To make it more clear, a simple example of RDF Modeling is giving in {\it Figure \ref{Fig:rdfModel}(c). To represent a fact that "German has The Rhein river", Ex:Germany is Subject/Resource, Ex:hasRiver is Predicate/Property, and "Rhein" is Object/Value. The first two value are Uniform Resource Identifiers (URIs) where "Ex:" is a defined path in RDF files and the following part is an extension of the path. The last value "Rhein" is a literal or a string. More examples can be viewed at \cite{W3C:RDF-Primer:Online}.
+To make it more clear, a simple example of RDF Modeling is giving in {\it Figure \ref{Fig:rdfModel}}(c). To represent a fact that "German has The Rhein river", Ex:Germany is Subject/Resource, Ex:hasRiver is Predicate/Property, and "Rhein" is Object/Value. The first two value are Uniform Resource Identifiers (URIs) where "Ex:" is a defined path in RDF files and the following part is an extension of the path. The last value "Rhein" is a literal or a string. More examples can be viewed at \cite{W3C:RDF-Primer:Online}.
 
 \section{Parsing and Error Recovery}
 \subsection{Parsing and Grammar Definitions}
@@ -61,7 +61,7 @@ Error Recovery Strategies are the behavior of a system once an error is detected
 	\item \textbf{Panic-Mode Recovery}: Once an error has been discovered, the parser ignores and skips next input symbols one by one till a recognized set of tokens is detected. In spite of discarding sometimes huge amount of input symbols with checking them for further error detection, it is considered a simple parsing mode and do not fall in an infinite loop while other modes may do.
 	\item \textbf{Phrase-Level Recovery}: To continue the parsing process, the parser performs local correction. A typical local correction in RDF is to insert a missing dot or delete extraneous dots.
 	\item \textbf{Error Productions}: By expecting the common errors, production rules can be inserted into the grammar. Then, the generated parser is well-informed about such errors. Error diagnostics can be easily done in this case since the error in our hand.
-	\item \textbf{Global Correction}: The parser tries to reduce as much as possible number of change operations (Insertion, deletion or modification) when dealing with an incorrect input token to reduce globally total cost of error correction. To make it more clear, let's assume an incorrect input statement X is giving in grammar G, the parser constructs a closest error-free parse tree of statement Y to replace statment X, such that changes are small as possible. 
+	\item \textbf{Global Correction}: The parser tries to reduce as much as possible number of change operations (Insertion, deletion or modification) when dealing with an incorrect input token to reduce globally total cost of error correction. To make it more clear, let's assume an incorrect input statement X is giving in grammar G, the parser constructs a closest error-free parse tree of statement Y to replace statement X, such that changes are small as possible. 
 \end{itemize}
 
 
