@@ -221,20 +221,16 @@
        \vfill
       {\Large \@date \par}
       \vfill
-        \begin{figure}[h]
-            %\noindent
-            %\begin{subfigure}{}
-            %    \includegraphics[width=40mm]{Smart-Data-Analytics.png}
-            %\end{subfigure}
-           %\hfill
-            \begin{subfigure}{}
-                \includegraphics[width=45mm]{uni-bonn-logo.png}
-            \end{subfigure}
-            \hfill
-            \begin{subfigure}{}
-                    \includegraphics[width=30mm]{logo-eis.png}
-            \end{subfigure}
-        \end{figure}
+ \begin{figure}[h!]
+ 	\noindent
+ 	\begin{subfigure}{}
+ 		\includegraphics[width=26mm]{images/logo-eis.png}
+ 	\end{subfigure}
+ 	\hfill
+ 	\begin{subfigure}{}
+ 		\includegraphics[width=40mm]{images/uni-bonn-logo_.jpg}
+ 	\end{subfigure}
+ \end{figure}
     \end{center}
     \par
     \@thanks

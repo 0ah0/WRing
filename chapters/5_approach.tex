@@ -17,7 +17,7 @@ As has been discussed in chapter \ref{ch:related}, there is a need for a tool to
 \begin{figure}
 	\centering
 	  	\includegraphics[width=13cm]{images/Approach.png}
-		\caption{Overview of the Proposed Solution}
+		\caption{\textbf{Overview of the proposed solution}}
 		\label{Fig:Approach}  
 \end{figure}
 \section{Representation in Pseudo-code}
@@ -56,11 +56,33 @@ tokenToBeMatched += token;\\
 		 $token \leftarrow ""$  	\\	
 		}
 }
-return foundSyntaxErrors \&\& recoveredSyntaxErrors
+return foundSyntaxErrors , recoveredSyntaxErrors
 \end{algorithm}
 
 
-\section{Classification of RDF Syntax Errors}
+\section{Categorization of RDF Syntax Errors}
+ In this approach, Turtle\footnote{\href{https://www.w3.org/TR/turtle/}{Turtle}} and N-Triples\footnote{\href{https://www.w3.org/TR/n-triples/}{N-Triples}} RDF serializations were the core syntaxes in our study, as a use case. Additionally, Turtle is a special case of N-Triples. for this reason, the grammar of the proposed solution was created based on Turtle format. 
+ 
+ Furthermore, since the significant part in this study is the ability to identify syntax errors, the expected syntax errors need to be known to be injected in the grammar. \cite{TurtleTests:Online} plays an important role in syntax errors declaration. It contains several files of Turtle format to show both correct and incorrect syntaxes and it is supposed to be used to validate any parser that parses Turtle format, if it can recognized a incorrect syntax as an incorrect and vice verse . 
+ 
+ To make our life easy, we have categorized the syntax errors (found in the files at \cite{TurtleTests:Online}) into groups. It can be identified if a file represents a correct syntax or incorrect one based on the word "Bad" which means it contains an incorrect syntax,then, it can be easily integrated in the grammar.  
+ 
+\begin{table}[]
+    \centering
+\begin{tabular}{|l|l|l|l|l}
+\cline{1-4}
+Sn. & Catergory & Position & Sample &  \\ \cline{1-4}
+1 & \multirow{3}{*}{Bad string escape
+} & Literal & \textcolor{red}{"a\textbackslash zb" } &  \\ \cline{1-1} \cline{3-4}
+2 &  & Literal & \textcolor{red}{"\textbackslash uWXYZ"}  &  \\ \cline{1-1} \cline{3-4}
+3 &  & Literal &  \textcolor{red}{"\textbackslash U0000WXYZ"} &  \\  \cline{1-4}
+\end{tabular}
+    \caption{Categorization of syntax errors }
+    \label{tab:my_label}
+\end{table}
+
+
+
 
 \section{Real-World Use Cases}
 
