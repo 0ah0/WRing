@@ -86,5 +86,75 @@ statement
 	\label{Fig:parseTreeTAll}
 \end{figure}
 
+After showing up a part of grammar rules and views of the parse tree, some of real cases of handling error detection and error recovery will be presented:
+\begin{itemize}
+    \item \textbf{Missing a dot at the end of a triple:} in Turtle syntax, a triple must ends with a dot. In listing \ref{lst:missingDotEx}, the head rule \textbf{statement} as it was previously described, can be either directives or triples (ends with a dot).Equally important the last line which shows that triples without a dot can be also a sub-goal of this rule. This sub-goal is considered as a normal path in a parse tree, but, once the parser detects it, it sends a notifications to the error listener with an error message "Missing  ’.’ at the end of a triple".  
+    
+    
+    \begin{lstlisting}[label=lst:missingDotEx,  caption={Detection of a syntax error of a missing dot at the end of a triple in the grammar }] 
+statement
+: directive
+| triples '.'
+| <@\textcolor{red}{triples  \{notifyErrorListeners("Bad end of a triple
+               with ','")\} }@>;
+\end{lstlisting}
+Once such errors saves by the error listener, the role of Error Detection Module is finished. The next is the role of Error Correction Module to correct the error. Since the list of syntax error is shared with Error Correction Module, it iterates all of these errors messages, if one of these messages in the error list matches those which it includes, then it applies the pre-assigned function.  For instance, \textbf{addDot(lineNum, columnNum)} function is applied in our case, since it matches the same error message and similarly, in case of "Missing  ’.’ at the  end of  Prefix directive" message. 
+    \begin{lstlisting}[language=java, label=lst:errorCorrectionlst,  caption={Java-based handling of error correction based on the error message in Error Correction Module }] 
+while (iterator.hasNext()) {
+String line = iterator.next();
+// select the action based on the error message
+if (line.contains("Missing '.' at the end of Prefix
+directive")||line.contains("Missing '.' at the end 
+of a triple"))
+<@\textcolor{violet}{addDot(lineNum, columnNum);}@>
+else if (line.contains("'A' cannot be used as
+predicate, it should be repalced with 'a'"))
+<@\textcolor{violet}{changeA2a(lineNum, columnNum);}@>
+}
+\end{lstlisting}
 
+    \item \textbf{Misuse of 'A'  as a predicate instead of 'a':} by mistake a user can missuse of 'A' as a predicate instead of using 'a' (which is rdf:type, to ease its usage, it was replaced with 'a'). if we start substitution of sub-goals of triples, \textbf{verb} can be found as a terminal node in  substitution chain. syntactically, it is 'a', but if the user used 'A', then the parser will fire an error with a message "’A’ cannot be used as a predicate, it should be replaced with ’a’" 
+    
+    	\vspace{5mm} %5mm vertical space
 
+    ddd
+
+    \begin{lstlisting}[label=lst:MissuseAex ,  caption={Detection a syntax error of missuse of 'A' as a predicate instead of 'a' in the grammar}] 
+statement
+: directive
+| triples '.'
+;
+triples
+: subject predicateObjectList
+;
+predicateObjectList
+: verb objectList (';' (verb objectList)?)*
+;
+verb
+:'a'
+| <@\textcolor{red}{'A' {notifyErrorListeners("'A' cannot be used as
+predicate, it should be repalced with 'a'");}}@>
+;
+\end{lstlisting}
+\item \textbf{Bad Syntax of a language tag in a literal:} 
+\begin{lstlisting}[label=lst:badlaguageTag,  caption={Starting rules in the grammar file8}] 
+triples
+: subject predicateObjectList
+;
+predicateObjectList
+: verb objectList (';' (verb objectList)\?)*
+;
+objectList
+: object (',' object)*
+object
+| literal
+;
+literal
+: rdfLiteral
+;
+rdfLiteral
+: String (LANGTAG | '\textasciicircum\textasciicircum' iri)\?
+| <@\textcolor{red}{ String  BAD\_LANGTAG\_AS\_NUMBER  {notifyErrorListeners(\"Language tag cannot be a numeric value\");} }@>
+;
+\end{lstlisting}
+\end{itemize}
