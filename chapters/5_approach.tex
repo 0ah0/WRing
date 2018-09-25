@@ -1,9 +1,10 @@
 \chapter{Approach}
 \label{ch:approach}
-
-\section{Proposed Solution}
 As has been discussed in chapter \ref{ch:related}, there is a need for a tool to detect as much as possible syntax errors in RDF documents. As a result to this need, this study was held and this chapter will cover the approach used in the proposed solution.
 
+\section{ANTLR: The Core Component}
+In order to find a parser which can accept the error production rules in its grammar, our choice was to use ANTLR framework to automatically generate the required parser. Lots of features in ANTLR motivate us to use it in the proposed solution, such as: 1) its grammar can equip with error production rules and when a couple of tokens match such rules, the parser will fire  error notifications, 2) it uses a parse tree to parse input token and the view of this parse tree can be delivered as an output to the user at the end of parsing process, it supports the auto-generation of parsers in different programming language, as it was discussed in Chapter \ref{ch:preliminaries}.
+\section{Overview of the Proposed Solution}
 	\vspace{5mm} %5mm vertical space
 
  To represent the approach in more clear way, {\it figure \ref{Fig:Approach}} was invented. It shows the technique used to handle an RDF text, having some syntax errors. follows are the sequence steps which highlight the main milestones of this approach:
@@ -16,7 +17,7 @@ As has been discussed in chapter \ref{ch:related}, there is a need for a tool to
 
 \begin{figure}
 	\centering
-	  	\includegraphics[width=13cm]{images/Approach.png}
+	  	\includegraphics[width=1\textwidth]{images/Approach.png}
 		\caption{\textbf{Overview of the proposed solution}}
 		\label{Fig:Approach}  
 \end{figure}

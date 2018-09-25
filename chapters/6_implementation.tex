@@ -2,7 +2,8 @@
 \label{ch:implementation}
 
 
-In this chapter, details of the implementation practical part of the study is discussed. The architecture, modules, development tools, installation, and configurations of such part are the main role of this chapter.    
+In this chapter, details of the implementation practical part of the study is discussed. The architecture, modules, development tools, installation, and configurations of such part are the main role of this chapter.  
+ 
 \section {Architecture}
 The design of the architecture was planned based on the Input-Process-Output Model. It can be also considered as a black-box solution where the solution processes the input, then it delivers the output once it is ready. follows is the discussion of those 3 phases, described in Figure \ref{Fig:Architecture} : 
  \begin{figure}[ht]
@@ -87,8 +88,8 @@ statement
 \end{figure}
 
 After showing up a part of grammar rules and views of the parse tree, some of real cases of handling error detection and error recovery will be presented:
-\begin{itemize}
-    \item \textbf{Missing a dot at the end of a triple:} in Turtle syntax, a triple must ends with a dot. In listing \ref{lst:missingDotEx}, the head rule \textbf{statement} as it was previously described, can be either directives or triples (ends with a dot).Equally important the last line which shows that triples without a dot can be also a sub-goal of this rule. This sub-goal is considered as a normal path in a parse tree, but, once the parser detects it, it sends a notifications to the error listener with an error message "Missing  ’.’ at the end of a triple".  
+\begin{enumerate}
+    \item \textbf{Missing a dot at the end of a triple:} in Turtle syntax, a triple must ends with a dot. In listing \ref{lst:missingDotEx}, the head rule \textbf{statement} as it was previously described, can be either directives or triples (ends with a dot). Equally important the last line which shows that triples without a dot can be also a sub-goal of this rule. This sub-goal is considered as a normal path in a parse tree, but, once the parser detects it, it sends a notifications to the error listener with an error message "Missing  ’.’ at the end of a triple".  
     
     
     \begin{lstlisting}[label=lst:missingDotEx,  caption={Detection of a syntax error of a missing dot at the end of a triple in the grammar }] 
@@ -98,7 +99,7 @@ statement
 | <@\textcolor{red}{triples  \{notifyErrorListeners("Bad end of a triple
                with ','")\} }@>;
 \end{lstlisting}
-Once such errors saves by the error listener, the role of Error Detection Module is finished. The next is the role of Error Correction Module to correct the error. Since the list of syntax error is shared with Error Correction Module, it iterates all of these errors messages, if one of these messages in the error list matches those which it includes, then it applies the pre-assigned function.  For instance, \textbf{addDot(lineNum, columnNum)} function is applied in our case, since it matches the same error message and similarly, in case of "Missing  ’.’ at the  end of  Prefix directive" message. 
+Once such errors saves by the error listener, the role of Error Detection Module is finished. The next is the role of Error Correction Module to correct the error. Since the list of syntax error is shared with Error Correction Module, it iterates all of these errors messages, If one of these messages in the error list matches those which it includes, then it applies the predefined function.  For instance, \textbf{addDot(lineNum, columnNum)} function is applied in our case, as it is coded in listing \ref{lst:errorCorrectionlst}, since it matches the same error message and similarly, in case of "Missing  ’.’ at the  end of  Prefix directive" message. The activity of this function just to reach the line which misses the dot by the sent lineNum and columNum values and then adds a dot. 
     \begin{lstlisting}[language=java, label=lst:errorCorrectionlst,  caption={Java-based handling of error correction based on the error message in Error Correction Module }] 
 while (iterator.hasNext()) {
 String line = iterator.next();
@@ -117,44 +118,41 @@ predicate, it should be repalced with 'a'"))
     
     	\vspace{5mm} %5mm vertical space
 
-    ddd
+    listing \ref{lst:errorCorrectionlst} also shows the handling of this error by executing \textbf{changeA2a(lineNum, columnNum)} function where the same error message is as well matched. This functions can access Turtle input with the referred lineNum and columNum, then it replaces 'A' with 'a' to correct that error. 
+    	\vspace{5mm} %5mm vertical space
 
-    \begin{lstlisting}[label=lst:MissuseAex ,  caption={Detection a syntax error of missuse of 'A' as a predicate instead of 'a' in the grammar}] 
+    \begin{lstlisting}[label=lst:MissuseAex ,  caption={Detection a syntax error of misuse of 'A' as a predicate instead of 'a' in the grammar}] 
 statement
 : directive
-| triples '.'
-;
+| triples '.';
 triples
-: subject predicateObjectList
-;
+: subject predicateObjectList;
 predicateObjectList
-: verb objectList (';' (verb objectList)?)*
-;
+: verb objectList (';' (verb objectList)?)*;
 verb
 :'a'
 | <@\textcolor{red}{'A' {notifyErrorListeners("'A' cannot be used as
-predicate, it should be repalced with 'a'");}}@>
-;
+predicate, it should be replaced with 'a'");}}@>;
 \end{lstlisting}
-\item \textbf{Bad Syntax of a language tag in a literal:} 
+\item \textbf{Bad syntax of a language tag in a literal:} 
+Turtle formats has the ability to specify the language of literal (which can be only placed as an object) by the character '@' followed by alphabetic characters, for example, "en", "fr", "de" are tags for English, French, German languages simultaneously. \textbf{"cat"@en}, and \textbf{"Katze"@de} are samples of literals with using of language tags.
 \begin{lstlisting}[label=lst:badlaguageTag,  caption={Starting rules in the grammar file8}] 
 triples
-: subject predicateObjectList
-;
+: subject predicateObjectList;
 predicateObjectList
-: verb objectList (';' (verb objectList)\?)*
-;
+: verb objectList (';' (verb objectList)?)*;
 objectList
 : object (',' object)*
 object
-| literal
-;
+: literal;
 literal
-: rdfLiteral
-;
+: rdfLiteral;
 rdfLiteral
-: String (LANGTAG | '\textasciicircum\textasciicircum' iri)\?
-| <@\textcolor{red}{ String  BAD\_LANGTAG\_AS\_NUMBER  {notifyErrorListeners(\"Language tag cannot be a numeric value\");} }@>
-;
+: String (LANGTAG | '^^' iri)?
+| <@\textcolor{red}{ String  BAD\_LANGTAG\_AS\_NUMBER  {notifyErrorListeners("Language tag cannot be a numeric value");} }@>;
+BAD_LANGTAG_AS_NUMBER : 
+'@' [0-9]+;
 \end{lstlisting}
-\end{itemize}
+
+ Perhaps a user wants to states a language tag for a literal but a number instead of an alphabetic character was given such as \textbf{"cat"@1}, then this should be considered as a syntax error in Turtle format. Listing \ref{lst:badlaguageTag} handles the sequence of rules in the grammar to make a parser firing a syntax error when such state was encountered. It can be easily following the hierarchy stricture of the rules, starting with \textbf{triples} head rule till reaching the last two lines which explain that an RDF literal can be a string followed by BAD\_LANGTAG\_AS\_NUMBER (which '@' character followed by numbers). When the parser finds such pattern in the input it delivers a syntax error to the error listener. Unfortunate, no error correction can be applied here, since what the user meant is totally unknown to us.     
+\end{enumerate}
