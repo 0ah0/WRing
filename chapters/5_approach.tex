@@ -5,7 +5,6 @@ As has been discussed in chapter \ref{ch:related}, there is a need for a tool to
 \section{ANTLR: The Core Component}
 In order to find a parser which can accept the error production rules in its grammar, our choice was to use ANTLR framework to automatically generate the required parser. Lots of features in ANTLR motivate us to use it in the proposed solution, such as: 1) its grammar can equip with error production rules and when a couple of tokens match such rules, the parser will fire  error notifications, 2) it uses a parse tree to parse input token and the view of this parse tree can be delivered as an output to the user at the end of parsing process, it supports the auto-generation of parsers in different programming language, as it was discussed in Chapter \ref{ch:preliminaries}.
 \section{Overview of the Proposed Solution}
-	\vspace{5mm} %5mm vertical space
 
  To represent the approach in more clear way, {\it figure \ref{Fig:Approach}} was invented. It shows the technique used to handle an RDF text, having some syntax errors. follows are the sequence steps which highlight the main milestones of this approach:
  \begin{enumerate}[label=(\alph*)]
@@ -24,10 +23,7 @@ In order to find a parser which can accept the error production rules in its gra
 \section{Representation in Pseudo-code}
 To functionally represent the approach of this study, Algorithm \ref{alg:algorithm-main} was engineered. It is showing the abstract behaviour of the developed program where \textbf{syntaxRules} variable combines both correct syntax rules and incorrect ones. A \textbf{While loop} traverse till the end of the file or a single chunk if a large file was separated in a couple of chunks. The \textbf{tokensToBeMatched}  variable collected a sequence of followed tokens to be matched either with correct or incorrect syntax rules.
 
-	\vspace{5mm} %5mm vertical space
-	%TODO: continue explanation of the algorithm
-More importantly, the target of this study to find syntax errors,  
-	\vspace{5mm} %5mm vertical space
+More importantly is the syntax errors finding, for that reason \textbf{tokensToBeMatched} is checked if its content are drawn by \textbf{incorrectSyntaxRules}, if it falls in that situation, then the content of \textbf{tokensToBeMatched} is considered as a syntax error and the parser sends a notification for those listener APIs  whose are interesting of further processing of the error. 
 
 \begin{algorithm}[H] 
  \caption{Representation of the proposed solution  in pseudo-code}
@@ -61,13 +57,14 @@ tokenToBeMatched += token;\\
 return foundSyntaxErrors , recoveredSyntaxErrors
 \end{algorithm}
 
+The correction of error is a feature that can be activated with the user options. In case, the user selects to enable it, then the Error Correction Module will traverse all list of detected syntax errors and based on the error message, it can identify if the error can be corrected or goes with correction. At the end of the correction phase, a report of the corrected error will be delivered to the user. 
 
 \section{Categorization of RDF Syntax Errors}
  In this approach, Turtle\footnote{\href{https://www.w3.org/TR/turtle/}{Turtle}} and N-Triples\footnote{\href{https://www.w3.org/TR/n-triples/}{N-Triples}} RDF serializations were the core syntaxes in our study, as a use case. Additionally, Turtle is a special case of N-Triples. for this reason, the grammar of the proposed solution was created based on Turtle format. 
  
  Furthermore, since the significant part in this study is the ability to identify syntax errors, the expected syntax errors need to be known to be injected in the grammar. \cite{TurtleTests:Online} plays an important role in syntax errors declaration. It contains several files of Turtle format to show both correct and incorrect syntaxes and it is supposed to be used to validate any parser that parses Turtle format, if it can recognized a incorrect syntax as an incorrect and vice verse . 
  
- In \ref{tab:syntaxErrorCate}, we have categorized the syntax errors (found in the files at \cite{TurtleTests:Online}) into groups. It can be identified if a file represents a correct syntax or incorrect one based on the word "Bad" which means it contains an incorrect syntax,then, it can be easily integrated in the grammar.  
+ In table \ref{tab:syntaxErrorCate}, we have categorized the syntax errors (found in the files at \cite{TurtleTests:Online}) into multiple groups. Each of those files can be identified if a file represents a correct syntax or incorrect one based on it title if it contains the workd "Bad" which means it contains an incorrect syntax, then, it can be syntactically engineered in our grammar.  
  
 
 \newcounter{cA} 

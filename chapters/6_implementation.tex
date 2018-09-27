@@ -6,13 +6,15 @@ In this chapter, details of the implementation practical part of the study is di
  
 \section {Architecture}
 The design of the architecture was planned based on the Input-Process-Output Model. It can be also considered as a black-box solution where the solution processes the input, then it delivers the output once it is ready. follows is the discussion of those 3 phases, described in Figure \ref{Fig:Architecture} : 
- \begin{figure}[ht]
+ \begin{figure}[H]
 	\begin{center}
-		\includegraphics[scale=0.5,angle=0]{images/Architecture}
+		\includegraphics[scale=0.5]{images/Architecture}
+		\setlength\belowcaptionskip{-7mm}
 		\caption{The proposed solution architecture}
 		\label{Fig:Architecture}
 	\end{center}
 \end{figure}
+
  \begin{itemize}
  \item \textbf {Input}: It is the role of the user to supply an RDF text with certain options, such as 1) enabling/disabling of the error correction, 2) showing an error report of JSON \footnote{\href{https://www.json.org/}{JSON}} or text format, and 3) concealing/showing up the parse tree.
 \item \textbf{Process}: starts with preparing the input ready to be parsing in the following flow: 1)it reads the input, 2) slices it into smaller pieces if needed, 3) parses the input itself or each slice, and 4) corrects some detected syntax errors. This phase was built based on a predefined grammar, it requires ANTLR library for parsing, and some options from the user to activate/deactive some features of the solution.   
@@ -26,6 +28,7 @@ The design of the architecture was planned based on the Input-Process-Output Mod
 	\begin{figure}[ht]
 	\begin{center}
 		\includegraphics[scale=0.5,angle=0]{images/modules.png}
+				\setlength\belowcaptionskip{-7mm}
 		\caption{UML diagram for the major modules in the proposed solution}
 		\label{Fig:UML}
 	\end{center}
