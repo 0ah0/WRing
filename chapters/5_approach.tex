@@ -70,11 +70,9 @@ The correction of error is a feature that can be activated with the user options
 \newcounter{cA} 
 \setcounter{cA}{1}
 \begin{longtable}{|c|c|c|l|l}
-    \caption{Categorization of syntax errors }
-    \label{tab:syntaxErrorCate}
-
-    \centering
-
+\caption{Categorization of syntax errors }
+\label{tab:syntaxErrorCate}
+\centering
 \cline{2-5}
 Sn. & Catergory & Position & Sample &  \\ \midrule 
 \thecA     \addtocounter{cA}{1}  & \multirow{3}{*}{ \textcolor{blue}{Bad String Escape}
@@ -153,10 +151,3 @@ x \textcolor{red}{@a} Item .  &  \\ \cline{1-1} \cline{3-4}  \\
 \thecA     \addtocounter{cA}{1}  &  &  IRI & \textless http:// \\ &  &  & \textgreater { :p}  :o . &  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  &  IRI &  \textless http://\textcolor{red}{\texttt{\textbackslash}}\textgreater { :p}  :o . &  \\   \midrule \midrule
 \end{longtable}
-
-
-
-
-
-
- 

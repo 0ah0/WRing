@@ -40,8 +40,9 @@
 \usepackage[toc,page]{appendix}
 \usepackage{tikz}
 \usetikzlibrary{fadings}
-
-
+\usepackage{booktabs}
+\usepackage{pdflscape}
+\usepackage{rotating}
 
 \makeatletter
 \def\setChapterprefix#1{\gdef\@Prefix{#1}}
@@ -172,15 +173,15 @@ Date:\\
 
 %% ----------------------------------------------------------------
 % The "Quote Page"
-%\pagestyle{empty}  % No headers or footers for the following pages
-%
-%\null\vfill
-%
-%\textit{``What we do in life ... echoes in eternity``}
-%
-%\begin{flushright}
-%	`Gladiator` movie (2000)\\
-%\end{flushright}
+\pagestyle{empty}  % No headers or footers for the following pages
+
+\null\vfill
+
+\textit{``The whole of science is nothing more than a refinement of everyday thinking.``}
+
+\begin{flushright}
+	Albert Einstein\\
+\end{flushright}
 
 \vfill\vfill\vfill\vfill\vfill\vfill\null
 \clearpage  %Quote page ended, start a new page
@@ -190,14 +191,12 @@ Date:\\
 %	% \addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
 	
 %I would like to express my gratitude to every individual who assisted me with completing this scientific work, namely \textit{Prof. Dr. Maria-Esther Vidal} and \textit{Dr. Ioanna Lytra} for their continuous support and valuable directions.
-I would like to say thank for 
 
-\begin{itemize}
-	\item My parents
-	\item My wife 
-	\item My children
-\end{itemize}
- for their continuous support and long patience.
+I would first like to thank my thesis advisor Mr. \textbf{Lavdim Halilaj} from the Enterprise Information Systems Research Group at Bonn University and the researcher at the Fraunhofer Institute for Intelligent Analysis and Information Systems department. The door to Mr.\textbf{ Halilaj} office was always open whenever I ran into a trouble spot or had a question about my research or writing. He consistently allowed this paper to be my own work, but steered me in the right the direction whenever he thought I needed it.
+
+I would also like to thank Prof. Dr. (Univ. Simon Bolivar) Maria-Esther Vidal, the Visting Professor from  Computer Science Department at the Simón Bolívar University and the head of the Scientific Data Management group at the TIB German National Library of Science and Technology, and I am gratefully indebted to her very valuable comments and advises on this thesis.
+
+Finally, I must express my very profound gratitude to my parents and to my parents, Mahdia and Madhat; my wife, Tayymaa and my children Abedelrahman, Madhat and Omer for providing me with unfailing support and continuous encouragement throughout my years of study and through the process of researching and writing this thesis. This accomplishment would not have been possible without them. 
 
 \hfill
 Ahmed
@@ -266,6 +265,9 @@ Ahmed
 %% ----------------------------------------------------------------
 \clearpage
 %------------------------------------------------------------------------------
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
 \label{Bibliography}
 \bibliographystyle{unsrtnat}  % Use the "unsrtnat" BibTeX style for formatting the Bibliography\bibliographystyle{plain}
 \nocite{*}
