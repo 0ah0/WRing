@@ -27,7 +27,7 @@ The design of the architecture was planned based on the Input-Process-Output Mod
 
 	\begin{figure}[ht]
 	\begin{center}
-		\includegraphics[scale=0.5,angle=0]{images/modules.png}
+		\includegraphics[scale=0.39,angle=0]{images/modules.png}
 				\setlength\belowcaptionskip{-7mm}
 		\caption{UML diagram for the major modules in the proposed solution}
 		\label{Fig:UML}
@@ -46,7 +46,7 @@ After briefing the proposed solution architecture, It is the time to cover it in
 %TODO:check here how to adjust the vertical space 
 \vspace{-5mm}
 
-\section{Real-World Use Cases}
+\section{Use Cases in Practice}
 In this section, some of use cases tackled in this study to detect syntax errors in RDF input and  the method of error correction of some of those detected syntax error will be exposed. As a start, let's begin with a Turtle example which has no syntax errors, then some syntax errors can be introduced to show the process of handling them. 
 	\vspace{5mm} %5mm vertical space
 
@@ -77,17 +77,18 @@ statement
 
 
 \begin{figure}
+		\centering\includegraphics[width=1.1\linewidth]{images/implementationParseTreeLeft.png}
+		\caption{{The left-side parse tree view of listing \ref{lst:turtleExample}.} It is left-side sub-trees of the parent node \textbf{start} in the parse tree}
+	\label{Fig:implementationParseTreeLeft}
+\end{figure}
 
-	\begin{subfigure}[]{}
-		\centering\includegraphics[width=1\linewidth]{images/parseTreeAllLeft.png}
-	\end{subfigure}     
-		\centering
-	\begin{subfigure}[]{}
-		\centering\includegraphics[width=1\linewidth]{images/parseTreeAlRight.png}
-		\label{fig:rightSideParseTree}
-	\end{subfigure}
-	\caption{The parse tree view of listing \ref{lst:turtleExample}. (a) shows the left-side tree and (b) is the right-side tree. Both (a) and (b) are siblings of the parent node \textbf{start} in the parse tree  }
-	\label{Fig:parseTreeTAll}
+\begin{figure}
+		\centering\includegraphics[width=1\linewidth]{images/implementationParseTreeRight.png}
+		\label{fig:implementationParseTreeRight}
+			\setlength\abovecaptionskip{-5mm}
+	\caption{The right-side parse tree view of listing \ref{lst:turtleExample}. It is right-side sub-trees of the parent node \textbf{start} in the parse tree}
+	\label{Fig:implementationParseTreeRight}
+
 \end{figure}
 
 After showing up a part of grammar rules and views of the parse tree, some of real cases of handling error detection and error recovery will be presented:

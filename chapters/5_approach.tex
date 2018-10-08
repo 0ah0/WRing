@@ -13,7 +13,12 @@ In order to find a parser which can accept the error production rules in its gra
 \item \textbf {Healing some of detected errors}: this feature firstly needs to be selected by the user to be active. The method of healing syntax errors focuses of a certain type of errors which has only one predefined solution in standards. Those errors like missing of dot at the end of triple, missing semi-colon after multiple predicates sharing same subject, missing comma after multiple objects having same subject and predicate. Lines surrounded with green color in {\it figure \ref{Fig:Approach}}(c) represents some of healed lines from error at the end of the correction phase.  
 \item\textbf {Generation of output text}: In this example, it is previously assumed that the user selected to correct found errors.  {\it Figure \ref{Fig:Approach}}(d) describes how the output should look like. It is sufficiently clear that healed lines are not shown, but some of unhealed line are still showing up. This comes as a normal result of existing of syntax errors which can have multiple solution, for example, a literal with multiple language tags like "me"@en@de. also it could be that the healing term is unknown, for example, missing of a prefix declaration for a certain local name-space. 
 \end{enumerate} 
-
+\begin{figure}
+	\centering
+	  	\includegraphics[width=1\textwidth]{images/approachParseTree.png}
+		\caption{\textbf{Demonstration of syntax errors detection on the parse tree.}}
+		\label{Fig:approachParseTree}  
+\end{figure}
 \begin{figure}
 	\centering
 	  	\includegraphics[width=1\textwidth]{images/Approach.png}
