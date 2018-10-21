@@ -40,33 +40,39 @@
 Since the RDF model can facilitate  exchanging of data between software applications and it can be also serialized in multiple formats, such as Turtle\footnote{\href{https://www.w3.org/TR/turtle/}{Turtle}}, N-Triples\footnote{\href{https://www.w3.org/TR/n-triples/}{N-Triples}}, N3\footnote{\href{https://www.w3.org/TeamSubmission/n3/}{N3}}, JSON-LD	\footnote{\href{https://www.w3.org/2018/jsonld-cg-reports/json-ld/}{JSON-LD}}, RDF{/}XML\footnote{\href{https://www.w3.org/TR/rdf-syntax-grammar/}{RDF{/}XML}}, and RDF{/}JSON	\footnote{\href{https://dvcs.w3.org/hg/rdf/raw-file/default/rdf-json/index.html}{RDF{/}JSON}}, then its  quality and correctness needs to be proved before proceeding of any further processing. Most of available  parsers which check for syntax errors in RDF, fail to detect more than one error, especially those represented in Turtle or N-Triples serialization formats. Therefore, there is a need to have more powerful tools that help in listing all such errors or at least most of them.%todo needs to show most used formats  
 
 
-This study was mainly  encouraged by the tremendous data representation and usage of either Turtle and N-Triples in different ontologies and in various sciences, as well as, to offer a solution to list most of syntax errors in RDF serialization formats, particularly Turtle and N-Triples. Hence, the intention of the study to afford a user-friendly syntax checker or parser. Such parser or syntax checker should give all errors can be detect inside such data.
+The motivation of this study is mainly  encouraged by the  tremendous RDF data representation and usage of either Turtle and N-Triples serialization formats in different ontologies and in various sciences, as well as, by the desire to offer a smart solution, capable of listing all or most of syntax errors, particularly, in those two formats. Besides the aim of the study to afford a user-friendly syntax checker of RDF formats, this tool should empower with the ability of recovering some of these syntax errors, essentially, when the errors are common and predefined, such as missing a colon or a dot.  
 
+%TODO need to speak about related work and the outline the result 
+
+The following text in this chapter are divided in a couple of sections to express our motivation of the study, present the problem statement, presents the challenges, list our research contributions, and finally outline how this thesis is structured.  
 
 \subsection{Motivation}
 
-This study was motivated by several scenarios which require syntax checking of RDF data as an input and ensuring of its quality. To mention one of such scenarios, let's discuss an example shown in {\it Figure \ref{Fig:Motivation}}. The example describes a collaboration system for processing an input data, say for example to perform machine learning analysis. Of course,in a such case, a valid input data to the system is must. The input data is verified for further data processing. Most of the current existing systems  ensuring syntax-error-free RDF data, are stopped parsing at the first syntax error occurrence, as will be followed in Section \ref{Sec:Review}.
-	\par
-	To stop parsing when the first syntax error is found will introduce much complications. Assuming, the input RDF data contains, for example, 10 syntax errors. Normally, what is happing when an error is found, the system will proceed with no further processing, instead it will report error's existence in the inserted data. The reported error then should be corrected by the user, then after correction data will be send back for re-checking of data's syntax. To make it more complex, imagine that the user will do such correction process for 10 times (remember that data includes 10 errors). Then, what if the data contains hundreds or thousands of errors. 
+This study was motivated by several software use cases, have as a requirement for their operating, syntax checking of RDF data when it comes as an input. As a motivating example, one of the use cases is discussed in {Figure \ref{Fig:Motivation}}. It describes a collaboration system for processing an input RDF data and let's assume it is performing machine learning classification and analysis. Indeed, in this case, a valid input to the system is required. The input data is initially verified against syntax errors for further data processing, if an error or more are found, the system will stop processing the input data and return a report of errors to the user. The current existing tools (as will be discussed in Chapter \ref{ch:related}) which check the RDF syntax of the input,  only assert that the input is  syntax-error-free. When the input has an error or more, those tools stop  parsing, and further handling, additionally, they report that error to the user. 
+
+Another essential point the abruption of parsing when the first syntax error is found will introduce much complications. Assuming, the input RDF data contains, for example, 10 syntax errors. Normally, what is happening when an error is found, the system will proceed with no further processing, instead it will report the existence of an error, with other information about the error, such an error message, row, and column numbers where the error is occurred. Subsequently, the reported error is commonly corrected by the user to be sent again for re-checking of the syntax. To make it more complex, suppose the user has 10 syntax errors in his RDF input, then, the previous process steps of an input checking, an pause of parsing, an error notifying, and an error correction by the user has to be repeated for 10 times.  Furthermore, when the number of syntax errors increases, the number of error processing and correction processes increases by the same value. Also, imagine what is the consumed time and the work overload to process an input RDF data contains hundreds or thousands of errors.  
 
 	\begin{figure}[ht]
 		\begin{center}
 			\includegraphics[scale=0.5,angle=0]{images/motivation}
-			\caption{A motivation example of syntax checking of data before further processing}
+			\caption{\textbf{A motivation example of syntax checking of data before further processing}}
 			\label{Fig:Motivation}
 		\end{center}
 	\end{figure}
 
-	let's dig deep to explain what is there in  {\it Figure \ref{Fig:Motivation}}, It is showing a flow of data from clients or users seeking further data processing. 3 persons are shown in this Figure, their names are Bob, Hani, and Sarah. All of them start with the first phase by sending the data to be syntacticly checked. The parser starts checking if there syntax errors of the input data, then if such data passed with no syntax errors, it can be forwarded for further phases, i.e. for data processing, otherwise, the input data will send back to the user to correct the errors. {\it Figure \ref{Fig:Motivation}} clearly shows that Sarah and Bob have syntax errors in their input data,then they got an error report, including found errors. In the meanwhile, Hani has received his data processed without getting such an error report, since his input data has no syntax errors. 
-			\par
-			This study has been encouraged by the illustrated example to find a suitable solution for such cases. The proposed solution will focus on producing a software program that can detect all or almost syntax errors that can be detected in the input data. 
+let's dig deep in demonstrating what is there in  {Figure \ref{Fig:Motivation}}, It is showing a flow of data from clients or users seeking further data processing. 3 persons are shown in this Figure, their names are Bob, Hani, and Sarah. All of them start with the first phase by sending their data to be syntactically checked. The parser starts checking if there are syntax errors of the input data, if such data passed with no syntax errors, it can be forwarded for further phases, i.e. for data processing, otherwise, the input data will send back to the user to correct the errors. {Figure \ref{Fig:Motivation}} clearly shows that Sarah and Bob have syntax errors in their input data,then, they got an error report, including details about the first detected error. In the meanwhile, Hani has received his data processed without getting such a report, since his input data has no syntax errors. 
+
+This study has been fostered by the former illustrated example to find a suitable solution to allow the parser to continue the whole input of RDF data checking against syntax error and to list them in an error report if any was found. Therefore, the proposed solution focuses on producing a software tool that can detect all syntax errors that can be detected in the input RDF data. 
 
 %\section{Objectives}
-\section{Proposed Problem } 	
-The tackled problem in this study is to list all the detected syntax errors found in RDF files; in order to help ontology engineers and users to fix them in one shut. Such a list of errors provided in the output of the syntax checking phase will significantly assist to get rid of a loop of first error notification if multiple errors are found in the input data.  
+\section{Problem Description } 	
+The research problem of this study is the unavailability of software tools that can list all the existing syntax errors in RDF files; thus, ontology engineers and users can fix them in one shot. Hence, such a list of errors if it is provided at the end of the syntax checking phase, it significantly assists to get rid of a loop of first error notifications, in case of an existence of multiple errors  in the input data as it was discussed.  
 
 \section{Challenges }
-Before reaching the proposed solution, different methods have been tired to reach the objective. The main strategy was the continuation of parsing after error detection with reporting the detected error. The following 3 tools were individually tested: Jena RIOT API; RDF4J RIO API; and  N3 Parser %TODO need references.
+Before reaching the proposed solution, different methods have been tired to reach the objective. The main purpose was the continuation of parsing till the end of the file without stopping on the first syntax error detection  and storing details of the detected errors into a data structure, such as lists. The following 3 tools were individually tested: Jena RIOT API\cite{McBride:2002:JSW:613357.613755}; RDF4J RIO API\cite{RDF4J:Online}; and  N3 Parser\cite{N3Parser:Online}. Both the first and the second are Java\_based RDF tool kit, including a plug-in for RDF parsing, the last is Javascript\_based parser, focused on N-Triple and Turtle serialization formats. In all of these framework, exception handling can be used to catch syntax errors. Our task was to removed the text that contains the first detected syntax error then supply the remaining text to parsed. Two methods were used: 1) cut only the triple of the statement that contains the syntax error and 2) remove text before the found syntax error, including the statement of the error. Both methods failed to offer a suitable solution for continuation of parsing after an error discovery, for the following reasons: 1) difficulty of handling nearby syntax errors, and 2) inexpressive and incomprehensible of error messages, especially, in the second tool.    
+
+
+%TODO need references.
 
 
 \section {Contributions}
@@ -83,6 +89,6 @@ The thesis is organized as follows. The next chapter presents the preliminaries 
 \ref{ch:conclusions} concludes this study.
 
 
-
+%TODO 1- to change the figure in this chapter and improve the caption
 
 
