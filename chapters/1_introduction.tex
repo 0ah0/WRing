@@ -54,8 +54,9 @@ Another essential point the abruption of parsing when the first syntax error is 
 
 	\begin{figure}[ht]
 		\begin{center}
-			\includegraphics[scale=0.5,angle=0]{images/motivation}
-			\caption{\textbf{A motivation example of syntax checking of data before further processing}}
+			\includegraphics[scale=0.6,angle=0]{images/motivation.png}
+			\setlength\belowcaptionskip{-7mm}
+			\caption{\textbf{Motivation example of syntax checking of data before further processing.} the users send their RDF data to the system for syntax validation before further data processing, Both Sarah and Bob have an syntax error or more, they receive an error report, while the input of Hani passed with no syntax errors and goes to the next phase of data processing . }
 			\label{Fig:Motivation}
 		\end{center}
 	\end{figure}
@@ -68,7 +69,7 @@ This study has been fostered by the former illustrated example to find a suitabl
 \section{Problem Description } 	
 The research problem of this study is the unavailability of software tools that can list all the existing syntax errors in RDF files; thus, ontology engineers and users can fix them in one shot. Hence, such a list of errors if it is provided at the end of the syntax checking phase, it significantly assists to get rid of a loop of first error notifications, in case of an existence of multiple errors  in the input data as it was discussed.  
 
-\section{Challenges }
+\section{Challenges}
 Before reaching the proposed solution, different methods have been tired to reach the objective. The main purpose was the continuation of parsing till the end of the file without stopping on the first syntax error detection  and storing details of the detected errors into a data structure, such as lists. The following 3 tools were individually tested: Jena RIOT API\cite{McBride:2002:JSW:613357.613755}; RDF4J RIO API\cite{RDF4J:Online}; and  N3 Parser\cite{N3Parser:Online}. Both the first and the second are Java\_based RDF tool kit, including a plug-in for RDF parsing, the last is Javascript\_based parser, focused on N-Triple and Turtle serialization formats. In all of these framework, exception handling can be used to catch syntax errors. 
 
 Our task was to remove the text that contains the first detected syntax error from an input text (since those tools fail when the first syntax error is found), then, to supply the remaining text for further parsing. Two methods were used: 1) cutting only the triple or the statement that contains the syntax error, 2) removing text before the found syntax error, including the statement of the error. Both those methods were failed to offer a suitable solution for continuation of parsing after an error discovery, for the following reasons: 1) the difficulty of handling nearby syntax errors, such as errors in the same line or in subsequent statements follow each others, 2) the inexpressive and incomprehensible of error messages, especially, in the second tool, which complicates understanding the actual syntax error for further handling.    
@@ -86,8 +87,7 @@ The main contributions of RDF-Doctor (the name of output tool of this study) are
 	\item {\bf Automatic error recovery of some syntax errors:} commonly syntax errors in well-know programming languages are those types of missing a dot, adding more dots, or missing semicolon, similarly, happens in RDF data. To limit annoying conflicts while error correction, a certain rule has been set out to control the eligibility of an error to be corrected. The rule is the availability of this error in a predefined error correction list (it includes fundamentally common errors where the action of error recovery of an error is previously known to us), otherwise, it cannot be corrected. For example, on the one hand,  missing of a dot or a semicolon are common mistakes during editing of RDF data, those errors can proficiently correct by RDF-Doctor, but on the other hand, missing of a prefix declaration, decidedly, cannot be corrected since the details of that missing prefix are obscure and unknown.     
 \end{enumerate}
 
-\section {Thesis Structu
-re}
+\section {Thesis Structure}
 The thesis is structured into 7 chapters. Until this spot, \textbf{Chapter \ref{ch:introduction}} was presented, titled with "Introduction". It  includes the general overview of the study, the motivation, the problem description and the challenges, research contributions are also introduced to show how our research work is differed from the state-of-art researches of other scientists. The
 remainder of the thesis is organized as follows:
 \begin{itemize}

@@ -19,20 +19,29 @@ In order to validate RDF data as an input, either by inserting a URL where it ex
 			\label{Fig:errorW3RDFValidator}
 		\end{center}
 	\end{figure}
-\subsection{Several Serialization formats  Parsing Tools}
+\subsection{Several Serialization Formats  Parsing Tools}
 
 \par Next, the existing tools that validate more than one  RDF serialization formats rather than only parsing of RDF/XML format were checked. We start with Jena RDF toolkit \cite{McBride:2002:JSW:613357.613755} which offers validation service based on the ARP parser. It can  be also used as a standalone program using a command-line  or as an API, integrated within another application. Considering its powerful capability of validating numerous RDF serialization formats, including RDF/XML, again, the first error is only reported.
-
+ \begin{figure}[ht]
+		\begin{center}
+			\setlength\belowcaptionskip{-7mm}
+			\includegraphics[scale=0.7,angle=0]{images/VRPErrorResult.png}
+			\caption{\textbf{Validation results of the W3C RDF validation tool \cite{W3C:Validation:Online} after parsing an RDF/XML text, included two syntax errors.} }
+			\label{Fig:VRPErrorResult}
+		\end{center}
+	\end{figure}
 \subsection{Classification of parsing approaches based on its core}
 
 Some of the tools validating RDF formats use the following core tools or methods as a significant part of their implementations: \begin{itemize}[noitemsep] 
-	\item \textbf{ARP-parser-dependable approach :} both W3C RDF validation tool \cite{W3C:Validation:Online} and RDF Validator and Converter \cite{Mybluemix:Validation:Online} use the ARP parser of Jena framework \cite{McBride:2002:JSW:613357.613755}. Moreover, the latter focuses more on triple-based serialization formats, validating them and converting from one format to another, whereas the former validates only RDF/XML format. 
-	\item \textbf{N3-parser-dependable approach :} N3 parser \cite{N3Parser:Online} can also be used for syntax validation. In the online IDLab Turtle Validator \cite{IDLab:Validation:Online}, N3 parser powered by N3 NodeJS library is used. As well, same approach was used to build a turtle editor with syntax validation in \cite{petersenturtleeditor}. 
-	\item \textbf{Shape expressions approach :} in \cite{prud2014shape} a turtle parser was developed based on shape expressions. Shape expressions validates RDF through declaring of constraints on the RDF model, if the declared constraints are violated, then RDF is invalid. Furthermore, Shape expressions describes the RDF graph on regular expressions base. 
+	\item \textbf{ARP-parser-dependable approach :} both W3C RDF validation tool \cite{W3C:Validation:Online} and RDF Validator and Converter \cite{Mybluemix:Validation:Online} use the ARP parser of Jena framework \cite{McBride:2002:JSW:613357.613755}. However, the latter focuses more on triple-based serialization formats, validating them and converting from one format to another, whereas the former validates only RDF/XML format. 
+	\item \textbf{N3-parser-dependable approach :} N3 parser \cite{N3Parser:Online} is a JavaScript\_based syntax validator, mainly, for checking the syntax of Turtle and N-Triple formats. The online version of IDLab Turtle Validator \cite{IDLab:Validation:Online} uses N3 parser and it is integarted as a NodeJS plug-in. As well, the same approach was used to build a turtle editor with syntax validation in \cite{petersenturtleeditor}. However, this approach is slow when parsing and its behaviour is unpredictable when dealing with large files. 
+	\item \textbf{Shape expressions approach :} in \cite{prud2014shape} a turtle parser was developed based on shape expressions. Shape expressions validates RDF through declaring of constraints on the RDF data, if the declared constraints are violated, then RDF data is invalid, otherwise, it is valid. Furthermore, Shape expressions describes the RDF graph based on regular expressions. 
 \end{itemize} 
 
-\par
-When it comes to the application side, N3-parser-dependable approach can be fitted perfectly in the new tool, since it is built using Nodejs library. This can improve the performance of the tool, especially when it is validating a large RDF code. Moreover, the first two approaches are more expressive in explaining the syntax error and its location, where as, the tool used the third approach is less expressive.
+The pervious three approaches have failed to list more than the first found error. Another essential point is to avoid JavaScript\_based development of the new tool and the alternative is to use Java\_based application, similar to the ARP-parser in the first approach. This can improve the performance of the tool, especially when it is validating large RDF data contents.
+
+\section{Types of Error Messages Approaches}
+Moreover, the first two approaches are more expressive in explaining the syntax error and its location, whereas, the tool used the third approach is less expressive.
 
 \par
 In this research, our intention goes toward inventing a fancy tool that lists all syntax errors with an improved performance. The proposed tool can have a solution for the explained issue in either two ways: 
@@ -40,6 +49,9 @@ In this research, our intention goes toward inventing a fancy tool that lists al
 	\item \textbf{Patching the output errors of parsers :} while reviewing the source codes of others' tools, an error event by an error handler will be emitted to show the first occurred error. An idea of looping inside the RDF code and  fixing eachtime the first error can be suggested. Fixing the error can be by either deleting the triple made the error, removing or adding a punctuation, inserting a dummy IRI for an incorrect or missing one,  etc, then reprase the RDF code again and again till the end of the code .
 	\item \textbf{Parser Optimization :} this needs to review deeply the whole code of the parser and improve its method. The improvement should list all syntax errors that the parser can detect. Both parsers built with N3-parser-dependable approach or Shape expressions approach can be optimized to reach our goals while the optimization of the latter inherits more complexity. 
 \end{itemize} 
+
+\section{Error Recovery Approach}
+
 
 \par
 To end this section, after describing the actual issue, reviewing the state of art of research works related to it, and finally presenting the possible solutions, we can say that both two solutions can solve the issue, but it seems to us that the second solution more efficient than the first, since this is the normal way how acually most of editors of programming languages work, to alert on-the-fly syntax errors to the programmer, even before compilation. 
