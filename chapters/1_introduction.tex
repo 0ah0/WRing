@@ -1,10 +1,6 @@
 \chapter{Introduction}
 \label{ch:introduction}
 
-
-
-\section{Introduction}
-
 %\begin{itemize}
 %
 %    \item What is the subject of the study? Describe the
@@ -46,7 +42,7 @@ The motivation of this study is mainly  encouraged by the  tremendous RDF data r
 
 The following text in this chapter are divided in a couple of sections to express our motivation of the study, present the problem statement, presents the challenges, list our research contributions, and finally outline how this thesis is structured.  
 
-\subsection{Motivation}
+\section{Motivation}
 
 This study was motivated by several software use cases, have as a requirement for their operating, syntax checking of RDF data when it comes as an input. As a motivating example, one of the use cases is discussed in {Figure \ref{Fig:Motivation}}. It describes a collaboration system for processing an input RDF data and let's assume it is performing machine learning classification and analysis. Indeed, in this case, a valid input to the system is required. The input data is initially verified against syntax errors for further data processing, if an error or more are found, the system will stop processing the input data and return a report of errors to the user. The current existing tools (as will be discussed in Chapter \ref{ch:related}) which check the RDF syntax of the input,  only assert that the input is  syntax-error-free. When the input has an error or more, those tools stop  parsing, and further handling, additionally, they report that error to the user. 
 
@@ -70,7 +66,7 @@ This study has been fostered by the former illustrated example to find a suitabl
 The research problem of this study is the unavailability of software tools that can list all the existing syntax errors in RDF files; thus, ontology engineers and users can fix them in one shot. Hence, such a list of errors if it is provided at the end of the syntax checking phase, it significantly assists to get rid of a loop of first error notifications, in case of an existence of multiple errors  in the input data as it was discussed.  
 
 \section{Challenges}
-Before reaching the proposed solution, different methods have been tired to reach the objective. The main purpose was the continuation of parsing till the end of the file without stopping on the first syntax error detection  and storing details of the detected errors into a data structure, such as lists. The following 3 tools were individually tested: Jena RIOT API\cite{McBride:2002:JSW:613357.613755}; RDF4J RIO API\cite{RDF4J:Online}; and  N3 Parser\cite{N3Parser:Online}. Both the first and the second are Java\_based RDF tool kit, including a plug-in for RDF parsing, the last is Javascript\_based parser, focused on N-Triple and Turtle serialization formats. In all of these framework, exception handling can be used to catch syntax errors. 
+Before reaching the proposed solution, different methods have been tired to reach the objective. The main purpose was the continuation of parsing till the end of the file without stopping on the first syntax error detection  and storing details of the detected errors into a data structure, such as lists. The following 3 tools were individually tested: Jena RIOT API\cite{McBride:2002:JSW:613357.613755}; RDF4J RIO API\cite{RDF4J:Online}; and  N3 Parser\cite{N3Parser:Online}. Both the first and the second are Java\_based RDF tool kit, including a plug-in for RDF parsing, the last is JavaScript\_based parser, focused on N-Triple and Turtle serialization formats. In all of these framework, exception handling can be used to catch syntax errors. 
 
 Our task was to remove the text that contains the first detected syntax error from an input text (since those tools fail when the first syntax error is found), then, to supply the remaining text for further parsing. Two methods were used: 1) cutting only the triple or the statement that contains the syntax error, 2) removing text before the found syntax error, including the statement of the error. Both those methods were failed to offer a suitable solution for continuation of parsing after an error discovery, for the following reasons: 1) the difficulty of handling nearby syntax errors, such as errors in the same line or in subsequent statements follow each others, 2) the inexpressive and incomprehensible of error messages, especially, in the second tool, which complicates understanding the actual syntax error for further handling.    
 
@@ -91,9 +87,9 @@ The main contributions of RDF-Doctor (the name of output tool of this study) are
 The thesis is structured into 7 chapters. Until this spot, \textbf{Chapter \ref{ch:introduction}} was presented, titled with "Introduction". It  includes the general overview of the study, the motivation, the problem description and the challenges, research contributions are also introduced to show how our research work is differed from the state-of-art researches of other scientists. The
 remainder of the thesis is organized as follows:
 \begin{itemize}
-	\item { \textbf{Chapter \ref{ch:preliminaries}:} presents the "Preliminaries" to shed light on the required background to understand what follows in the coming chapters.}
+	\item { \textbf{Chapter \ref{ch:preliminaries}:} presents the "Background" to shed light on the required background to understand what follows in the coming chapters.}
 	
-	\item {\textbf{Chapter \ref{ch:related}:}} reviews the "Related work" and presents the up-to-date research works. 
+	\item {\textbf{Chapter \ref{ch:related}:}} reviews the "Related Work" and presents the up-to-date research works. 
 		
 	\item {\textbf{Chapter \ref{ch:approach}:}} describes the "Approach" of the proposed solution. 
 	

@@ -6,17 +6,17 @@ As has been discussed in chapter \ref{ch:related}, there is a need for a tool to
 In order to find a parser which can accept the error production rules in its grammar, our choice was to use ANTLR framework to automatically generate the required parser. Lots of features in ANTLR motivate us to use it in the proposed solution, such as: 1) its grammar can equip with error production rules and when a couple of tokens match such rules, the parser will fire  error notifications, 2) it uses a parse tree to parse input token and the view of this parse tree can be delivered as an output to the user at the end of parsing process, it supports the auto-generation of parsers in different programming language, as it was discussed in Chapter \ref{ch:preliminaries}.
 \section{Overview of the Proposed Solution}
 
- To represent the approach in more clear way, {\it figure \ref{Fig:Approach}} was invented. It shows the technique used to handle an RDF text, having some syntax errors. follows are the sequence steps which highlight the main milestones of this approach:
+ To represent the approach in more clear way, {Figure \ref{Fig:Approach}} was invented. It shows the technique used to handle an RDF text, having some syntax errors. follows are the sequence steps which highlight the main milestones of this approach:
  \begin{enumerate}[label=(\alph*)]
-\item \textbf{Reading RDF text}: a ordinary RDF file is submitted to our application. The application starts with reading the file. In case of large files, it is going to be splitted into two or more chunks based on the volume of the file. each chunk will be processed separately from others.  {\it Figure \ref{Fig:Approach}}(a) demonstrates this part. 
-\item \textbf{Detection of syntax errors}: the parser has predefined rules for syntax errors, once a rule is matched with a sequence of input tokens, it stores this error to be reported later in the error report. Reading of input tokens continues till the end of the file while searching for matches for syntax errors. In  {\it figure \ref{Fig:Approach}}(b) lines surrounded with red color simulate detected lines which contain syntax errors. 
-\item \textbf {Healing some of detected errors}: this feature firstly needs to be selected by the user to be active. The method of healing syntax errors focuses of a certain type of errors which has only one predefined solution in standards. Those errors like missing of dot at the end of triple, missing semi-colon after multiple predicates sharing same subject, missing comma after multiple objects having same subject and predicate. Lines surrounded with green color in {\it figure \ref{Fig:Approach}}(c) represents some of healed lines from error at the end of the correction phase.  
-\item\textbf {Generation of output text}: In this example, it is previously assumed that the user selected to correct found errors.  {\it Figure \ref{Fig:Approach}}(d) describes how the output should look like. It is sufficiently clear that healed lines are not shown, but some of unhealed line are still showing up. This comes as a normal result of existing of syntax errors which can have multiple solution, for example, a literal with multiple language tags like "me"@en@de. also it could be that the healing term is unknown, for example, missing of a prefix declaration for a certain local name-space. 
+\item \textbf{Reading RDF text}: a ordinary RDF file is submitted to our application. The application starts with reading the file. In case of large files, it is going to be splitted into two or more chunks based on the volume of the file. each chunk will be processed separately from others.  {Figure \ref{Fig:Approach}}(a) demonstrates this part. 
+\item \textbf{Detection of syntax errors}: the parser has predefined rules for syntax errors, once a rule is matched with a sequence of input tokens, it stores this error to be reported later in the error report. Reading of input tokens continues till the end of the file while searching for matches for syntax errors. In  {Figure \ref{Fig:Approach}}(b) lines surrounded with red color simulate detected lines which contain syntax errors. 
+\item \textbf {Healing some of detected errors}: this feature firstly needs to be selected by the user to be active. The method of healing syntax errors focuses of a certain type of errors which has only one predefined solution in standards. Those errors like missing of dot at the end of triple, missing semi-colon after multiple predicates sharing same subject, missing comma after multiple objects having same subject and predicate. Lines surrounded with green color in {Figure \ref{Fig:Approach}}(c) represents some of healed lines from error at the end of the correction phase.  
+\item\textbf {Generation of output text}: In this example, it is previously assumed that the user selected to correct found errors.  {Figure \ref{Fig:Approach}}(d) describes how the output should look like. It is sufficiently clear that healed lines are not shown, but some of unhealed line are still showing up. This comes as a normal result of existing of syntax errors which can have multiple solution, for example, a literal with multiple language tags like "me"@en@de. also it could be that the healing term is unknown, for example, missing of a prefix declaration for a certain local name-space. 
 \end{enumerate} 
 \begin{figure}
 	\centering
 	  	\includegraphics[width=.8\textwidth]{images/approachParseTree.png}
-		\caption{\textbf{Demonstration of syntax errors detection on the parse tree.}}
+		\caption{\textbf{Detection of syntax errors while traversing the parse tree.} Root node is the head of first rule in the grammar and the head of the parse tree, All the children of the root are either  non-terminal nodes represented by "NT" followed by an number or  terminal ones shown by "T" succeeded by a number. A syntax error can be detected on a non-terminal node when all of its terminals represent a sequence of tokens that is a statement including a syntax error. Red terminals represent error-inclusive statements and green ones for error-free statements  }
 		\label{Fig:approachParseTree}  
 \end{figure}
 
@@ -31,7 +31,7 @@ To functionally represent the approach of this study, Algorithm \ref{alg:algorit
 
 More importantly is the syntax errors finding, for that reason \textbf{tokensToBeMatched} is checked if its content are drawn by \textbf{incorrectSyntaxRules}, if it falls in that situation, then the content of \textbf{tokensToBeMatched} is considered as a syntax error and the parser sends a notification for those listener APIs  whose are interesting of further processing of the error. 
 
-\begin{algorithm}[H] 
+\begin{algorithm}[] 
  \caption{Representation of the proposed solution  in pseudo-code}
  \label{alg:algorithm-main}
  \KwData{inputText, correctSyntaxRules, incorrectSyntaxRules, CorrectionIsSelected}
@@ -70,69 +70,70 @@ The correction of error is a feature that can be activated with the user options
  
  Furthermore, since the significant part in this study is the ability to identify syntax errors, the expected syntax errors need to be known to be injected in the grammar. \cite{TurtleTests:Online} plays an important role in syntax errors declaration. It contains several files of Turtle format to show both correct and incorrect syntaxes and it is supposed to be used to validate any parser that parses Turtle format, if it can recognized a incorrect syntax as an incorrect and vice verse . 
  
- In table \ref{tab:syntaxErrorCate}, we have categorized the syntax errors (found in the files at \cite{TurtleTests:Online}) into multiple groups. Each of those files can be identified if a file represents a correct syntax or incorrect one based on it title if it contains the workd "Bad" which means it contains an incorrect syntax, then, it can be syntactically engineered in our grammar.  
+ In table \ref{tab:syntaxErrorCate}, we have categorized the syntax errors (found in the files at \cite{TurtleTests:Online}) into multiple groups. Each of those files can be identified if a file represents a correct syntax or incorrect one based on it title if it contains the word "Bad" which means it contains an incorrect syntax, then, it can be syntactically engineered in our grammar.  
  
 
 \newcounter{cA} 
 \setcounter{cA}{1}
-\begin{longtable}{|c|c|c|l|l}
-\caption{Categorization of syntax errors }
+\begin{longtable}{|c|p{3cm}|p{3cm}|l|l}
+\caption{\textbf{Categorization of syntax errors of N-Triple and Turtle serialization formats}}
 \label{tab:syntaxErrorCate}
 \centering
 \cline{2-5}
-Sn. & Catergory & Position & Sample &  \\ \midrule 
-\thecA     \addtocounter{cA}{1}  & \multirow{3}{*}{ \textcolor{blue}{Bad String Escape}
+Sn. & Category & Position & Sample &  \\  
+\cline{1-4}
+
+\thecA     \addtocounter{cA}{1}  & \centering \multirow{3}{=}{ \textcolor{blue}{Bad String Escape}
 } & Literal & \textcolor{red}{"a\textbackslash zb" } &  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Literal & \textcolor{red}{"\textbackslash uWXYZ"}  &  \\ \cline{1-1} \cline{3-4}
-\thecA     \addtocounter{cA}{1}  &  & Literal &  \textcolor{red}{"\textbackslash U0000WXYZ"} &  \\   \midrule \midrule
-\thecA     \addtocounter{cA}{1}  &  \multirow{5}{*}{ \textcolor{blue}{Missuse of Keywords}} & Predicate &  :s \textcolor{red}{ A} :o . &  \\   \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal &  \textcolor{red}{"\textbackslash U0000WXYZ"} &  \\   \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &  \multirow{5}{=}{ \textcolor{blue}{Misuse of Keywords}} & Predicate &  :s \textcolor{red}{ A} :o . &  \\   \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1} &  & Subject &\textcolor{red}{ a} :p :o . &  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1} &  & Object & :s :p \textcolor{red}{ a} .  &  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1} &  & Subject & \textcolor{red}{true} :p :o . &  \\ \cline{1-1} \cline{3-4}
-\thecA     \addtocounter{cA}{1}  &  & Object & :s \textcolor{red}{true} :o . &  \\   \midrule \midrule
-\thecA     \addtocounter{cA}{1}  &   \textcolor{blue}{Bad Language Tag} & Language Tag &  “duck”@\textcolor{red}{1} &  \\ \midrule \midrule
-\thecA     \addtocounter{cA}{1}  &  \multirow{5}{*}{ \textcolor{blue}{Bad Local Namespace in Prefixed IRI}} & Prefixed IRI &  :s :p \textcolor{red}{ :-a}  . &  \\   \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Object & :s \textcolor{red}{true} :o . &  \\   \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &   \textcolor{blue}{Bad Language Tag} & Language Tag &  “duck”@\textcolor{red}{1} &  \\ \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &  \multirow{5}{=}{ \textcolor{blue}{Bad Local Namespace in Prefixed IRI}} & Prefixed IRI &  :s :p \textcolor{red}{ :-a}  . &  \\   \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Prefixed IRI & :s :p \textcolor{red}{ :o\%2} .&  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Prefixed IRI & :s :p \textcolor{red}{ :\%o2} .&  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Prefixed IRI & :s :p \textcolor{red}{:a\texttt{\~{}}b} . &  \\ \cline{1-1} \cline{3-4}
-\thecA     \addtocounter{cA}{1}  &  & Prefixed IRI &  \textcolor{red}{:a\textbackslash u0039} :p :o . &  \\   \midrule \midrule
-\thecA     \addtocounter{cA}{1}  & \multirow{2}{*}{ \textcolor{blue}{Bad Prefix Label in  Prefixed IRI}
+\thecA     \addtocounter{cA}{1}  &  & Prefixed IRI &  \textcolor{red}{:a\textbackslash u0039} :p :o . &  \\   \cline{1-4}
+\thecA     \addtocounter{cA}{1}  & \multirow{2}{=}{ \textcolor{blue}{Bad Prefix Label in  Prefixed IRI}
 } & Prefixed IRI & :s :p \textcolor{red}{ ex.}:o . &  \\ \cline{1-1} \cline{3-4}
-\thecA     \addtocounter{cA}{1}  &  & Prefixed IRI & :s :p \textcolor{red}{.ex}:o .  &  \\ \midrule \midrule
-\thecA     \addtocounter{cA}{1}  &  \multirow{18}{*}{ \textcolor{blue}{Bad Syntax from N3 Notation }} & Curly Brackets & \textcolor{red}{ \{ :a :q :c . \}}  :p :o . &  \\   \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Prefixed IRI & :s :p \textcolor{red}{.ex}:o .  &  \\ \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &  \multirow{18}{=}{ \textcolor{blue}{Bad Syntax from N3 Notation }} & Curly Brackets & \textcolor{red}{ \{ :a :q :c . \}}  :p :o . &  \\   \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Equal Sign & :a \textcolor{red}{ =} :b .&  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & N3 Paths & \textcolor{red}{ :x.
   ns:p.
     ns:q } :p :z . &  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & N3 Paths & \textcolor{red}{:x\textasciicircum ns:p } :p :z . &  \\ \cline{1-1} \cline{3-4}
-\thecA     \addtocounter{cA}{1}  &  & ‘is .. of’  & :z \textcolor{red}{ is}  :p \textcolor{red}{ of}  :x . \\  & & Pattern &  &  \\ \cline{1-1} \cline{3-4}
-\thecA     \addtocounter{cA}{1}  &  & DOTs without  &\textcolor{red}{ :a.:b.:c } . \\ & & Space & &  \\ \cline{1-1} \cline{3-4}
-\thecA     \addtocounter{cA}{1}  &  & '@keywords' & \textcolor{red}{@keywords  
-} a . \\ & & Pattern & x a Item . &  \\\cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & ‘is .. of’ Pattern & :z \textcolor{red}{ is}  :p \textcolor{red}{ of}  :x .  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  & &  {IRIs without Space}& \textcolor{red}{ :a.:b.:c } . &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & '@keywords'  & \textcolor{red}{@keywords  
+} a .  \\ & & Pattern &   a Item . &  \\\cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & '@keywords' & \textcolor{red}{@keywords  
 }  . \\ & & Pattern & 
-x \textcolor{red}{@a} Item .  &  \\ \cline{1-1} \cline{3-4}  \\  
+x \textcolor{red}{@a} Item .  &  \\\cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & '\textless=' Pattern & :s \textcolor{red}{ \textless=} :o .&  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & '=\textgreater' Pattern  & :s   \textcolor{red}{ =\textgreater} :o  .&  \\ \cline{1-1} \cline{3-4}
-\thecA     \addtocounter{cA}{1}  &  & '@forSome' & \textcolor{red}{@forSome } :x . \\ & & Pattern & &  \\ \cline{1-1} \cline{3-4}
-\thecA     \addtocounter{cA}{1}  &  & '@forAll' & \textcolor{red}{@forAll } :x . \\ & & Pattern & &  \\ \cline{1-1} \cline{3-4}
- \midrule \midrule
-\thecA     \addtocounter{cA}{1}  & \multirow{4}{*}{ \textcolor{blue}{Bad Prefix Label in Directives}
-} & \multirow{2}{*}{Directive} & @prefix  \textcolor{red}{eg.} :\textless example\textgreater . \\ & &  & \textcolor{red}{eg.}:s  :p  :o  . &  \\\cline{1-1} \cline{3-4}
-\thecA     \addtocounter{cA}{1}  &   & \multirow{2}{*}{Directive} & @prefix   \textcolor{red}{.eg} :\textless example\textgreater . \\ & &  & \textcolor{red}{.eg}:s  :p  :o . &  \\\cline{1-1} \cline{3-4} \midrule \midrule
-\thecA     \addtocounter{cA}{1}  &  \multirow{5}{*}{ \textcolor{blue}{Bad Number as a Literal:}} & Literal &  :s :p  \textcolor{red}{ 123.abc}  . &  \\   \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  &'@forSome' Pattern & \textcolor{red}{@forSome } :x .  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & '@forAll' Pattern  & \textcolor{red}{@forAll } :x .   \\  \cline{1-4}
+\thecA     \addtocounter{cA}{1}  & \multirow{2}{=}{ \textcolor{blue}{Bad Prefix Label in Directives}
+} & \multirow{2}{=}{Directive} & @prefix  \textcolor{red}{eg.} :\textless example\textgreater . \\ & &  & \textcolor{red}{eg.}:s  :p  :o  . &  \\\cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &   & \multirow{2}{*}{Directive} & @prefix   \textcolor{red}{.eg} :\textless example\textgreater . \\ & &  & \textcolor{red}{.eg}:s  :p  :o . &  \\ \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &  \multirow{5}{=}{ \textcolor{blue}{Bad Number as a Literal:}} & Literal &  :s :p  \textcolor{red}{ 123.abc}  . &  \\   \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Literal & :s :p \textcolor{red}{ 123e} .&  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Literal & :s :p \textcolor{red}{ 123abc} .&  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Literal & :s :p \textcolor{red}{0x123} . &  \\ \cline{1-1} \cline{3-4}
-\thecA     \addtocounter{cA}{1}  &  & Literal & :s :p  \textcolor{red}{+- 1} . &  \\   \midrule \midrule
-\thecA     \addtocounter{cA}{1}  &  \multirow{8}{*}{ \textcolor{blue}{Bad Directives}} &  \multirow{2}{*}{Directive} &  \textcolor{red}{\#Missing a prefix for ':'}\\
+\thecA     \addtocounter{cA}{1}  &  & Literal & :s :p  \textcolor{red}{+- 1} . &  \\   \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &   \textcolor{blue}{Bad Directives} &  \multirow{2}{*}{Directive} &  \textcolor{red}{\#Missing a prefix for ':'}\\
 & & & \textcolor{red}{ :}s \textcolor{red}{ :}p  "x"  . &  \\   \cline{1-1} \cline{3-4}
  \thecA     \addtocounter{cA}{1}  &  & \multirow{2}{*}{Directive} &   \textcolor{red}{\#Missing an IRI}\\
-& & & @prefix ex: . &  \\   \cline{1-1} \cline{3-4}
+& & & @prefix ex: . &  \\ \cline{1-1} \cline{3-4}
  \thecA     \addtocounter{cA}{1}  &  & \multirow{2}{*}{Directive} &   \textcolor{red}{\#Missing a prefix label}\\
-& & &@prefix \textless example\textgreater . &  \\   \cline{1-1} \cline{3-4}
+& & &@prefix \textless example\textgreater . &  \\ & & &  \\   \cline{1-1} \cline{3-4}
  \thecA     \addtocounter{cA}{1}  &  & \multirow{2}{*}{Directive} &   \textcolor{red}{\#Missing a colon }\\
-& & & @prefix ex \textless example\textgreater . &  \\   \midrule \midrule
+& & & @prefix ex \textless example\textgreater . &  \\   \cline{1-4}
 \thecA     \addtocounter{cA}{1}  &  \multirow{8}{*}{ \textcolor{blue}{Bad String}} & Literal &  :s :p \textcolor{red}{ "abc' }. &  \\   \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Literal &  :s :p \textcolor{red}{'abc"  }. &  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Literal &  :s :p \textcolor{red}{ '''abc' }.  &  \\ \cline{1-1} \cline{3-4}
@@ -140,8 +141,8 @@ x \textcolor{red}{@a} Item .  &  \\ \cline{1-1} \cline{3-4}  \\
 \thecA     \addtocounter{cA}{1}  &  & Literal &  :s :p \textcolor{red}{ """abc }. &  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Literal &  :s :p \textcolor{red}{ """abc""""@en }. &  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Literal &  :s :p \textcolor{red}{ '''abc''''@en} . &  \\ \cline{1-1} \cline{3-4}
-\thecA     \addtocounter{cA}{1}  &  & Literal &  :s :p \textcolor{red}{ "abc"@en\textasciicircum \textasciicircum xsd:String }. &  \\   \midrule \midrule
-\thecA     \addtocounter{cA}{1}  &  \multirow{5}{*}{ \textcolor{blue}{Bad Structure }} & Nquads & \multirow{2}{*}{\textcolor{red}{ \textless s\textgreater  \textless p\textgreater  \textless o\textgreater  \textless g\textgreater } . }\\ & &  Pattern &  \\   \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal &  :s :p \textcolor{red}{ "abc"@en\textasciicircum \textasciicircum xsd:String }. &  \\   \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &  \multirow{12}{*}{ \textcolor{blue}{Bad Structure }} & Nquads & \multirow{2}{*}{\textcolor{red}{ \textless s\textgreater  \textless p\textgreater  \textless o\textgreater  \textless g\textgreater } . }\\ & &  Pattern &  \\   \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Subject & \textcolor{red}{ “Hello”} :p :o .&  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Predicate & :s \textcolor{red}{ “Hello”} :o .&  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Predicate & :s \texttt{\textcolor{red}{[ ]}} :o . &  \\ \cline{1-1} \cline{3-4}
@@ -149,11 +150,13 @@ x \textcolor{red}{@a} Item .  &  \\ \cline{1-1} \cline{3-4}  \\
 \thecA     \addtocounter{cA}{1}  &  & Triple &  \textcolor{red}{ \#Missing dot at the triple end} \\ & &  &  :s  :p  :o&  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Triple & :s  :p  :o .\textcolor{red}{.. } &  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  & Triple & :s   :p  :o \textcolor{red}{; } &  \\ \cline{1-1} \cline{3-4}
-\thecA     \addtocounter{cA}{1}  &  & Triple &  \textcolor{red}{ \#Missing an object in a triple} \\ & &  & :s :p  .&    \\   \midrule \midrule
-\thecA     \addtocounter{cA}{1}  &  \multirow{6}{*}{ \textcolor{blue}{Bad IRI:}} &  IRI & \textless
+\thecA     \addtocounter{cA}{1}  &  & Triple &  \textcolor{red}{ \#Missing an object in a triple} \\ & &  & :s :p  .&    \\   \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &  \multirow{1}{*}{ \textcolor{blue}{Bad IRI}} &  IRI & \textless
  http:// space\textgreater { a}  :o . &  \\   \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  &  IRI &  \textless http://\textcolor{red}{\texttt{\textbackslash u00ZZ11}}\textgreater { :p}  :o .&  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  &  IRI & \textless http://\textcolor{red}{\texttt{\textbackslash U00ZZ1111}}\textgreater { :p}  :o .&  \\ \cline{1-1} \cline{3-4}
 \thecA     \addtocounter{cA}{1}  &  &  IRI & \textless http:// \\ &  &  & \textgreater { :p}  :o . &  \\ \cline{1-1} \cline{3-4}
-\thecA     \addtocounter{cA}{1}  &  &  IRI &  \textless http://\textcolor{red}{\texttt{\textbackslash}}\textgreater { :p}  :o . &  \\   \midrule \midrule
+\thecA     \addtocounter{cA}{1}  &  &  IRI &  \textless http://\textcolor{red}{\texttt{\textbackslash}}\textgreater { :p}  :o . &   \\  \cline{1-4}
+ 
 \end{longtable}
+

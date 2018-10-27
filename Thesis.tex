@@ -43,6 +43,7 @@
 \usepackage{booktabs}
 \usepackage{pdflscape}
 \usepackage{rotating}
+\usepackage{pdfpages}
 
 \makeatletter
 \def\setChapterprefix#1{\gdef\@Prefix{#1}}
@@ -192,14 +193,14 @@ Date:\\
 	
 %I would like to express my gratitude to every individual who assisted me with completing this scientific work, namely \textit{Prof. Dr. Maria-Esther Vidal} and \textit{Dr. Ioanna Lytra} for their continuous support and valuable directions.
 
-I would first like to thank my thesis advisor Mr. \textbf{Lavdim Halilaj} from the Enterprise Information Systems Research Group at Bonn University and the researcher at the Fraunhofer Institute for Intelligent Analysis and Information Systems department. The door to Mr.\textbf{ Halilaj} office was always open whenever I ran into a trouble spot or had a question about my research or writing. He consistently allowed this paper to be my own work, but steered me in the right the direction whenever he thought I needed it.
+I would first like to thank my thesis advisor Mr. \textbf{Lavdim Halilaj} from the Enterprise Information Systems Research Group at Bonn University and the researcher at the Fraunhofer Institute for Intelligent Analysis and Information Systems department. The door to Mr.\textbf{ Halilaj}  was always open whenever I had an inquiry about my research or thesis or ran into a problem. He always steered me in the right the direction whenever it is needed.
 
 I would also like to thank Prof. Dr. (Univ. Simon Bolivar) Maria-Esther Vidal, the Visting Professor from  Computer Science Department at the Simón Bolívar University and the head of the Scientific Data Management group at the TIB German National Library of Science and Technology, and I am gratefully indebted to her very valuable comments and advises on this thesis.
 
 Finally, I must express my very profound gratitude to my parents and to my parents, Mahdia and Madhat; my wife, Tayymaa and my children Abedelrahman, Madhat and Omer for providing me with unfailing support and continuous encouragement throughout my years of study and through the process of researching and writing this thesis. This accomplishment would not have been possible without them. 
 
 \hfill
-Ahmed
+Ahmad
 }
 
 % \clearpage  % End of the Acknowledgements
@@ -235,7 +236,15 @@ Ahmed
 %\addtotoc{Abstract}  % Add the "Abstract" page entry to the Contents
 \abstract{
 	\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
-Diverse models were invented to model and represent data. Entity-relationship model, Geographic data model, Generic data model, and lastly Semantic data model are the most significant data models. The RDF data model is one of the well-known forms of Semantic data model. The main targets of the RDF data model are the processing of meta-data and the exchanging of machine-readable information between web applications. The Subject-Predicate-Object form, known as a triple is used to present information about web resources in the RDF data model. Since the interoperability between application is the main activity of such model, the correct syntax format used to represent that model is required. Most available tools which check for RDF syntax errors are failed at the first found error. RDF-Doctor is checking for such errors, listing all of them, and correcting some of them. The solution uses ANTLR parser generator to build the contained parser based on a grammar which injected with error production rules.  %TODO give some tips about evaluations 
+Over the years, a number of diverse languages are invented to model and represent data. 
+Entity-relationship model, Geographic data model, Generic data model, and lastly RDF data model are among the most known data modeling languages. 
+The RDF data model is one of the well-known forms of Semantic data model. 
+The main targets of the RDF data model are the processing of meta-data and the exchanging of machine-readable information between web applications. 
+The Subject-Predicate-Object form, known as a triple is used to present information about web resources in the RDF data model. 
+Since the interoperability between applications is the main activity of such model, the correct syntax format used to represent that model is required. 
+Most available tools which check for RDF syntax errors are failed at the first found error. 
+RDF-Doctor is checking for such errors, listing all of them, and correcting some of them. 
+The solution uses ANTLR parser generator to build the contained parser based on a grammar which injected with error production rules.  %TODO give some tips about evaluations 
  
 
 \textit{\small{\textbf{Keywords:} RDF, Turtle, Syntax checking}}
