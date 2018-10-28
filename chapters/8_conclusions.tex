@@ -1,6 +1,7 @@
-\chapter{Conclusion and Future Work}
+\chapter{Conclusions and Future Work}
 \label{ch:conclusions}
-\section{Conclusion}
+
+\section{Conclusions}
 This chapter concludes this study. Mainly, the focus was to detect all syntax errors in RDF input. To achieve the referred goal, The ANTLR tool as a parser generator was used. As a use case for this study, RDF serialization formats of both Turtle and NTriples were investigated, where the grammar that describes there syntax was invented.
 
 In addition, to detect the syntax errors, error production rules were specified in the grammar. In case a sequence of input matches one of such rule, the parser will rise an error occurrence notification, then the error listeners class will save this error to a list of syntax errors. This list of errors later can help to recover some of these errors if it has one straight forward error which has a well-know syntax format. 
@@ -10,8 +11,9 @@ According to our research in the related work (Chapter \ref{ch:related}), it can
 As a use case, Turtle, one of RDF serialization formats, was used in this study. The grammar designed based on the syntax of turtle. However, it is easy to replace with another RDF serialization formats to achieve the same objective. Additionally, the grammar can be changed to generate a parser in a different programming language with the help of ANTLR framework.   
 
 
-\section{ Future Work}
-The semantic web is rapidly developed, by introducing new tools, apps, plugins, can be of different programming language. As well, there are several RDF serialization  formats have same shortage of fault-tolerant parser. Since it a very wide and an open research field, a couple of ideas come to our mind which can be our next step in the future. 
+\section{Future Work}
+The semantic web is rapidly developed, by introducing new tools, apps, plugins, can be of different programming language. As well, there are several RDF serialization  formats have same shortage of fault-tolerant parser. 
+Since it a very wide and an open research field, a couple of ideas come to our mind which can be our next step in the future. 
 \begin{itemize}
     \item Introducing parsers for mostly used programming languages. 
     \item Designing parsers to support the different RDF serialization formats.

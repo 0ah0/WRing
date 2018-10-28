@@ -193,11 +193,18 @@ Date:\\
 	
 %I would like to express my gratitude to every individual who assisted me with completing this scientific work, namely \textit{Prof. Dr. Maria-Esther Vidal} and \textit{Dr. Ioanna Lytra} for their continuous support and valuable directions.
 
-I would first like to thank my thesis advisor Mr. \textbf{Lavdim Halilaj} from the Enterprise Information Systems Research Group at Bonn University and the researcher at the Fraunhofer Institute for Intelligent Analysis and Information Systems department. The door to Mr.\textbf{ Halilaj}  was always open whenever I had an inquiry about my research or thesis or ran into a problem. He always steered me in the right the direction whenever it is needed.
+This thesis could not have been possible without the help and guidance of some
+people. 
+Firstly, I would like to thank Prof. Dr. Jens Lehmann and Dr. Steffen Lohmann for letting me pursue my master thesis at the Smart Data Analytics (SDA) group at the Computer Science Department in the University of Bonn.
 
-I would also like to thank Prof. Dr. (Univ. Simon Bolivar) Maria-Esther Vidal, the Visting Professor from  Computer Science Department at the Simón Bolívar University and the head of the Scientific Data Management group at the TIB German National Library of Science and Technology, and I am gratefully indebted to her very valuable comments and advises on this thesis.
+Next, I would like to thank my thesis advisor Mr. Lavdim Halilaj. 
+The door to Mr. Halilaj was always open whenever I had an inquiry about my research or thesis or ran into a problem. He always steered me in the right the direction whenever it is needed.
 
-Finally, I must express my very profound gratitude to my parents and to my parents, Mahdia and Madhat; my wife, Tayymaa and my children Abedelrahman, Madhat and Omer for providing me with unfailing support and continuous encouragement throughout my years of study and through the process of researching and writing this thesis. This accomplishment would not have been possible without them. 
+Special thanks go for Dr. Christoph Lange for being always ready to help with the administrative procedures at Fraunhofer IAIS.
+Next, I sincerely thank Prof. Dr. Maria-Esther Vidal, I am gratefully indebted to her very valuable comments and advises on this thesis.
+
+Finally, I must express my very profound gratitude to my parents, Mahdia and Madhat; my wife, Tayymaa and my children Abedelrahman, Madhat and Omer for providing me with unfailing support and continuous encouragement throughout my years of study and through the process of researching and writing this thesis. 
+This accomplishment would not have been possible without them. 
 
 \hfill
 Ahmad
@@ -236,18 +243,30 @@ Ahmad
 %\addtotoc{Abstract}  % Add the "Abstract" page entry to the Contents
 \abstract{
 	\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
-Over the years, a number of diverse languages are invented to model and represent data. 
-Entity-relationship model, Geographic data model, Generic data model, and lastly RDF data model are among the most known data modeling languages. 
-The RDF data model is one of the well-known forms of Semantic data model. 
-The main targets of the RDF data model are the processing of meta-data and the exchanging of machine-readable information between web applications. 
-The Subject-Predicate-Object form, known as a triple is used to present information about web resources in the RDF data model. 
-Since the interoperability between applications is the main activity of such model, the correct syntax format used to represent that model is required. 
+Over the years, the demand for the interoperability support between diverse applications is significantly increased.
+Typically, the Resource Definition Framework (RDF) is utilized for the interoperability support and allow the representation of knowledge and data from varios domains.
+Moreover, vast amount of data from heterogeneous datasources are continuously published in the RDF format.
+Therefore, the RDF data should be syntactically correct in order to enable software agents for further processing.
+Albeit a number of approaches are proposed for dealing with this problem, these approaches are commonly not able to identify all syntax errors at the same time and usually fail on first encountered error. 
+%a number of diverse languages are invented to model and represent data from various domains. 
+%The Entity-relationship model, Geographic data model, Generic data model, and lastly the RDF data model are among the most known data modeling languages. 
+%The RDF data model is one of the well-known forms of Semantic data model. 
+%The main targets of the RDF data model are the processing of meta-data and the exchanging of machine-readable information between web applications. 
+%The Subject-Predicate-Object form, known as a triple is used to present information about web resources in the RDF data model. 
+%Since the interoperability between applications is the main activity of such model, the correct syntax format used to represent that model is required. 
 Most available tools which check for RDF syntax errors are failed at the first found error. 
-RDF-Doctor is checking for such errors, listing all of them, and correcting some of them. 
-The solution uses ANTLR parser generator to build the contained parser based on a grammar which injected with error production rules.  %TODO give some tips about evaluations 
+
+In this thesis, we tackle the problem of identifying multiple errors at the same time, and propose RDF-Doctor, a holistic approach for detecting and resolving syntactic errors in an autonomous fashion.
+First, we define a comprehensive list of errors that can be detected along with the customized error messages to allow users for better understanding of the actual errors.
+Next, special methods are developed to automatically correct syntax errors.
+Finally, for a particular number of errors, customized and meaningful messages are delivered to users to facilitate the manual corrections process.
+%RDF-Doctor is checking for such errors, listing all of them, and correcting some of them. 
+%The solution uses ANTLR parser generator to build the contained parser based on a grammar which injected with error production rules. 
+The results from empirical evaluations provide concrete evidences that the presented approach is able to effectively detect a wide range of syntax errors and correct a subset of them.
+%TODO give some tips about evaluations 
  
 
-\textit{\small{\textbf{Keywords:} RDF, Turtle, Syntax checking}}
+\textit{\small{\textbf{Keywords:} RDF, Syntax Checking}}
 %}	
 \clearpage  % Abstract ended, start a new page
  %% ----------------------------------------------------------------
