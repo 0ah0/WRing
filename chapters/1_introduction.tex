@@ -1,59 +1,44 @@
 \chapter{Introduction}
 \label{ch:introduction}
 
-%\begin{itemize}
-%
-%    \item What is the subject of the study? Describe the
-%        economic/econometric problem.
-%
-%    \item What is the purpose of the study (working hypothesis)?
-%
-%    \item What do we already know about the subject (literature
-%        review)? Use citations: {\it \citet{Gallant:87} shows that...
-%        Alternative Forms of the Wald test are considered
-%        \citep{Breusch&Schmidt:88}.}
-%
-%    \item What is the innovation of the study?
-%
-%    \item Provide an overview of your results.
-%
-%
-%    \item Outline of the paper:\\
-%        {\it The paper is organized as follows. The next section describes %the
-%        model under investigation. Section \ref{Sec:Literature Review} %reviews the up-to-date research works.
-%        and Section \ref{Sec:Results} presents the results. Finally, %Section
-%        \ref{Sec:Conc} concludes.}
-%
-%    \item The introduction should not be longer than 4 pages.
-%
-%\end{itemize}
+\par 
+The objective of the Semantic Web vision is to enable data from heterogeneous datasources to be interconnected in order to establish a Global Information Source. 
+The Resource Description Framework (RDF) is a common modeling language used for conceptualization and representing information about existing resources in the Semantic Web.
+A number of software applications from diverse fields, such as Big Data, Machine Learning, and Data Science, are generating data from their legacy systems in the RDF language. 
+On the other hand, new applications are developed relying their data management mechanisms completely on RDF.
+To facilitate the exchanging of data between software applications and several serializations formats, such as RDF{/}XML, Turtle, N-Triples, and JSON-LD \footnote{\url{https://www.w3.org/TR/rdf-syntax-grammar/}, \url{https://www.w3.org/TR/turtle/}, \url{https://www.w3.org/TR/n-triples/}, and \url{https://www.w3.org/2018/jsonld-cg-reports/json-ld/}}, are proposed over the years.
+These formats address different requirements, such that: 1) RDF{/}XML is tailored for parsing with existing XML tools and libraries; 2) Turtle, for being more human-readable; 3) N-Triples aims at simplifying parsing procedures; and 4) JSON-LD, to allow encoding of the RDF data in the JSON format.
+A fundamental pre-condition to consume the RDF data encoded in so-called RDF documents, is that they are syntactically correct.
+Several approaches are presented to deal with the syntax validation of the RDF documents.
+However, most of available approaches which check for syntactic errors in RDF, fail to detect more than one error in the same time, in particular for Turtle or N-Triples serialization formats. 
+Therefore, we observe a need for a comprehensive approach able to identify all syntactic errors at the same time, thus reducing the time required for error detecting and correction.
 
-\par The use of the Resource Description Framework (RDF) model is recently increasing in diverse fields in computer science, such as Big Data, Machine Learning, Data Science, and Data Management. 
-The RDF data model helps computing machines in processing of "meta-data" which is data about data, especially those data about web resources. 
-Moreover, such computing machines will be smarter to understand the data represented in different RDF serialization formats. 
+In this thesis, we present RDF-Doctor, a comprehensive approach for error detection and correction of RDF documents.
+The motivation of this study is mainly encouraged by the  tremendous RDF data representation and usage in either Turtle and N-Triples serialization formats.
+RDF-Doctor is capable of detecting an exhaustive number of syntactic errors, particularly, in Turtle or N-Triple format, respectively. 
+In addition, our approach is able to automatically correct a subset of already found errors.
+Besides that, RDF-Doctor offers user-friendly messages to facilitate manual correction for common and frequently encountered errors, such as missing a colon or a dot.  
 
-Since the RDF model can facilitate  exchanging of data between software applications and it can be also serialized in multiple formats, such as Turtle\footnote{\href{https://www.w3.org/TR/turtle/}{Turtle}}, N-Triples\footnote{\href{https://www.w3.org/TR/n-triples/}{N-Triples}}, N3\footnote{\href{https://www.w3.org/TeamSubmission/n3/}{N3}}, JSON-LD	\footnote{\href{https://www.w3.org/2018/jsonld-cg-reports/json-ld/}{JSON-LD}}, RDF{/}XML\footnote{\href{https://www.w3.org/TR/rdf-syntax-grammar/}{RDF{/}XML}}, and RDF{/}JSON	\footnote{\href{https://dvcs.w3.org/hg/rdf/raw-file/default/rdf-json/index.html}{RDF{/}JSON}}, then its  quality and correctness needs to be proved before proceeding of any further processing. 
-Most of available parsers which check for syntax errors in RDF, fail to detect more than one error, especially those represented in Turtle or N-Triples serialization formats. Therefore, there is a need to have more powerful tools that help in listing all such errors or at least most of them.%todo needs to show most used formats  
-
-
-The motivation of this study is mainly  encouraged by the  tremendous RDF data representation and usage of either Turtle and N-Triples serialization formats in different ontologies and in various sciences, as well as, by the desire to offer a smart solution, capable of listing all or most of syntax errors, particularly, in those two formats. Besides the aim of the study to afford a user-friendly syntax checker of RDF formats, this tool should empower with the ability of recovering some of these syntax errors, essentially, when the errors are common and predefined, such as missing a colon or a dot.  
-
-%TODO need to speak about related work and the outline the result 
-
-The following text in this chapter are divided in a couple of sections to express our motivation of the study, present the problem statement, presents the challenges, list our research contributions, and finally outline how this thesis is structured.  
+%The following text in this chapter are divided in a couple of sections to express our motivation of the study, present the problem statement, presents the challenges, list our research contributions, and finally outline how this thesis is structured.  
 
 \section{Motivation}
 
-This study was motivated by several software use cases, have as a requirement for their operating, syntax checking of RDF data when it comes as an input. As a motivating example, one of the use cases is discussed in {Figure \ref{Fig:Motivation}}. It describes a collaboration system for processing an input RDF data and let's assume it is performing machine learning classification and analysis. Indeed, in this case, a valid input to the system is required. The input data is initially verified against syntax errors for further data processing, if an error or more are found, the system will stop processing the input data and return a report of errors to the user. The current existing tools (as will be discussed in Chapter \ref{ch:related}) which check the RDF syntax of the input,  only assert that the input is  syntax-error-free. When the input has an error or more, those tools stop  parsing, and further handling, additionally, they report that error to the user. 
+%This study was motivated by real world application where exists demand for dealing wit, have as a requirement for their operating, syntax checking of RDF data when it comes as an input. 
+Let us suppose a group of people, Bob, Hani, and Sarah, working together in developing an ontology for representing the knowledge about a particular domain.
+Since all of them are experienced ontology engineers, they prefer to realize the modifications using plain text editors.
+As a motivating example, one of the use cases is discussed in {Figure \ref{Fig:Motivation}}. 
+It describes a collaboration system for processing an input RDF data and let's assume it is performing machine learning classification and analysis. 
+Indeed, in this case, a valid input to the system is required. The input data is initially verified against syntax errors for further data processing, if an error or more are found, the system will stop processing the input data and return a report of errors to the user. 
+The current existing tools (as will be discussed in Chapter \ref{ch:related}) which check the RDF syntax of the input,  only assert that the input is  syntax-error-free. When the input has an error or more, those tools stop  parsing, and further handling, additionally, they report that error to the user. 
 
 Another essential point the abruption of parsing when the first syntax error is found will introduce much complications. Assuming, the input RDF data contains, for example, 10 syntax errors. Normally, what is happening when an error is found, the system will proceed with no further processing, instead it will report the existence of an error, with other information about the error, such an error message, row, and column numbers where the error is occurred. Subsequently, the reported error is commonly corrected by the user to be sent again for re-checking of the syntax. To make it more complex, suppose the user has 10 syntax errors in his RDF input, then, the previous process steps of an input checking, an pause of parsing, an error notifying, and an error correction by the user has to be repeated for 10 times.  Furthermore, when the number of syntax errors increases, the number of error processing and correction processes increases by the same value. Also, imagine what is the consumed time and the work overload to process an input RDF data contains hundreds or thousands of errors.  
 
-	\begin{figure*}[td]
-			\includegraphics[width=0.9\textwidth]{images/motivation.png}
+	\begin{figure}
+			\includegraphics[width=0.86\textwidth]{images/motivation.png}
 			\caption{\textbf{Motivation example.} Typical scenario when different users send their RDF documents to the system for syntax validation before further data processing.
 			Both Sarah and Bob have an syntax error or more, they receive an error report, while the input of Hani passed with no syntax errors and goes to the next phase of data processing.}
 			\label{Fig:Motivation}
-	\end{figure*}
+	\end{figure}
 
 let's dig deep in demonstrating what is there in  {Figure \ref{Fig:Motivation}}, It is showing a flow of data from clients or users seeking further data processing. 3 persons are shown in this Figure, their names are Bob, Hani, and Sarah. All of them start with the first phase by sending their data to be syntactically checked. The parser starts checking if there are syntax errors of the input data, if such data passed with no syntax errors, it can be forwarded for further phases, i.e. for data processing, otherwise, the input data will send back to the user to correct the errors. {Figure \ref{Fig:Motivation}} clearly shows that Sarah and Bob have syntax errors in their input data,then, they got an error report, including details about the first detected error. In the meanwhile, Hani has received his data processed without getting such a report, since his input data has no syntax errors. 
 
@@ -64,7 +49,7 @@ This study has been fostered by the former illustrated example to find a suitabl
 The research problem of this study is the unavailability of software tools that can list all the existing syntax errors in RDF files; thus, ontology engineers and users can fix them in one shot. Hence, such a list of errors if it is provided at the end of the syntax checking phase, it significantly assists to get rid of a loop of first error notifications, in case of an existence of multiple errors  in the input data as it was discussed.  
 
 \section{Challenges}
-Before reaching the proposed solution, different methods have been tired to reach the objective. The main purpose was the continuation of parsing till the end of the file without stopping on the first syntax error detection  and storing details of the detected errors into a data structure, such as lists. The following 3 tools were individually tested: Jena RIOT API\cite{McBride:2002:JSW:613357.613755}; RDF4J RIO API\cite{RDF4J:Online}; and  N3 Parser\cite{N3Parser:Online}. Both the first and the second are Java\_based RDF tool kit, including a plug-in for RDF parsing, the last is JavaScript\_based parser, focused on N-Triple and Turtle serialization formats. In all of these framework, exception handling can be used to catch syntax errors. 
+Before reaching the proposed solution, different methods have been tired to reach the objective. The main purpose was the continuation of parsing till the end of the file without stopping on the first syntax error detection  and storing details of the detected errors into a data structure, such as lists. The following 3 tools were individually tested: Jena RIOT API \cite{McBride:2002:JSW:613357.613755}; RDF4J RIO  API \cite{RDF4J:Online}; and  N3 Parser \cite{N3Parser:Online}. Both the first and the second are Java\_based RDF tool kit, including a plug-in for RDF parsing, the last is JavaScript\_based parser, focused on N-Triple and Turtle serialization formats. In all of these framework, exception handling can be used to catch syntax errors. 
 
 Our task was to remove the text that contains the first detected syntax error from an input text (since those tools fail when the first syntax error is found), then, to supply the remaining text for further parsing. Two methods were used: 1) cutting only the triple or the statement that contains the syntax error, 2) removing text before the found syntax error, including the statement of the error. Both those methods were failed to offer a suitable solution for continuation of parsing after an error discovery, for the following reasons: 1) the difficulty of handling nearby syntax errors, such as errors in the same line or in subsequent statements follow each others, 2) the inexpressive and incomprehensible of error messages, especially, in the second tool, which complicates understanding the actual syntax error for further handling.    
 
@@ -82,8 +67,10 @@ The main contributions of RDF-Doctor (the name of output tool of this study) are
 \end{enumerate}
 
 \section {Thesis Structure}
-The thesis is structured into 7 chapters. Until this spot, \textbf{Chapter \ref{ch:introduction}} was presented, titled with "Introduction". It  includes the general overview of the study, the motivation, the problem description and the challenges, research contributions are also introduced to show how our research work is differed from the state-of-art researches of other scientists. The
-remainder of the thesis is organized as follows:
+The thesis is structured into seven chapters. 
+%Until this spot, \textbf{Chapter \ref{ch:introduction}} was presented, titled with "Introduction". 
+It starts with the \emph{Introduction}, where a general overview of the study, the motivation, the problem description and the challenges, as well as contributions are presented. 
+The remainder of the thesis is organized as follows:
 \begin{itemize}
 	\item { \textbf{Chapter \ref{ch:preliminaries}:} presents the "Background" to shed light on the required background to understand what follows in the coming chapters.}
 	

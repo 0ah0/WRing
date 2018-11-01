@@ -33,14 +33,55 @@ To make it more clear, a simple example of RDF Modeling is giving in Figure \ref
 \begin{figure}[ht]
 	\begin{center}
 		\includegraphics[scale=0.4,angle=0]{images/RDF-Model}
+		\setlength\belowcaptionskip{-5mm}
 		\caption{\textbf{ Structure of RDF with Example.} A triple is a major component in RDF Model which has a form of Subject-Predicate-Object, as shown by (a), while an example of a triple is presented by (b).}
 		\label{Fig:rdfModel}
 	\end{center}
 \end{figure}
+RDF data can be represented in a couple of serialization formats, as was mentioned in Chapter \ref{ch:introduction}. Since their syntax used as use cases to be parsed with RDF-Doctor , In the next two subsection, N-Triples and Turtle are discussed. 
+\subsection{N-Triple Serialization}
+N-Triples \cite{W3C:Ntriples:Online}
 
 \subsection{Turtle Serialization}
-Here write something about Turtle Serialization\todo{Check this} ...
+ Terse RDF Triple Language (Turtle) \cite{W3C:Turtle:Online} is one of RDF serialization formats, it uses triples for data representation. A triple has Subject-Predicate-Object form, it  has a similarity with some of natural languages where a simple sentence consists of a subject, a verb, and an object. In order to understand the syntax of Turtle, some terms  relevant to such syntax are discussed as follows.
 
+\begin{itemize}
+    \item \textbf{URI\footnote{https://tools.ietf.org/html/rfc3986
+:}} it refers to a Uniform Resource Identifier, used to point to a web resource, not only a web page, as a Uniform Resource Locator (URL) do. it has two forms: a normal form (similar to URL in-between brackets) and a short form (can be referred as \textbf{Prefixed-Name})
+
+    \item \textbf{Blank Node:}
+    \item \textbf{Prefix:} it is a  short-cut way to replace long URIs with abbreviated ones. essentially, it contains a Prefix-Label.
+        \item \textbf{Prefixed-Name:}
+        \item \textbf{Prefixed-Label:}
+        \item \textbf{Prefixed-URI:}  
+  
+    \item \textbf{Literal:} a string or a number
+\end{itemize} 
+
+The main players in Turtle syntax are prefixes and triples. Prefixes are used to make Turtle a user-friendly language and to reduce the redundancy of repeating some values. A prefix starts with a keyword \textbf{@Prefix} and \textbf{PREFIX} can be also used, followed by \textbf{Prefix\_label} such as "rdf", followed by a \textbf{colon}, next \textbf{Prefix\_URI} \textbf{in-between  2 Brackets} for that prefix, and a \textbf{dot} ends the prefix line. 
+
+
+Similarly, a base URI can be declare similar to the prefix syntax, with replacing @prefix with \textbf{@base} or \textbf{BASE} 
+
+
+Next, in points, the syntax of Turtle is described:
+\begin{itemize}
+    \item Each directive or triple ends with a dot.
+    \item Subject can be either a blank node, or URI. 
+    \item Predicate is only URI.
+     \item Object can be either an URI, a Literal or an blank node.
+
+
+\end{itemize} 
+
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[scale=0.8,angle=0]{images/TurtleStructure.png}
+		\setlength\belowcaptionskip{-5mm}
+		\caption{\textbf{ Structure of Turtle with Example.} Multiple terms draw the syntax of Turtle, they are shown with one or more matched patterns}
+		\label{Fig:TurtleStructure}
+	\end{center}
+\end{figure}
 \section{Parsing and Error Recovery}
 \label{sec:bck_parser}
 This subsection defines "Parsing" and "Grammar" terms, shows the role of the parser in the compiler, discusses types of parser developments, and finally, it lists the methodologies of error recovery in parsers. 
@@ -80,12 +121,12 @@ In parsers, the error recovery techniques specify the parser behavior, once an e
 
 ANTLR is a handy tool and easy to use for the purpose of generating a specific domain language parser. It is a parser generator to do an automatic generation of a source code of a parser with less time and effort. The core requirement of ANTLR is to define the grammar of the desired language syntax . The grammar contains language rules  drawing the syntax and the semantic of such  language which the parser is built for. 
 \par
- As has been previously discussed, the compiler has two main subsystems: lexer and parser. Both lexer and parser are needed to have their rules defined in ANTLR grammar file.  {Figure \ref{Fig:ANTLR}} demonstrates an auto-generated parser program, generated based on ANTLR tool. follows is a sequence steps \citealp{ANTLR:Tool:Online}, describes such parsing process:
+ As was previously discussed, the compiler has two main subsystems relevant to this study: a lexical analyzer (called also lexer) and a parser. Both lexer and parser are needed to have their rules defined in the grammar file. Lexer rules are those rules which define the terminals, whereas parser rules determine the non-terminals. Another essential point that is the process of parser creation  demonstrated in {Figure \ref{Fig:ANTLR} where the parser program is generated with the help of ANTLR framework. In more details, this parsing process \cite{ANTLR:Tool:Online} is followed, straing from the needed grammar to build the parser, ending with the output of the parse tree at the end of parsing :
 
 \begin{figure}[td]
 	\begin{center}
 		\includegraphics[scale=0.6]{images/ANTLR}
-		\caption{\textbf{Parsing process based on ANTLR parser generator.} ANTLR parser generator receives the grammar file to generate the classes of the lexer and the parser, when the input text is submitted, the generated classes with using of ANTLR library start the parsing process to generate the parse tree}
+		\caption{\textbf{Parsing process based on ANTLR parser generator\cite{ANTLR:Tool:Online}.} ANTLR parser generator receives the grammar file to generate the classes of the lexer and the parser, when the input text is submitted, the generated classes with using of ANTLR library start the parsing process to generate the parse tree}
 		\label{Fig:ANTLR}
 	\end{center}
 \end{figure}
@@ -93,11 +134,12 @@ ANTLR is a handy tool and easy to use for the purpose of generating a specific d
 
 \begin{enumerate}
 		
-		\item  {\bf Writing a grammar file:} ordinarily, a grammar called a parsing expression grammar, or PEG is required to build a parser. ANTLR needs a context-free grammar, crafted with Extended Backus-Naur Form (EBNF). EBNF consists of a sequence of rules. These rules describe the syntax and the semantic of an input which needs to be parsed. Either Terminal or Non-terminal entities are the components of these rules. On the one hand, Terminals are the leaf elements where they have no grammatical structure, e.g., words or numbers. On the other hand, Terminal entities are those with a definite grammatical structure and name, e.g., triple component. 
-		\item {\bf Generation of recognizer target\_based classes by ANTLR generator:} a significant feature of ANTLR is its capability of generated the auto-generated parse code for  a variety of the programming languages \citealp{ANTLR:Website:Online}: Java, C\#, Python (2 and 3), JavaScript, Go, C++, and Swift.
+		\item  {\bf Writing a grammar file:} ordinarily, a grammar called a parsing expression grammar, or PEG is required to build a parser. ANTLR needs a context-free grammar, crafted with the Extended Backus-Naur Form (EBNF). EBNF consists of a sequence of rules. These rules describe the syntax and the semantic of an input which needs to be parsed. Both terminals or non-terminals are types of rule heads. On the one hand, terminals are leaf elements where they have no grammatical structure, e.g., words or numbers. On the other hand, non-terminals have a definite grammatical structure and name, e.g., triples or prefixes. 
+
+		\item {\bf Generation of recognizer target\_based classes by ANTLR:} a significant feature of ANTLR is its capability of generated the auto-generated parser source code for  a variety of the programming languages like \cite{ANTLR:Website:Online}: Java, C\#, Python (2 and 3), JavaScript, Go, C++, and Swift.
 		\item {\bf Feeding an input file for parsing:} as an input, ANTLR can parse text documents without additional libraries. Users send their input files for parsing where the parsing process will be achieved based on the crafted grammar in the first step.
-		\item {\bf Parsing procedure:} {Figure \ref{Fig:ANTLR} } shows that it is the cooking time in this step where all materials and Ingredients are ready. The materials are: 1) the auto-generated parser, 2) the ANTLR library. The ingredients are one or more text files to be parsed. 
-		\item {\bf Delivering of a report and parse tree as an output:} now the cake is ready for eating, an output of this process is given. A parse tree and a report of collected errors can be such output.
+		\item {\bf Parsing procedure:} {Figure \ref{Fig:ANTLR} } shows this step as  a phase of cooking . In this step, all materials and ingredients are available. The materials are: 1) the auto-generated parser, and 2) the ANTLR library. The ingredients are one or more text files to be parsed. 
+		\item {\bf Delivering of a final report and parse tree as an output:} now, the cake is ready for eating, an output of this process is given to the user containing of a parse tree and a report of collected errors.
 	\end{enumerate}
 
 
