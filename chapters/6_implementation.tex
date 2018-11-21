@@ -6,17 +6,18 @@ In this chapter, details of the implementation practical part of the study is di
  
 \section {Architecture}
 The design of the architecture was planned based on the Input-Process-Output Model. It can be also considered as a black-box solution where the solution processes the input, then it delivers the output once it is ready. follows is the discussion of those 3 phases, described in Figure \ref{Fig:Architecture} : 
- \begin{figure}[H]
+ \begin{figure}[ht]
 	\begin{center}
-		\includegraphics[scale=0.5]{images/Architecture}
+		\includegraphics[scale=0.5]{images/architecture.pdf}
+		\caption{\textbf{RDF-Doctor architecture.}}
+				\setlength\abocaptionskip{-7mm}
 		\setlength\belowcaptionskip{-7mm}
-		\caption{\textbf{The RDF-Doctor architecture.}}
 		\label{Fig:Architecture}
 	\end{center}
 \end{figure}
 
  \begin{itemize}
- \item \textbf {Input}: It is the role of the user to supply an RDF text with certain options, such as 1) enabling/disabling of the error correction, 2) showing an error report of JSON \footnote{\href{https://www.json.org/}{JSON}} or text format, and 3) concealing/showing up the parse tree.
+ \item \textbf {Input}: It is the role of the user to supply an RDF text with certain options, such as 1) enabling/disabling of the error correction, 2) showing an error report of JSON\footnote{https://www.json.org/} or text format, and 3) concealing/showing up the parse tree.
 \item \textbf{Process}: starts with preparing the input ready to be parsing in the following flow: 1)it reads the input, 2) slices it into smaller pieces if needed, 3) parses the input itself or each slice, and 4) corrects some detected syntax errors. This phase was built based on a predefined grammar, it requires ANTLR library for parsing, and some options from the user to activate/deactive some features of the solution.   
 \item \textbf{Output}: provides the reports after processing the input, including 1) an errors report to announce the detected syntax errors, 2) a correction report to report the recovered syntax errors, and 3) an output file after healing some of the detected syntax errors, and 4) a frame contains the parse tree. Both of the correction report and the output file need the enabling of the error correction feature to be generated. 
 \end{itemize}
@@ -25,14 +26,7 @@ The design of the architecture was planned based on the Input-Process-Output Mod
 
 \section {Modules} 
 
-	\begin{figure}[ht]
-	\begin{center}
-		\includegraphics[scale=0.39,angle=0]{images/modules.png}
-				\setlength\belowcaptionskip{-7mm}
-		\caption{\textbf{UML diagram for the major modules in the proposed solution}}
-		\label{Fig:UML}
-	\end{center}
-\end{figure}
+
 
 After briefing the proposed solution architecture, It is the time to cover it in more details by shedding light onto those modules which represent the pillars of such solution. {Figure \ref{Fig:UML}} establishes a UML diagram for the most significant modules in this solution, represented into 3 modules: Main, Error Detection, and Error Correction. The following text discusses those modules plus Core module. It is worth to be noted that Core module is not shown in {figure \ref{Fig:UML}} to facilitate the understanding of the main modules, otherwise it would be complex, furthermore, Core is automatically generated module by ANTLR based on the given grammar, thereby few changes were coded in the module:  
  \begin{enumerate}[]
@@ -42,7 +36,15 @@ After briefing the proposed solution architecture, It is the time to cover it in
 \item \textbf{Main}: is the executive part which combines input, output, and processing components. It receives the input text, and if it is large (for example, more than 1 million lines), it is segmented into one or more chunks based on its size. Each chunk is handled separately in regards of parsing, error detection, as well as in error correction.
 
 \end{enumerate} 
-
+	\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[scale=0.65,angle=0]{images/modules.pdf}
+		\setlength{\abovecaptionskip}{0pt} 
+				\setlength\belowcaptionskip{-5mm}
+		\caption{\textbf{UML diagram for the major modules in RDF.} 3 main modules represent pillars of RDF-Doctor, Main Module parses RDF input and encounterd errors are collected by errorListener, errorDetection module handles  errors in errorlistener and customizes  released error messages, finally, errorCorrection module corrects certain errors, if error correction is selected by the user.}
+		\label{Fig:UML}
+	\end{center}
+\end{figure}
 %TODO:check here how to adjust the vertical space 
 \vspace{-5mm}
 
@@ -78,13 +80,13 @@ statement
 
 \begin{figure}
 		\centering\includegraphics[width=1.12\linewidth]{images/implementationParseTreeLeft.png}
-		\caption{\textbf{The left-side parse tree view of listing \ref{lst:turtleExample}.} It is left-side sub-trees of the parent node start in the parse tree}
+		\caption{\textbf{The left-side parse tree view of listing \ref{lst:turtleExample}.} It is left-side sub-trees of the parent node start in the parse tree.}
 	\label{Fig:implementationParseTreeLeft}
 \end{figure}
 
 \begin{figure}
 		\includegraphics[width=1\linewidth]{images/implementationParseTreeRight.png}
-	\caption{\textbf{The right-side parse tree view of listing \ref{lst:turtleExample}.} It is right-side sub-trees of the parent node \textbf{start} in the parse tree}
+	\caption{\textbf{The right-side parse tree view of listing \ref{lst:turtleExample}.} It is right-side sub-trees of the parent node \textbf{start} in the parse tree.}
 	\label{Fig:implementationParseTreeRight}
 
 \end{figure}

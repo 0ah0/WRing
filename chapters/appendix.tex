@@ -1,4 +1,5 @@
-\appendix
+\begin{appendices}
+
 
 \chapter{Parser Rules}
 \label{ch:appendix}
@@ -538,4 +539,95 @@ IRIREF
 
 \end{lstlisting}
 
+\chapter{RDF Syntax Errors Categories }
+\label{ch:synErrCategories}
+
+
+\newcounter{cA} 
+\setcounter{cA}{1}
+\begin{longtable}{|c|p{3cm}|p{3cm}|l|l}
+\caption{\textbf{Categories of syntax errors of N-Triple and Turtle serializations}}
+\label{tab:syntaxErrorCate}
+\centering
+\cline{2-5}
+Sn. & Category & Position & Sample &  \\  
+\cline{1-4}
+
+\thecA     \addtocounter{cA}{1}  & \centering \multirow{3}{=}{ \textcolor{blue}{Bad String Escape}
+} & Literal & \textcolor{red}{"a\textbackslash zb" } &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal & \textcolor{red}{"\textbackslash uWXYZ"}  &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal &  \textcolor{red}{"\textbackslash U0000WXYZ"} &  \\   \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &  \multirow{5}{=}{ \textcolor{blue}{Misuse of Keywords}} & Predicate &  :s \textcolor{red}{ A} :o . &  \\   \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1} &  & Subject &\textcolor{red}{ a} :p :o . &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1} &  & Object & :s :p \textcolor{red}{ a} .  &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1} &  & Subject & \textcolor{red}{true} :p :o . &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Object & :s \textcolor{red}{true} :o . &  \\   \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &   \textcolor{blue}{Bad Language Tag} & Language Tag &  “duck”@\textcolor{red}{1} &  \\ \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &  \multirow{5}{=}{ \textcolor{blue}{Bad Local Namespace in Prefixed IRI}} & Prefixed IRI &  :s :p \textcolor{red}{ :-a}  . &  \\   \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Prefixed IRI & :s :p \textcolor{red}{ :o\%2} .&  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Prefixed IRI & :s :p \textcolor{red}{ :\%o2} .&  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Prefixed IRI & :s :p \textcolor{red}{:a\texttt{\~{}}b} . &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Prefixed IRI &  \textcolor{red}{:a\textbackslash u0039} :p :o . &  \\   \cline{1-4}
+\thecA     \addtocounter{cA}{1}  & \multirow{2}{=}{ \textcolor{blue}{Bad Prefix Label in  Prefixed IRI}
+} & Prefixed IRI & :s :p \textcolor{red}{ ex.}:o . &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Prefixed IRI & :s :p \textcolor{red}{.ex}:o .  &  \\ \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &  \multirow{5}{=}{ \textcolor{blue}{Bad Syntax from N3 Notation }} & Curly Brackets & \textcolor{red}{ \{ :a :q :c . \}}  :p :o . &  \\   \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Equal Sign & :a \textcolor{red}{ =} :b .&  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & N3 Paths & \textcolor{red}{ :x.
+  ns:p.
+    ns:q } :p :z . &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & N3 Paths & \textcolor{red}{:x\textasciicircum ns:p } :p :z . &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & ‘is .. of’ Pattern & :z \textcolor{red}{ is}  :p \textcolor{red}{ of}  :x .  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  & &  {IRIs without Space}& \textcolor{red}{ :a.:b.:c } . &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & '@keywords'  & \textcolor{red}{@keywords  
+} a .  \\ & & Pattern &   a Item . &  \\\cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & '@keywords' & \textcolor{red}{@keywords  
+}  . \\ & & Pattern & 
+x \textcolor{red}{@a} Item .  &  \\\cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & '\textless=' Pattern & :s \textcolor{red}{ \textless=} :o .&  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & '=\textgreater' Pattern  & :s   \textcolor{red}{ =\textgreater} :o  .&  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  &'@forSome' Pattern & \textcolor{red}{@forSome } :x .  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & '@forAll' Pattern  & \textcolor{red}{@forAll } :x .   \\  \cline{1-4}
+\thecA     \addtocounter{cA}{1}  & \multirow{2}{=}{ \textcolor{blue}{Bad Prefix Label in Directives}
+} & \multirow{2}{=}{Directive} & @prefix  \textcolor{red}{eg.} :\textless example\textgreater . \\ & &  & \textcolor{red}{eg.}:s  :p  :o  . &  \\\cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &   & \multirow{2}{*}{Directive} & @prefix   \textcolor{red}{.eg} :\textless example\textgreater . \\ & &  & \textcolor{red}{.eg}:s  :p  :o . &  \\ \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &  \multirow{5}{=}{ \textcolor{blue}{Bad Number as a Literal:}} & Literal &  :s :p  \textcolor{red}{ 123.abc}  . &  \\   \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal & :s :p \textcolor{red}{ 123e} .&  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal & :s :p \textcolor{red}{ 123abc} .&  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal & :s :p \textcolor{red}{0x123} . &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal & :s :p  \textcolor{red}{+- 1} . &  \\   \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &   \textcolor{blue}{Bad Directives} &  \multirow{2}{*}{Directive} &  \textcolor{red}{\#Missing a prefix for ':'}\\
+& & & \textcolor{red}{ :}s \textcolor{red}{ :}p  "x"  . &  \\   \cline{1-1} \cline{3-4}
+ \thecA     \addtocounter{cA}{1}  &  & \multirow{2}{*}{Directive} &   \textcolor{red}{\#Missing an IRI}\\
+& & & @prefix ex: . &  \\ \cline{1-1} \cline{3-4}
+ \thecA     \addtocounter{cA}{1}  &  & \multirow{2}{*}{Directive} &   \textcolor{red}{\#Missing a prefix label}\\
+& & &@prefix \textless example\textgreater . &  \\ & & &  \\   \cline{1-1} \cline{3-4}
+ \thecA     \addtocounter{cA}{1}  &  & \multirow{2}{*}{Directive} &   \textcolor{red}{\#Missing a colon }\\
+& & & @prefix ex \textless example\textgreater . &  \\   \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &  \multirow{8}{*}{ \textcolor{blue}{Bad String}} & Literal &  :s :p \textcolor{red}{ "abc' }. &  \\   \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal &  :s :p \textcolor{red}{'abc"  }. &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal &  :s :p \textcolor{red}{ '''abc' }.  &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal &  :s :p \textcolor{red}{ """abc'''  }. &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal &  :s :p \textcolor{red}{ """abc }. &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal &  :s :p \textcolor{red}{ """abc""""@en }. &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal &  :s :p \textcolor{red}{ '''abc''''@en} . &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Literal &  :s :p \textcolor{red}{ "abc"@en\textasciicircum \textasciicircum xsd:String }. &  \\   \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &  \multirow{1}{=}{ \textcolor{blue}{Bad Structure }} & Nquads & \multirow{1}{*}{\textcolor{red}{ \textless s\textgreater  \textless p\textgreater  \textless o\textgreater  \textless g\textgreater } . }\\ & &  Pattern &  \\   \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Subject & \textcolor{red}{ “Hello”} :p :o .&  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Predicate & :s \textcolor{red}{ “Hello”} :o .&  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Predicate & :s \texttt{\textcolor{red}{[ ]}} :o . &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Predicate & :s \textcolor{red}{ \_:blank} :o .&  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Triple &  \textcolor{red}{ \#Missing dot at the triple end} \\ & &  &  :s  :p  :o&  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Triple & :s  :p  :o .\textcolor{red}{.. } &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Triple & :s   :p  :o \textcolor{red}{; } &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  & Triple &  \textcolor{red}{ \#Missing an object in a triple} \\ & &  & :s :p  .&    \\   \cline{1-4}
+\thecA     \addtocounter{cA}{1}  &  \multirow{1}{*}{ \textcolor{blue}{Bad IRI}} &  IRI & \textless
+ http:// space\textgreater { a}  :o . &  \\   \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  &  IRI &  \textless http://\textcolor{red}{\texttt{\textbackslash u00ZZ11}}\textgreater { :p}  :o .&  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  &  IRI & \textless http://\textcolor{red}{\texttt{\textbackslash U00ZZ1111}}\textgreater { :p}  :o .&  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  &  IRI & \textless http:// \\ &  &  & \textgreater { :p}  :o . &  \\ \cline{1-1} \cline{3-4}
+\thecA     \addtocounter{cA}{1}  &  &  IRI &  \textless http://\textcolor{red}{\texttt{\textbackslash}}\textgreater { :p}  :o . &   \\  \cline{1-4}
+ 
+\end{longtable}
+\end{appendices}
 

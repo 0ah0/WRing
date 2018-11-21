@@ -36,7 +36,7 @@
 \usepackage{graphicx}
 \captionsetup{justification=raggedright,
               singlelinecheck=false}
-\usepackage[toc,page]{appendix}
+\usepackage[titletoc,toc,page]{appendix}
 \usepackage{tikz}
 \usetikzlibrary{fadings}
 \usepackage{booktabs}
@@ -44,8 +44,11 @@
 \usepackage{rotating}
 \usepackage{pdfpages}
 \usepackage[american]{babel}
+\usepackage{csquotes}
+\usepackage[justification=justified,
+   format=plain]{caption} % 'format=plain' avoids hanging indentation
 \usepackage[%
-  backend=bibtex      % biber or bibtex
+  backend=biber      % biber or bibtex
  ,style=authoryear    % Alphabeticalsch
  ,style=numeric-comp  % numerical-compressed
  ,sorting=none        % no sorting
@@ -60,9 +63,7 @@
  ,minnames=8,
  maxnames=10
 ]{biblatex}
-\addbibresource{literature.bib}  % better than \bibliography
-%\usepackage[square, numbers, comma, sort&compress]{natbib}  % Use the "Natbib" style for the references in the Bibliography
-
+\addbibresource{literature.bib}  
 \makeatletter
 \def\setChapterprefix#1{\gdef\@Prefix{#1}}
 \setChapterprefix{}
@@ -178,7 +179,7 @@ I, Ahmed Hemid, declare that this thesis, titled ``RDF Doctor: Holistic RDF Synt
 \item I have acknowledged all main sources of help.
 \end{itemize}
 
-Ahmed Hemid
+Ahmad Hemid
   
 Signature:\\
 \rule[1em]{25em}{0.5pt}  % This prints a line for the signature

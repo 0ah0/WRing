@@ -17,7 +17,7 @@ In order to validate RDF data as an input, either by inserting a URL where it ex
 		\begin{center}
 			\setlength\belowcaptionskip{-7mm}
 			\includegraphics[scale=0.8,angle=0]{images/errorW3RDFValidator.png}
-			\caption{\textbf{Validation results of the W3C RDF validation tool \cite{W3C:Validation:Online} after parsing an RDF/XML text, included two syntax errors.} the original RDF/XML document has two syntax errors since "rdf1" and "dc12" have no prefix declarations, but the results under "Fatal Error Messages"  show only the first found error and neglects the other.}
+			\caption{\textbf{Validation results of the W3C RDF validation tool \cite{W3C:Validation:Online} after parsing an RDF/XML text, included two syntax errors.} The original RDF/XML document has two syntax errors since "rdf1" and "dc12" have no prefix declarations, but the results under "Fatal Error Messages"  show only the first found error and neglects the other.}
 			\label{Fig:errorW3RDFValidator}
 		\end{center}
 	\end{figure}
@@ -28,7 +28,7 @@ In order to validate RDF data as an input, either by inserting a URL where it ex
 		\begin{center}
 			\setlength\belowcaptionskip{-10mm}
 			\includegraphics[scale=0.7,angle=0]{images/VRPErrorResult.png}
-			\caption{\textbf{Validation results of Validating RDF Parser (VRP) \cite{karsten:Thesis:2000} after parsing an RDF/XML file, included two syntax errors.} 4 error messages are shown, 2 of them are meaningful, hence, they help in resolving the 2 detected errors, the other 2 messages have no meaning}
+			\caption{\textbf{Validation results of Validating RDF Parser (VRP) \cite{karsten:Thesis:2000} after parsing an RDF/XML file, included two syntax errors.} 4 error messages are shown, 2 of them are meaningful, hence, they help in resolving the 2 detected errors, the other 2 messages have no meaning.}
 			\label{Fig:VRPErrorResult}
 		\end{center}
 	\end{figure}
@@ -42,7 +42,7 @@ Some of the tools validating RDF formats use the following core tools or methods
 
 The previous three approaches failed to list more than the first found error. Another essential point has been learned is to avoid JavaScript\_based development of the new tool and the alternative is to use Java\_based application, similar to the ARP-parser discussed in the first approach. Empirically, developing using java can improve the performance of the purposed tool, especially when  validating large RDF data files.
 
-\section{Types of Error Messages Approaches}
+\section{Types of Error Messages in Approaches}
 Releasing user-friendly and meaningful error messages is of a great benefit to help the user to identify and correct the errors. 
 \begin{itemize}
     \item \textbf{Non-expressive and meaningless error messages:} the parsing tools under the Shape expressions approach show less expressive  and unfriendly error messages.
@@ -53,7 +53,7 @@ Releasing user-friendly and meaningful error messages is of a great benefit to h
 \section{Error Recovery Approach}
 Automatic error recovery or correction will be valuable to resolve from common syntax errors. For example, lots of programming languages need a semicolon at the end of the line. There are also few tools which can correct such errors without the involvement of the programmer. In the same way it will be useful to have this option of automatic correction after parsing of various serialization formats of RDF. Further, while surveying the existing RDF parsing tools, a tool proposed or provided such a feature was not found. RDF-Doctor will be equipped with this feature to correct these errors.   
 
-\par
+\section{Summary}
 To end this chapter, after describing the actual issue, reviewing the  state-of-art of research works, related to the same spot with pointing out  the different approaches of RDF parsing and syntax checking, different types of error messages , and finally the approach of automatic error correction. The outcome of this study is the RDF-Doctor. It is a parser that is generated with the help of the ANTLR parser generator. Additionally, It is a Java\_based application to parse N-Triple and Turtle serialization formats; show a meaningful error messages; as well as, automatically recover from common syntax errors.    
 
 
