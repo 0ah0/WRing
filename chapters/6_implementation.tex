@@ -9,9 +9,8 @@ The design of the architecture was planned based on the Input-Process-Output Mod
  \begin{figure}[ht]
 	\begin{center}
 		\includegraphics[scale=0.5]{images/architecture.pdf}
-		\caption{\textbf{RDF-Doctor architecture.}}
-				\setlength\abocaptionskip{-7mm}
-		\setlength\belowcaptionskip{-7mm}
+	\setlength\belowcaptionskip{-5mm}
+		\setlength\abovecaptionskip{-2mm}		\caption{\textbf{RDF-Doctor architecture.} It consists of Input, Process, and Output phases. In the Input phase, users send their RDF texts. Process phase reads these texts, splits them in case of large volumes, then parses them and recovers of certain errors if exist, this phase requires user options, such enable/disable error recovery, Grammar which used to built the generated parser, and ANTLR library for parsing. Finally, Output phase presents some reports and parse tree}
 		\label{Fig:Architecture}
 	\end{center}
 \end{figure}

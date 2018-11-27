@@ -34,8 +34,8 @@ If the ontology has more than one error, these tools naturally stop parsing, and
 
 Commonly, an ontology after each change may have more than one syntactic error.
 The procedure of correcting them is as follows, when the first error is encountered, the system reports the error.
-Next, the user, reads the message and locate the error within the ontology file. 
-After that, the user correct the error, and resubmit its version with recent modifications.
+Next, the user, reads the message and locates the error within the ontology file. 
+After that, the user corrects the error, and resubmits its version with recent modifications.
 The system checks for syntax, and again it detects another error, causing to the user to repeat the same procedure of error correction.
 This will continue until the ontology file is free of errors.
 However, it might happen that during the correction phase, users can introduce new errors.
@@ -57,7 +57,7 @@ Therefore, this procedure is time consuming, error-prone and tedious to all invo
 %\section{Objectives}
 \section{Problem Description and Challenges} 	
 Ideally, ontology engineers should be able to retrieve and easily correct easily any existing error in their ontology version.
-At the conceptual level, this thesis address the problem of comprehensive and simultaneous error detection and resolving for the RDF documents.
+At the conceptual level, this thesis addresses the problem of comprehensive and simultaneous error detection and resolving for the RDF documents.
 Therefore, the approach should assist ontology engineers on identifying syntactic issues and automatically fix them.
 In addition, for any error that is not possible to automatically correct, a user-friendly and understandable message should be provided.
 
@@ -84,7 +84,7 @@ The main contributions of the proposed approach are listed in the following:
 	\item  {\bf Identifying of exiting syntax errors in RDF Documents:} is a major goal and contribution with the intention to investigate RDF Documents and search for potential syntax errors. 
 	The proposed approach is powered by ANTLR framework \cite{ANTLR:Website:Online}, a powerful parser generator, with the objective of establishing an RDF parser that enables simultaneous listing of all discovered syntax errors. 
 	The fundamental aspect of the approach is the injection of the grammar identification rules inside the parser. 
-	Once, the parser detects a presence of so-called tokens in an RDF input matching one of the given grammar rules, it sends an error notification to the error listener component, where error lists are stored.
+	Once, the parser detects a presence of so-called tokens in an RDF input matching one of the given grammar rules that represent a syntax error, it sends an error notification to the error listener component, where error lists are stored.
 	\item {\bf Reporting syntax errors with user-friendly and expressive messages:} where either normal users or ontology engineers are assisted with meaningful error messages. 
 	Following the principle from the ancient Greek philosopher, Socrates: “Understanding a question is half an answer”\cite{Socrates:quote:Online}, similarly, an understandable error message helps to recover from an error. 
 	Our approach is based on both: the regular expression and grammar rules, where each rule represents either a sequence of correct syntax tokens or a sequence of incorrect ones. 

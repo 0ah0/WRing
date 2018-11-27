@@ -1,106 +1,134 @@
 \chapter{Background}
 \label{ch:preliminaries}
 
-In this chapter, we outline the relevant terminologies and the theoretical  preliminaries that is essential for better understanding of this essay.
-This chapter is sectioned into 3 parts.
-Section \ref{sec:bck_rdf_model} describes essential concepts of RDF as a modeling language and its main serialization formats. 
-In Section \ref{sec:bck_parser}, parsing techniques and methods to detect and recover syntax errors are discussed. Finally, Section \ref{sec:bck_ANTLR} presents an overview of ANTLR parser generator which is used to automatically generate the internal parser of RDF-Doctor.
-
+In this chapter, we outline the relevant terminology and the theoretical preliminaries that is essential for better understanding of this thesis.
+Initially, in Section \ref{sec:bck_rdf_model}, we describe important concepts of RDF as a modeling language and its main serialization formats. 
+Next, in Section \ref{sec:bck_parser} discusses parsing techniques and methods to detect and recover syntax errors. Finally, Section \ref{sec:bck_ANTLR} presents an overview of ANTLR framework which is used to automatically generate the internal parser of RDF-Doctor.
 
 \section{The Resource Definition Framework}
 \label{sec:bck_rdf_model}
 
-The "Semantic Web" \cite{W3C:SemanticWebTerm:Online} term  has appeared during the transformation process of web development from "Web of documents" to "Web of data", similar to those data found in databases. 
-W3C defines it as "the Web of linked data". {Figure \ref{Fig:semanticWebStack}} describes the Semantic Web Stack, proposed by W3C. 
-It can be seen that it contains several technologies to enable the users of creating their own data stores on web, building vocabularies, and enforcing processing rules on such data.   
+The ``Semantic Web" \cite{W3C:SemanticWebTerm:Online} term  has appeared during the transformation process from ``Web of documents" to ``Web of data", similar to those data found in databases. 
+W3C defines it as ``the Web of linked data". 
+{Figure \ref{Fig:semanticWebStack}} describes the Semantic Web Stack, proposed by W3C. 
+It contains several technologies to enable the users for creating their own data stores on web, building vocabularies and ontologies, as well as enforcing processing rules on such data.   
 
-Subsequently, in order to make data more and more machine-readable and interchangeable between various applications, RDF model \cite{W3C:RDF-Primer:Online} has been proposed.  To elaborate, RDF model plays a fundamental role of data exchange in the layered Semantic Web Stack and links the high-level semantic web tools with low-level ones, as exhibited in {Figure \ref{Fig:semanticWebStack}}. 
+Subsequently, in order to make data more and more machine-readable and interchangeable between various applications, the RDF model~\cite{W3C:RDF-Primer:Online} has been developed.  
+RDF model plays a fundamental role of data exchange in the layered Semantic Web Stack and links the high-level semantic web tools with low-level ones, as illustrated in {Figure \ref{Fig:semanticWebStack}}. 
 	\begin{figure}[ht]
 	\begin{center}
 	\setlength\belowcaptionskip{-7mm}
 		\includegraphics[scale=0.5,angle=0]{images/semanticWebStack}
-		\caption{\textbf{The Semantic web stack \cite{W3C:SemanticStack:Online}.} RDF Model links  high-level semantic web tools with low-level ones and works as a bridge to enable data exchange between various applications.}
+		\caption{\textbf{The Semantic web stack \cite{W3C:SemanticStack:Online}.} It is composed of several layers containing different technologies and languages. 
+		RDF Model links high-level semantic web tools with low-level ones and works as a bridge to enable data exchange between various applications.}
 		\label{Fig:semanticWebStack}
 	\end{center}
 \end{figure}
 \par
-Also, {Figure \ref{Fig:rdfModel}}(a) presents how data are engineered in RDF Model in triples. A triple is defined by 3 main components: a subject, a predicate, and an object. It has a common similarity of a basic structure of a simple sentence in a natural language which consists of a subject, a verb, and  an object. As the verb in natural languages shows a relation and a connection between the other two entities, in the same way in RDF Model, the predicate connects both subject and object in a certain property. 
+Also, {Figure \ref{Fig:rdfModel}}(a) presents a simple graphical depiction of RDF Model. 
+A triple is the most atomic unit, which is defined by three main components: a subject, a predicate, and an object. 
+It has a common similarity of a basic structure of a simple sentence in a natural language which consists of a subject, a verb, and an object. 
+As the verb in natural languages shows a relation and a connection between the other two entities, in the same way in RDF Model, the predicate connects both a subject and an object via a certain property. 
 
-\subsection{Simple Example of RDF Model}
-
-To make it more clear, a simple example of RDF Modeling is giving in Figure \ref{Fig:rdfModel}(b). A fact to express that "German has the river Rhein", \textbf{Ex:Germany} is a subject, \textbf{Ex:hasRiver} is a predicate, and \textbf{"Rhein"} is an object. The first two terms are Uniform Resource Identifiers (URIs) where \textbf{Ex:} is a declared prefix label in RDF file to refer to an URI path and the following part \textbf{Germany} is an extension of the path. The last value \textbf{"Rhein"} is a literal or a string. What is given is a simple example of RDF Model to show its fundamental structure, but, in the meanwhile, more examples can be viewed at \cite{W3C:RDF-Primer:Online}.
+A simple example of modeling a natural sentence using RDF is given in Figure~\ref{Fig:rdfModel}(b). 
+It expresses that "Germany has the river Rhein", where \textbf{Ex:Germany} is a subject, \textbf{Ex:hasRiver} is a predicate, and \textbf{"Rhein"} is an object. 
+The first two terms uses Uniform Resource Identifiers (URIs) to establish unique identifiers, where \textbf{Ex:} is a declared prefix label in the RDF file to refer to an URI path and the following part \textbf{Germany} is an extension of the path. 
+The last value \textbf{"Rhein"} is a literal or a string. %What is given is a simple example of RDF Model to show its fundamental structure, but, in the meanwhile, more examples can be viewed at \cite{W3C:RDF-Primer:Online}.
 
 \begin{figure}[ht]
 	\begin{center}
 		\includegraphics[scale=0.4,angle=0]{images/RDF-Model}
 		\setlength\belowcaptionskip{-5mm}
-		\caption{\textbf{ Structure of RDF with example.} A triple is a major component in RDF Model which has a form of Subject-Predicate-Object, as shown by (a), while an example of a triple is presented by (b).}
+		\caption{\textbf{Graphical Representation of RDF Model.} A triple is a major component in RDF Model which has a form of Subject-Predicate-Object, as shown by (a), while an example of a natural sentence encoded in the triple format is presented by (b).}
 		\label{Fig:rdfModel}
 	\end{center}
 \end{figure}
-RDF data can be represented in a couple of serialization formats, as was mentioned in Chapter \ref{ch:introduction} and since their syntax are used as use cases to be parsed with RDF-Doctor , In the next two subsections, Turtle and N-Triples are discussed. 
-
+RDF data can be represented in a number of different serialization formats.
+%as was mentioned in Chapter \ref{ch:introduction} and since their syntax are used as use cases to be parsed with RDF-Doctor , 
+In the next two subsections, Turtle and N-Triples are as two common serialization formats. 
 
 \subsection{Turtle Serialization}
- Terse RDF Triple Language (Turtle) \cite{W3C:Turtle:Online} is one of RDF serialization formats, it uses triples for data representation. A triple has Subject-Predicate-Object form, it  has a similarity with some of natural languages where a simple sentence consists of a subject, a verb, and an object. In order to understand the syntax of Turtle, some terms  relevant to its syntax are discussed in the following:
+Terse RDF Triple Language (Turtle) \cite{W3C:Turtle:Online} is one of the serialization formats, which uses triples for data representation. 
+%A triple has Subject-Predicate-Object form, it  has a similarity with some of natural languages where a simple sentence consists of a subject, a verb, and an object. 
+In order to understand the syntax of Turtle, some terms  relevant to its syntax are discussed in the following:
 
 \begin{figure}[ht]
 	\begin{center}
 		\includegraphics[scale=0.8,angle=0]{images/TurtleStructure.png}
 		\setlength\belowcaptionskip{-5mm}
-		\caption{\textbf{ Structure of Turtle in example.} Multiple terms draw the syntax of Turtle, they are pointed with one or more matched samples.}
+		\caption{\textbf{The structure of Turtle.} Multiple terms represent the syntax of Turtle, they are pointed with one or more matched samples.}
 		\label{Fig:TurtleStructure}
 	\end{center}
 \end{figure}
 \begin{itemize}
     \item \textbf{URI\footnote{https://tools.ietf.org/html/rfc3986
-}:} it refers to a Uniform Resource Identifier, used to point to a web resource, not only a web page address, as a Uniform Resource Locator (URL) do. In two forms, it can represented by: 1) Absolute form (similar to URL in-between 2 brackets, in Figure \ref{Fig:TurtleStructure} lines 1 and 6, pointers show samples of absolute URIs); 2) Relative form or \textbf{Relative URI}, this form is used when a base URI is defined, in Figure \ref{Fig:TurtleStructure} line 5 shows a declaration of a base URI, then, line 12 shows two samples of relative URIs \textless Manager\textgreater and \textless manages\textgreater ; 3) Short form (referred as \textbf{Prefixed-Name} and discussed next).
-  \item \textbf{Prefix:} a prefix declaration is a  short-cut way to replace absolute URIs with abbreviated ones. Essentially, it contains a \textbf{Prefix-Label} and \textbf{Prefix-URI}. Prefix samples are shown in the first four lines of Figure \ref{Fig:TurtleStructure}, starts with \textbf{@prefix} keyword, followed by a \textbf{Prefix-Label}, then a colon, next comes a URI or a \textbf{Prefix-URI}, and lastly, an end dot. 
-        \item \textbf{Prefix-Name:} a short URI consists of a \textbf{Prefix-Label}, followed by a colon, then a resource name. A sample is pointed in Figure \ref{Fig:TurtleStructure} line 13.
+}:} refers to a Uniform Resource Identifier, used to point to a web resource, not only a web page address, as a Uniform Resource Locator (URL) do. 
+The URI can represented in the following forms: 1) Absolute form (similar to URL in-between 2 brackets, lines 1 and 6, pointers show samples of absolute URIs); 
+2) Relative form or \textbf{Relative URI}, this form is used when a base URI is defined, line 5 shows a declaration of a base URI, then, line 12 shows two samples of relative URIs, i.e., \textless Manager\textgreater and \textless manages\textgreater; and 
+3) Short form (referred as \textbf{Prefixed-Name} and discussed next).
+  \item \textbf{Prefix:} a prefix declaration is a shortcut way to replace absolute URIs with abbreviated ones. Essentially, it contains a \textbf{Prefix-Label} and \textbf{Prefix-URI}. 
+  Prefix samples are shown in the first four lines of Figure \ref{Fig:TurtleStructure}, starting with \textbf{@prefix} keyword, followed by a \textbf{Prefix-Label}, then a colon, next comes a URI or a \textbf{Prefix-URI}, and lastly, an end dot. 
+ \item \textbf{Prefix-Name:} a short URI consists of a \textbf{Prefix-Label}, followed by a colon, then a resource name. An example is illustrated in line 13.
         
-        \item \textbf{Prefix-Label:} a short sequence of characters to get rid of  re-writing of a long absolute URI.
-        \item \textbf{Prefix-URI:} an absolute URI are used in prefix declarations. 
-        \item \textbf{Base:} a base declaration to define a base URI used inside a Turtle file. This could be also another short-cut way for URIs when they have a common path, then the last local part in URIs can be written inside 2 brackets.  
-\item \textbf{Directive:} prefix and base declarations can be considered as directives, similar in somehow to those declarations of libraries in common programming languages.  
-    \item \textbf{Blank Node:} an identifier for a temporal or unnamed resource \cite{journals:tkde:GutierrezHV07}, it starts with ":\_", then a sequence of characters (referred as BlankNode-Label). Figure \ref{Fig:TurtleStructure} line 13 shows a blank node in the position of Subject.  
-    \item \textbf{Literal:} a string or a number (either numeric or boolean number). A string sample is exhibited in Figure \ref{Fig:TurtleStructure} line 9.
+  \item \textbf{Prefix-Label:} a short sequence of characters to avoid re-writing of a long absolute URI.
+  \item \textbf{Prefix-URI:} an absolute URI is used in prefix declarations. 
+  \item \textbf{Base:} a declaration to define a base URI used inside a Turtle file. 
+  This could be also another shortcut form for URIs when they have a common path, then the last local part in URIs can be written inside 2 brackets. 
+        
+\item \textbf{Directive:} prefix and base declarations can be considered as directives, similar to those declarations of libraries in common programming languages.  
+    \item \textbf{Blank Node:} an identifier for a temporal or unnamed resource~\cite{journals:tkde:GutierrezHV07}, it starts with ":\_", then a sequence of characters (referred as BlankNode-Label). 
+    Figure \ref{Fig:TurtleStructure} line 13 shows a blank node in the position of Subject.  
+    \item \textbf{Literal:} a string, a date, a numeric or a boolean value as shown in line 9.
 \end{itemize} 
 
-The main players in Turtle syntax are prefixes and triples. Prefixes are used to make Turtle a user-friendly language and to reduce the redundancy of repeating absolute URI, subject, and subjects and predicates, if one subject and one predicate are together shared  more than one object. 
+The main components in Turtle syntax are prefixes and triples. 
+Prefixes are used to make Turtle a user-friendly language and to reduce the redundancy of repeating absolute URI, subject, and subjects and predicates, if one subject or one predicate are shared together on more than one object. 
 
 \begin{figure}[ht]
 	\begin{center}
 		\includegraphics[scale=0.4,angle=0]{images/TurtleandNtripleElements.png}
 				\setlength\belowcaptionskip{-5mm}
-		\caption{\textbf{ Elements of triple in Turtle and N-Triple serializations.} Triple consist of Subject, Predicate, and Object, Subject can be either URI or Blank Node (BN), Predicate is only URI, while Object can take URI, BN or Literal forms.}
+		\caption{\textbf{ Elements of triples in Turtle and N-Triple serializations.} A triple consist of a Subject, a Predicate, and an Object. A Subject can be either URI or Blank Node (BN), a Predicate is only URI, while an Object can take URI, BN or Literal forms.}
 		\label{Fig:TurtleandNtripleElements}
 	\end{center}
 \end{figure}
 
+In the following, the basic rules defined in the Turtle serialization are outlined:
 
-In order to understand the basic rules defined Turtle serialization, in the following text, those rules are outlined, however, more details and advanced rules are found at \cite{W3C:Turtle:Online}:
 \begin{itemize}
-    \item Each directive (a declaration of Prefix or Base) or triple ends  in a  dot.
-    \item Figure \ref{Fig:TurtleandNtripleElements} shows which elements can replace the content of a triple as follows: \textbf{Subject} can be either a blank node, or URI, a \textbf{Predicate} is only URI, and an \textbf{Object} can be either an URI, a Literal or an blank node.
-    \item When multiple \textbf{Objects} share the same \textbf{Subject} and \textbf{Predicate}, then comma symbols separate between those \textbf{Objects}, as demonstrated in Figure \ref{Fig:TurtleStructure} line 7, both \textbf{ex:animal} and \textbf{ex:mammal} objects with the same subject \textbf{ex:dog1} and the same predicate \textbf{a}  (a keyword substitutes the \textbf{rdf:type} URI) are separated by a comma.
-     \item A semicolon separates combinations of a \textbf{Predicate} and an \textbf{Object} when these combinations share the same \textbf{Subject}. Both lines 8 and 9 of Figure \ref{Fig:TurtleStructure} shows this pattern where a combination of a predicate \textbf{rdf:type} and an object \textbf{ex:cat} and the other combination of a predicate \textbf{rdfs:label} and an object \textbf{"Lusi"@en}, share the same subject \textbf{ex:cat1}, then both combinations are separated by a semicolon.
-      \item Prefix and Base declarations are generally written on the top of Turtle files or at least before using them in a Prefix-Name found in triples.
-     \item Literals are strings or numbers. Strings have multiple forms: 1) a string in single line, written between 2 double or single quotes; 2) a string in multiple lines, starts with 3 double or single  quotes and ends in same number of quotes; 3) a string with a language tag, has the first 2 string forms, followed by \textbf{@}, next comes a language tag (a few sequence of characters to identify the language of the preceding string); 4) a string with a certain data-type, again has the first 2 string forms, followed by \textbf{\textasciicircum\textasciicircum}, then a data-type URI comes, \textbf{"Lusi"\textasciicircum\textasciicircum\textless http://www.w3.org/2001/XMLSchema\#string\textgreater} is a string sample of XML Schema data-type\footnote{https://www.w3.org/TR/xmlschema11-2/}. Numbers are numeric values, e.g., decimals, integers, and doubles or boolean values.
-     \item Blank Node identifier refers to one resource must use the same identifier that refers the same resource in the whole Turtle file.   
+    \item Each directive (a declaration of Prefix or Base) or triple ends with a dot.
+    \item Figure \ref{Fig:TurtleandNtripleElements} shows elements of a triple and their possible forms, as follows: \textbf{Subject} can be either a blank node, or URI, a \textbf{Predicate} is only URI, and an \textbf{Object} can be either an URI, a Literal or a blank node.
+    \item When multiple \textbf{Objects} share the same \textbf{Subject} and \textbf{Predicate}, then comma separates between those \textbf{Objects}.
+    As example is demonstrated in Figure \ref{Fig:TurtleStructure} line 7 where both \textbf{ex:animal} and \textbf{ex:mammal} have the same subject \textbf{ex:dog1} and the same predicate \textbf{a} (a keyword substitutes the \textbf{rdf:type} term) and are separated by a comma.
+    
+     \item A semicolon separates combinations of a \textbf{Predicate} and an \textbf{Object} when these combinations share the same \textbf{Subject}. 
+     Both lines 8 and 9 of Figure \ref{Fig:TurtleStructure} shows this pattern where a combination of a predicate \textbf{rdf:type} and an object \textbf{ex:cat} and the other combination of the predicate \textbf{rdfs:label} and the object \textbf{"Lusi"@en}, share the same subject \textbf{ex:cat1}, and they are separated by a semicolon.
+     
+      \item Prefix and Base declarations are commonly written on the top of Turtle files or at least before the first use of them in a Turtle Document.
+      
+     \item Literals are strings or numbers. 
+     Strings have multiple forms: 1) a string in single line, written between two single or double quotes; 2) a string in multiple lines, starts with three single or double quotes and ends with the same number of quotes; 3) a string with a language tag, has one of the previous two forms, and is followed by language tag, i.e., \textbf{@} which contains a few sequence of characters to identify the language of the preceding string; and 4) a string with a certain data-type, again has one of the first two forms, followed by \textbf{\textasciicircum\textasciicircum}, associated with a data-type URI, as for example \textbf{``Lusi"\textasciicircum\textasciicircum\textless http://www.w3.org/2001/XMLSchema\#string\textgreater} is a string sample of XML Schema data-type~\footnote{\url{https://www.w3.org/TR/xmlschema11-2}}.
+     In addition it can contain numbers, such as decimals, integers, doubles or boolean values, i.e., \emph{true} or \emph{false}.
+     \item Blank Node identifier refers one or more triples with no persistent URI and must use the same identifier in the whole Turtle file.   
      
      
 \end{itemize} 
 
 \subsection{N-Triple Serialization}
-N-Triples \cite{W3C:Ntriples:Online} is the simplest  and a popular serialization format that forms RDF data in triples, however, it is hard to be read by users, since long absolute URIs are mostly used to represent \textbf{Subjects}, \textbf{Predicates}, and \textbf{Objects}. Figure \ref{Fig:NTriplesStructure} shows an N-Triple example where  only the following 3 elements serialize its content:  \textbf{Absolute URIs}; \textbf{Blank Nodes}; and \textbf{Literals}, they are same as those in Turtle serialization. 
+N-Triples \cite{W3C:Ntriples:Online} is the simplest serialization format that organizes RDF data in a form of triples, however, it is hard to be read by users, since long absolute URIs are mostly used to represent \textbf{Subjects}, \textbf{Predicates}, and \textbf{Objects}. 
+Figure \ref{Fig:NTriplesStructure} shows an N-Triple example where the only three following elements are serialized: \textbf{Absolute URIs}; \textbf{Blank Nodes}; and \textbf{Literals}. 
 
-Hence, N-Triple is considered as a subset of Turtle serialization. Additionally, the content of its \textbf{Subjects}, \textbf{Predicates}, and \textbf{Objects} are shown in Figure \ref{Fig:TurtleandNtripleElements}, again similar to Turtle, however, a type of absolute URIs is only used in N-Triple. So, N-Triples has no prefix or base declarations, repeats a subject even if it is shared with a combination of a predicate and an object, same also when multiple objects share the same subject and predicate. To end this, a general form of N-Triples can be reached,  consisting of a \textbf{Subject}, followed by a \textbf{Predicate},  next comes an \textbf{Object}, finally, ends in  \textbf{a dot}.   
+N-Triple is considered as a subset of Turtle serialization. 
+Additionally, its content formed by \textbf{Subjects}, \textbf{Predicates}, and \textbf{Objects} is shown in Figure \ref{Fig:TurtleandNtripleElements}, which is quite similar to Turtle, however, a type of absolute URIs is only used in N-Triple. 
+So, N-Triples has no prefix or base declarations, and repeats subjects even if they are shared from predicates and objects. Furthermore, a general form of N-Triples can be reached,  consisting of a \textbf{Subject}, followed by a \textbf{Predicate}, next comes an \textbf{Object}, finally, it ends with \textbf{a dot}.   
 
 \begin{figure}[ht]
 	\begin{center}
 		\includegraphics[scale=0.8,angle=0]{images/NTriplesStructure.png}
 		\setlength\belowcaptionskip{-5mm}
-		\caption{\textbf{ Structure of N-Triple in Example.} Main elements of N-Triples serialization are URIs, Blank Nodes, and Literals, samples of them are pointed. Local parts or resources of URIs are colored in black to make it a better human-readable, even it is not easy with those absolute URIs.}
+		\caption{\textbf{Structure of N-Triple serialization.} 
+		Main elements of N-Triple serialization are URIs, Blank Nodes, and Literals. 
+		The URIs of local terms or resources defined within an N-Triple document are colored in black.}
 		\label{Fig:NTriplesStructure}
 	\end{center}
 \end{figure}
