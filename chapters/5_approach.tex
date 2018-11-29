@@ -1,12 +1,16 @@
 \chapter{Approach}
 \label{ch:approach}
-As has been discussed in chapter \ref{ch:related}, there is a need for a tool to detect as much as possible syntax errors in RDF documents. As a result to this need, this study was held and this chapter will cover the approach used in the proposed solution.
+As has been discussed in Chapter \ref{ch:related}, there is a need for a tool which can detect all the encountered syntax errors in RDF documents to ensure their quality and to make RDF diagnostics easy for users instead of showing only the first detected syntax error. In order to fill this need, this study was held to propose a proper solution. Moreover, this chapter will discuss the approach used to build RDF-Doctor.
 
-\section{ANTLR: The Core Component}
-In order to find a parser which can accept the error production rules in its grammar, our choice was to use ANTLR framework to automatically generate the required parser. Lots of features in ANTLR motivate us to use it in the proposed solution, such as: 1) its grammar can equip with error production rules and when a couple of tokens match such rules, the parser will fire  error notifications, 2) it uses a parse tree to parse input token and the view of this parse tree can be delivered as an output to the user at the end of parsing process, it supports the auto-generation of parsers in different programming language, as it was discussed in Chapter \ref{ch:preliminaries}.
+
 \section{Overview of RDF-Doctor Approach}
+This section covers the core component of the approach, then discusses the main processing steps, and ends with offering the approach algorithm. 
+\subsection{ANTLR: The Core Component}
+In order to find a parser which can accept the error production rules in its grammar, our choice was to use ANTLR framework to automatically generate the required parser. Equally important lots of handy features in ANTLR motivate its usage in the proposed solution to generate the internal parser, and also as an imported library for compiling and  running  of RDF-Doctor. To elaborate, some of these features are: 1) its grammar can equip with error production rules and when a couple of tokens match such rules, the parser will fire an error notification; 2) it uses a parse tree to parse input tokens and the view of this parse tree can be delivered as one of the outputs to the user at the end of parsing process; 3)it supports the auto-generation of parsers in different programming languages, as it was discussed in Chapter \ref{ch:preliminaries}, which is an added value  of one-to-many, where one grammar file can automatically generate of the programming languages.
 
- To represent the approach in more clear way, {Figure \ref{Fig:Approach}} was invented. It shows the technique used to handle an RDF text, having some syntax errors. follows are the sequence steps which highlight the main milestones of this approach:
+\subsection{Main Processing Steps}
+
+ To represent clearly the approach, {Figure \ref{Fig:Approach}} was invented. It shows the technique used to handle an RDF text, having some syntax errors. follows are the sequence steps which highlight the main milestones of this approach:
  \begin{enumerate}[label=(\alph*)]
 \item \textbf{Reading RDF text}: a ordinary RDF file is submitted to our application. The application starts with reading the file. In case of large files, it is going to be splitted into two or more chunks based on the volume of the file. each chunk will be processed separately from others.  {Figure \ref{Fig:Approach}}(a) demonstrates this part. 
 \item \textbf{Detection of syntax errors}: the parser has predefined rules for syntax errors, once a rule is matched with a sequence of input tokens, it stores this error to be reported later in the error report. Reading of input tokens continues till the end of the file while searching for matches for syntax errors. In  {Figure \ref{Fig:Approach}}(b) lines surrounded with red color simulate detected lines which contain syntax errors. 
@@ -15,18 +19,18 @@ In order to find a parser which can accept the error production rules in its gra
 \end{enumerate} 
 \begin{figure}
 	\centering
+	  	\includegraphics[width=1\textwidth]{images/Approach.png}
+		\caption{\textbf{Overview of the proposed solution.} The user writes or edits his own RDF file, then sends it to RDF-Doctor for parsing, RDF-Doctor can divide the input in multiple chucks, in case of a large input or use the same input file. Next input chunk or file is parsed to detect encountered syntax errors if exist, then it recovers subset of detected errors, if automatic error recovery is enabled by the user. Finally, RDF-Doctor outputs a parse tree, a correction report, an error report, and an output file, including RDF file after error recovery.}
+		\label{Fig:Approach}  
+\end{figure}
+\begin{figure}
+	\centering
 	  	\includegraphics[width=.8\textwidth]{images/approachParseTree.png}
 		\caption{\textbf{Detection of syntax errors while traversing the parse tree.} Root node is the head of first rule in the grammar and the head of the parse tree, All the children of the root are either  non-terminal nodes represented by "NT" followed by an number or  terminal ones shown by "T" succeeded by a number. A syntax error can be detected on a non-terminal node when all of its terminals represent a sequence of tokens that is a statement including a syntax error. Red terminals represent error-inclusive statements and green ones for error-free statements.}
 		\label{Fig:approachParseTree}  
 \end{figure}
 
-\begin{figure}
-	\centering
-	  	\includegraphics[width=1\textwidth]{images/Approach.png}
-		\caption{\textbf{Overview of the proposed solution}}
-		\label{Fig:Approach}  
-\end{figure}
-\section{Representation in Pseudo-code}
+
 To functionally represent the approach of this study, Algorithm \ref{alg:algorithm-main} was engineered. It is showing the abstract behaviour of the developed program where \textbf{syntaxRules} variable combines both correct syntax rules and incorrect ones. A \textbf{While loop} traverse till the end of the file or a single chunk if a large file was separated in a couple of chunks. The \textbf{tokensToBeMatched}  variable collected a sequence of followed tokens to be matched either with correct or incorrect syntax rules.
 
 More importantly is the syntax errors finding, for that reason \textbf{tokensToBeMatched} is checked if its content are drawn by \textbf{incorrectSyntaxRules}, if it falls in that situation, then the content of \textbf{tokensToBeMatched} is considered as a syntax error and the parser sends a notification for those listener APIs  whose are interesting of further processing of the error. 
@@ -71,4 +75,12 @@ The correction of error is a feature that can be activated with the user options
  Furthermore, since the significant part in this study is the ability to identify syntax errors, the expected syntax errors need to be known to be injected in the grammar. \cite{TurtleTests:Online} plays an important role in syntax errors declaration. It contains several files of Turtle format to show both correct and incorrect syntaxes and it is supposed to be used to validate any parser that parses Turtle format, if it can recognized a incorrect syntax as an incorrect and vice verse . 
  
  In table \ref{tab:syntaxErrorCate}, we have categorized the syntax errors (found in the files at \cite{TurtleTests:Online}) into multiple groups. Each of those files can be identified if a file represents a correct syntax or incorrect one based on it title if it contains the word "Bad" which means it contains an incorrect syntax, then, it can be syntactically engineered in our grammar.  
- 
+ \begin{table*}[tbp]
+ 	\centering
+\includegraphics[width=5.5in]{images/TrimmedBigTable.pdf}
+		\setlength\abovecaptionskip{-10mm}
+
+	\caption{\textbf{Categories subset of syntax errors of N-Triple and Turtle serializations from Table \ref{tab:syntaxErrorCate}.} This table is a part of Table \ref{tab:syntaxErrorCate} to show one sample of each category, the serial numbers take the same order of rows in the referred table. Position represents a term related to Turtle and N-Triple serializations where the actual syntax error is located.}
+	\label{tab:trimmedTable}
+\end{table*}
+

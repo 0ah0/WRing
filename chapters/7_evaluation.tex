@@ -8,7 +8,9 @@ Ubuntu 18.04 machine with a 4th Gen Intel Core i5-
 1333MHz DDR3. RDF-Doctor was implemented using
 Java version 9. ANTLR framework version 4.7.1 was used to build the internal parser in RDF-Doctor, as well, as an imported library for compiling and running of it.  
 
-\section{Experiment 1: Validating with RDF Suite Test} In this experiment, RDF-Doctor was validated against RDF Suite Test, specifically Turtle serialization. Next text discusses the objective, shows the procedure, and finally, presents and discusses the result.     
+In the following sections, 3 experiments to evaluate RDF-Doctor are presented. Each section handles an experiment by exploring its objective, presenting its procedure, and finally, ending with demonstration and discussion of the  result.   
+
+\section{Validating with RDF Suite Test} In this experiment, RDF-Doctor was validated against RDF Suite Test, specifically Turtle serialization. Next text discusses the objective, shows the procedure, and finally, presents and discusses the result.     
 \subsection{Objective}
 The evaluation phase starts with \cite{TurtleTests:Online} where Test Suite files of Turtle serialization are found. There are multiple Test Suites for each of RDF serializations, recommend by W3 Consortium\footnote{https://www.w3.org/}. The proficiency of a parser for a certain serialization can be validated with these files found in a corresponding Test Suite. Therefore, the target of this experiment is to measure the proficiency of RDF-Doctor while testing with W3C Turtle Test Suite.
 
@@ -56,13 +58,11 @@ The test drives the result when dealing with either correct or incorrect Turtle 
 \caption{\textbf{Evaluation summary of RDF-Doctor for both correct and incorrect syntactic forms when validating with Turtle Test Suite \cite{TurtleTests:Online}.} "Detected" for Correct Syntax means that RDF-Doctor is able to recognize them as correct syntactic forms, whereas, for those which are not correctly recognized classified under "Not detected", similarly, "Detected" in Incorrect/Bad Syntax referred to recognized syntactic forms  as incorrect forms with releasing corresponding error messages, but "Not detected" specifies  incorrect syntactic forms  which are not recognized and might generate false positives.}
 \label{tab:TurtleSuit}
 \end{table}
-
 \begin{figure}[ht]
 \begin{center}
-		\includegraphics[scale=0.5,angle=0]{images/PieChartExperiment1.png}
-
-		\label{Fig:pieChartExperiment1}
-		\caption{\textbf{Result of Experiment 1 to evaluate  RDF-Doctor with Turtle Test Suite \cite{TurtleTests:Online}.} }
+		\includegraphics[scale=0.7,angle=0]{images/Experiment01.png}
+		\caption{\textbf{RDF-Doctor evaluation with Turtle Test Suite \cite{TurtleTests:Online}.} Each file in \cite{TurtleTests:Online} was classified of having a syntax error or not and then the final result was grouped into 4 categories: true positives (files with syntax errors are correctly identified); false positives (files without syntax errors are incorrectly identified); false negatives (files with syntax errors are incorrectly rejected); true negatives (files without syntax errors are correctly rejected).}
+		\label{Fig:Experiment01}
 \end{center}
 \end{figure}
 
@@ -80,13 +80,16 @@ For evaluation, the precision and recall are computed using the equations \ref{e
 
 
 
-\section{Experiment 2: Validating with Random Syntax Errors Generation}
+\section{Validating with Random Syntax Errors Generation}
+RDF-Doctor is being validated with injected syntax errors in random. What follows is a details of this experiment.
 \subsection{Objective}
 To get rid of the generated bias, this experiment uses both Poisson distribution and uniform random number generation methods. It also assumes a naive user editing an RDF input data, found in an environment similar to the one in Figure \ref{Fig:Motivation} and he is mistakenly generating some  syntax errors. Then, the inserted syntax errors evaluate the quality of RDF-doctor.
 
 
 \subsection{Procedure}
- In this experiment, a naive user who is working on on RDF input data for 8 hours and each one hour he is making a text change (insert/modify/delete) before submission to RDF-Doctor for parsing is simulated. The average number of making syntax errors per time interval is represented by a parameter $\lambda$. For example, if   $\lambda$ = 5, it means that five syntax errors are occurred per hour.  As an input for a Poisson distribution, 10 syntax errors per instance of time was supplied. Hence, for each instance of time we calculate value of $\lambda$, then the output value drives how many number of syntax errors are entitled for that instance of time. Next, Those syntax errors are arbitrarily selected from the type of errors range [1-61], drawn by rows of Table \ref{tab:syntaxErrorCate}. Beside locations of injected syntax errors were done in a semi-random method, usin  
+ In this experiment, a naive user who is working on on RDF input data for 8 hours and each one hour he is making a text change (insert/modify/delete) before submission to RDF-Doctor for parsing is simulated. The average number of making syntax errors per time interval is represented by a parameter $\lambda$. For example, if   $\lambda$ = 5, it means that five syntax errors are occurred per hour.  As an input for a Poisson distribution, 10 syntax errors per instance of time was supplied. Hence, for each instance of time we calculate value of $\lambda$, then the output value drives how many number of syntax errors are entitled for that instance of time.
+ 
+ Next, Those syntax errors are arbitrarily selected from the type of errors range [1-61], drawn by rows of Table \ref{tab:syntaxErrorCate}. Beside locations of injected syntax errors were controlled in a semi-random method, using the uniform random number generation to get a suggested line number if this location can be a correct location for such an error, otherwise, it can be nearby of the suggested line number on the top lines of the input file, such as Prefix and Base directives.   
 
 \subsection{Result and Discussion}
 
@@ -96,7 +99,7 @@ To get rid of the generated bias, this experiment uses both Poisson distribution
 	\begin{center}
 		\includegraphics[scale=0.45,angle=0]{images/Experiment02-01.png}
 		\setlength\belowcaptionskip{-5mm}
-		\caption{\textbf{Random syntax errors distribution.} Number and types of syntax errors between brackets for a user in an interval of 8 instances of time. A Poisson  distribution with $\lambda$ = 5 models an average of 5 syntax errors per instance of time. Each instance of time shows value of$\lambda$, assuming the user can generate [1-10] syntax errors per instance of time. A uniform random number generator computes type of errors from [1-61] syntax errors in Table \ref{tab:syntaxErrorCate}.} 
+		\caption{\textbf{Random syntax errors distribution.} Number and types of syntax errors between brackets for a user in an interval of 8 instances of time. A Poisson  distribution with $\lambda$ = 5 models an average of 5 syntax errors per instance of time. Each instance of time shows value of $\lambda$, assuming the user can generate [1-10] syntax errors per instance of time. Also, a uniform random number generator computes type of errors from [1-61] syntax errors in Table \ref{tab:syntaxErrorCate}. For example, at the 5\textsuperscript{th} instance of time, $\lambda$ = 3, then 3 types of syntax errors are randomly generated.} 
 		\label{Fig:experiment2}
 	\end{center}
 \end{figure}
@@ -107,7 +110,7 @@ To get rid of the generated bias, this experiment uses both Poisson distribution
 	\begin{center}
 		\includegraphics[scale=0.7,angle=0]{images/Experiment02-02.png}
 		\setlength\belowcaptionskip{-5mm}
-		\caption{\textbf{Result of error detection when syntax errors are randomly generated.}} 
+		\caption{\textbf{RDF-Doctor evaluation of error detection when syntax errors are randomly distributed.} For every instance of time, result shows number of errors between the injected one which were correctly detected by RDF-Doctor with giving corresponding error messages, pointed with "detected", and those one which were undetected and unrecognized by RDF-Doctor, referred as "undetected".} 
 		\label{Fig:Experiment02-02}
 	\end{center}
 \end{figure}
@@ -116,14 +119,16 @@ To get rid of the generated bias, this experiment uses both Poisson distribution
 	\begin{center}
 		\includegraphics[scale=0.7,angle=0]{images/Experiment02-03.png}
 				\setlength\belowcaptionskip{-5mm}
-		\caption{\textbf{Result of False Positives in Experiment 2 when syntax errors are randomly generated.}} 
+
+		\caption{\textbf{Result of False Positives during RDF-Doctor validating with randomly distributed syntax errors.} For each time instance, when number of syntax errors are inserted at random, that may result in false positives since one of the unrecognized syntax errors can be in-betweeen those inserted ones.} 
 		\label{Fig:Experiment02-03}
 				\setlength\belowcaptionskip{-5mm}
 		\setlength\abovecaptionskip{0mm}
 	\end{center}
 \end{figure}
 
-\section{Experiment 3: Impact of Number of Errors and  Volume on Behaviour and  Performance}
+\section{Number of Errors and Volume Impact on Behaviour and  Performance of RDF-Doctor}
+In last experiment, behaviour and  performance RDF-Doctor is being evaluated when a number of syntax errors and a volume of ontologies are changed. Details are shown in the following.  
 \subsection{Objective}
 
 In order to study the behaviour and the performance of RDF-Doctor, this experiment was performed. We are studying the effect of growing of number of syntax errors, as well as, the size of ontologies when it is changed. 
@@ -137,10 +142,10 @@ Two types of ontologies are used: small; and medium size. For the former, FOAF  
 Figure \ref{Fig:Experiment03-01} drives the impact of number of errors and the volume size. When introducing 10 syntax error, 9 out 10 were detected and one was not detected for both FOAF and DBpedia. 25 out 30 injected syntax errors in FOAF and 26 out 30 injected syntax errors in DBpedia were detected, the rest are undetected. Subsequently, 61 syntax errors were inserted 6 and 11 syntax errors go undetected in FOAF, DBpedia, respectively, the remaining are detected with expressive error messages to help users in resolving such errors. 
 \begin{figure}[ht]
 \begin{center}
-		\includegraphics[scale=0.45,angle=0]{images/Experiment03-01.png}
+		\includegraphics[scale=0.49,angle=0]{images/Experiment03-01.png}
 				\setlength\belowcaptionskip{-5mm}
 
-		\caption{\textbf{Result of Experiment 3 to evaluate the impact of number of errors and volume on RDF-Doctor.} FOAF, and DBpedia ontologies were used to evaluate RDF-Doctor, 10foaf, 30foaf, allfoaf are datasets of FOAF ontology, including with 10, 30, 61 random syntax errors, respectively, same is applicable for DBpedia. Detected errors are the errors which were properly identified by RDF-Doctor and the matched error messages were released, while undetected errors are those which not correctly recognized.}
+		\caption{\textbf{Impact of number of errors and volume on RDF-Doctor.} FOAF, and DBpedia ontologies were used to evaluate RDF-Doctor, 10foaf, 30foaf, allfoaf are datasets of FOAF ontology, including with 10, 30, 61 random syntax errors, respectively, same is applicable for DBpedia. Detected errors are the errors which were properly identified by RDF-Doctor and the matched error messages were released, while undetected errors are those which not correctly recognized.}
 		\label{Fig:Experiment03-01}
 
 \end{center}
@@ -154,10 +159,10 @@ Another essential point is number of false positives were shown in the result, a
 
 \begin{figure}[ht]
 \begin{center}
-		\includegraphics[scale=0.9,angle=0]{images/Experiment03-02.pdf}
+		\includegraphics[scale=0.8,angle=0]{images/Experiment03-02.pdf}
 		\setlength\belowcaptionskip{-5mm}
-		\setlength\abovecaptionskip{-15mm}
-		\caption{\textbf{Result of False Positives in Experiment 3.} Undetected errors generate false-positive errors and when the number of errors increase, the false-positives are comparably increased.}
+		\setlength\abovecaptionskip{-10mm}
+		\caption{\textbf{Result of False Positives when number of errors and volume sizes are varied.} Undetected errors generate false-positive errors and when the number of errors increase, the false-positives are comparably increased.}
 				\label{Fig:Experiment03-02}
 \end{center}
 \end{figure}
