@@ -1,6 +1,6 @@
 \chapter{Evaluation}
 \label{ch:evaluation}
-To evaluate RDF-Doctor, firstly, it was tested against standard test cases, including formats of correct and incorrect syntax in files, secondly, to get rid of bias, a random number of errors was generated using Poisson distribution and uniform random number generators for a period of time of 8 hours to simulate a couple of syntax errors, produced by an ontology user, lastly, the performance of RDF-Doctor was measured when both the number of errors and the volumes of ontologies are varied. This chapter discusses all of such experiments in the following text. 
+To evaluate RDF-Doctor, firstly, it was tested against standard test cases, including formats of correct and incorrect syntax in files, secondly, to get rid of bias, a random number of errors was generated using Poisson distribution and uniform random number generators for a period of time of 8 time instances to simulate a couple of syntax errors, produced by an ontology user, lastly, the performance of RDF-Doctor was measured when both the number of errors and the volumes of ontologies are varied. This chapter discusses all of such experiments in the following text. 
 \section{Implementation}
 Experiments were run on a Linux
 Ubuntu 18.04 machine with a 4th Gen Intel Core i5-
@@ -87,15 +87,9 @@ To get rid of the generated bias, this experiment uses both Poisson distribution
 
 
 \subsection{Procedure}
- In this experiment, a naive user who is working on on RDF input data for 8 hours and each one hour he is making a text change (insert/modify/delete) before submission to RDF-Doctor for parsing is simulated. The average number of making syntax errors per time interval is represented by a parameter $\lambda$. For example, if   $\lambda$ = 5, it means that five syntax errors are occurred per hour.  As an input for a Poisson distribution, 10 syntax errors per instance of time was supplied. Hence, for each instance of time we calculate value of $\lambda$, then the output value drives how many number of syntax errors are entitled for that instance of time.
+ In this experiment, a naive user who is working on on RDF input data for 8 time instances and each one hour he is making a text change (insert/modify/delete) before submission to RDF-Doctor for parsing is simulated. The average number of making syntax errors per time interval is represented by a parameter $\lambda$. For example, if   $\lambda$ = 5, it means that five syntax errors are occurred per hour.  As an input for a Poisson distribution, 10 syntax errors per instance of time was supplied. Hence, for each instance of time we calculate value of $\lambda$, then the output value drives how many number of syntax errors are entitled for that instance of time.
  
- Next, Those syntax errors are arbitrarily selected from the type of errors range [1-61], drawn by rows of Table \ref{tab:syntaxErrorCate}. Beside locations of injected syntax errors were controlled in a semi-random method, using the uniform random number generation to get a suggested line number if this location can be a correct location for such an error, otherwise, it can be nearby of the suggested line number on the top lines of the input file, such as Prefix and Base directives.   
-
-\subsection{Result and Discussion}
-
-
-
-	\begin{figure}[ht]
+ 	\begin{figure}[ht]
 	\begin{center}
 		\includegraphics[scale=0.45,angle=0]{images/Experiment02-01.png}
 		\setlength\belowcaptionskip{-5mm}
@@ -104,7 +98,7 @@ To get rid of the generated bias, this experiment uses both Poisson distribution
 	\end{center}
 \end{figure}
 
-
+ Next, Those syntax errors are arbitrarily selected from the type of errors range [1-61], drawn by rows of Table \ref{tab:syntaxErrorCate}. Beside locations of injected syntax errors were controlled in a semi-random method, using the uniform random number generation to get a suggested line number if this location can be a correct location for such an error, otherwise, it can be nearby of the suggested line number on the top lines of the input file, such as Prefix and Base directives.   
 
 	\begin{figure}[ht]
 	\begin{center}
@@ -114,20 +108,24 @@ To get rid of the generated bias, this experiment uses both Poisson distribution
 		\label{Fig:Experiment02-02}
 	\end{center}
 \end{figure}
+\subsection{Result and Discussion}
+RDF-Doctor shows promising result in Figure \ref{Fig:Experiment02-02}. In half of the time instances, only one syntax error was missed and goes unrecognized, the remaining were detected. The rest of the times instances show zero or few errors, except the time instance number 6\textsuperscript{th}, shows 5 undetected syntax errors, this can be due to fall most of the unrecognized syntax errors in this time instance since the insertion of the syntax errors was done randomly.  
 
 	\begin{figure}[ht]
 	\begin{center}
 		\includegraphics[scale=0.7,angle=0]{images/Experiment02-03.png}
 				\setlength\belowcaptionskip{-5mm}
 
-		\caption{\textbf{Result of False Positives during RDF-Doctor validating with randomly distributed syntax errors.} For each time instance, when number of syntax errors are inserted at random, that may result in false positives since one of the unrecognized syntax errors can be in-betweeen those inserted ones.} 
+		\caption{\textbf{Result of false positives during RDF-Doctor validating with randomly distributed syntax errors.} For each time instance, when number of syntax errors are inserted at random, that may result in false positives since one of the unrecognized syntax errors can be in-between those inserted ones.} 
 		\label{Fig:Experiment02-03}
 				\setlength\belowcaptionskip{-5mm}
 		\setlength\abovecaptionskip{0mm}
 	\end{center}
 \end{figure}
+Figure \ref{Fig:Experiment02-03} ex habits the comparison of the number of the injected syntax errors versus the number of false positives of this experiment. The result presents a high number of false positive, but this again due the probability of existing one or more of the unrecognized syntax errors. We think that with the new version of ANTLR this issue can be solved or by optimizing RDF-Doctor to handle this internally in another level of syntax error detection beside the error production rules in the grammar. 
 
-\section{Number of Errors and Volume Impact on Behaviour and  Performance of RDF-Doctor}
+
+\section{Impact of Number of Errors and Volume}
 In last experiment, behaviour and  performance RDF-Doctor is being evaluated when a number of syntax errors and a volume of ontologies are changed. Details are shown in the following.  
 \subsection{Objective}
 
@@ -162,7 +160,7 @@ Another essential point is number of false positives were shown in the result, a
 		\includegraphics[scale=0.8,angle=0]{images/Experiment03-02.pdf}
 		\setlength\belowcaptionskip{-5mm}
 		\setlength\abovecaptionskip{-10mm}
-		\caption{\textbf{Result of False Positives when number of errors and volume sizes are varied.} Undetected errors generate false-positive errors and when the number of errors increase, the false-positives are comparably increased.}
+		\caption{\textbf{Result of false positives when number of errors and volume sizes are varied.} Undetected errors generate false positive errors and when the number of errors increase, the false positives are comparably increased.}
 				\label{Fig:Experiment03-02}
 \end{center}
 \end{figure}
