@@ -13,39 +13,78 @@ This section covers the core components of the approach, then discusses the main
 
 \subsection{ANTLR: The Core Component}
 
-As a first component is the ANTLR framework, which is used to automatically generate a parser based on the pre-defined error production rules and the grammar.
+As a first component is the ANTLR framework, which is used to automatically generate a parser based on the predefined error production rules and the grammar.
 %In order to find a parser which can accept the error production rules in its grammar, our choice was to use ANTLR framework to automatically generate the required parser.
 %Equally important lots of handy features in ANTLR motivate its usage in the proposed solution to generate the internal parser, and also as an imported library for compiling and  running  of RDF-Doctor. 
 The ANTLR framework has several important features: 1) a given grammar can equip with error production rules and when a couple of tokens match such rules, the parser will fire an error notification; 2) it uses a parse tree to parse input tokens and the view of this parse tree can be delivered as one of the outputs to the user at the end of parsing process; and 3)it supports the auto-generation of parsers in different programming languages.
 %which is an one-to-many added value, where one grammar file can automatically generate of the programming languages.
+
+%\begin{itemize}
+% \item \textbf {Input}: It is the role of the user to provide an RDF file with certain options, such as 1) enabling/disabling of the error correction; 2) showing an error report of JSON\footnote{https://www.json.org/} or text format; and 3) concealing/showing up the parse tree.
+
+
+%\item \textbf{Processing}: starts with preparing the input to be parsed in the following workflow: 1)it reads the input; 2) splits it into smaller pieces if needed; 3) parses the input for each slice (if many); and 4) corrects a subset of detected syntax errors. 
+%This phase utilizes the parser built based on a predefined grammar.
+%it requires ANTLR library for parsing, and some options from the user to activate/deactive some features of the solution.   
+%\item \textbf{Output}: provides the reports after processing phase, %including 1) an error report to announce the detected syntax errors; 2) a correction report which lists the recovered syntax errors; and 3) an output file after healing some of the detected syntax errors\todo{It is not clear what is the point number 3}; and 4) a frame contains the parse tree. 
+%Both, the correction report and the output file require to be enabled in order to be generated. 
+%\end{itemize}
+
 
 \subsection{Main Processing Steps}
 
 \begin{figure}
 	\centering
 	  	\includegraphics[width=1\textwidth]{images/Approach.png}
-		\caption{\textbf{The main workflow of RDF-Doctor.} The user writes or edits his own RDF file, then sends it to RDF-Doctor for parsing.
+		\caption{\textbf{RDF-Doctor workflow.} The user writes or edits his own RDF file, then sends it to RDF-Doctor for parsing.
 		Next, RDF-Doctor can divide the input in multiple chucks, in case of a large input or use the same input file. 
 		Each input chunk or file is parsed to detect any syntax errors if exist, then it recovers subset of detected errors, if the automatic error recovery feature is enabled by the user. 
 		Finally, RDF-Doctor outputs a parse tree, a correction report, an error report, and an output file, including RDF file after error recovery.}
 		\label{Fig:Approach}  
 \end{figure}
 
-The main workflow used in RDF-Doctor is illustrated in Figure \ref{Fig:Approach}.
+The main workflow used in RDF-Doctor is illustrated in Figure \ref{Fig:Approach} and Figure \ref{Fig:Architecture}.
 It comprises four steps which are explained in the following:
 %shows the technique used to handle an RDF text, including a couple of  syntax errors. 
 %In the following, the main milestones of this approach are explained in 4 sequential steps:
 
  \begin{enumerate}[label=(\alph*)]
-\item \textbf{Reading RDF files}: an ordinary RDF file is submitted to RDF-Doctor.
-Initially, RDF-Doctor reads the given file as illustrated in Figure \ref{Fig:Approach} (a). 
+\item \textbf{Reading RDF files}: an ordinary RDF file is submitted to RDF-Doctor, this is the Input phase, as described in Figure \ref{Fig:Architecture}.
+Initially, in the Process phase in Figure \ref{Fig:Architecture}, RDF-Doctor reads the given file, depicted also in Figure \ref{Fig:Approach} (a). 
 In case that file is too large, it segments the file into two or more chunks based on the volume. 
-Each chunk is parsed and processed separately from others in this step.  
+Each chunk is parsed and processed separately from others in this step.
+%%%%%%%%%%%%%%%%%%%%
+It is a role of the user to provide certain options when submitting the input RDF file, such as 1) enabling/disabling of the error correction; 2) showing an error report of JSON\footnote{https://www.json.org/} or a text format; and 3) concealing/showing up the parse tree diagram.
+%%%%%%%%%%%%%%%%%%%%
 %{Figure \ref{Fig:Approach}}(a) simulates the actual work of this step where a submission of an RDF file with syntax errors is assumed. 
-\item \textbf{Detecting of syntax errors}: the parser has predefined rules for syntax errors, where %(these rules are titled with error production rules, presented in Error Recovery Methodologies in Chapter \ref{ch:preliminaries}), 
+\item \textbf{Detecting of syntax errors}: parsing is the 3\textsuperscript{th} step in  the Process phase in Figure \ref{Fig:Architecture}, in which the parser has predefined rules for syntax errors,  %(these rules are titled with error production rules, presented in Error Recovery Methodologies in Chapter \ref{ch:preliminaries}), 
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[scale=0.5]{images/architecture.pdf}
+	\setlength\belowcaptionskip{-5mm}
+		\setlength\abovecaptionskip{-2mm}		\caption{\textbf{RDF-Doctor architecture.} It consists of Input, Processing, and Output phases. 
+		In the Input phase, users send their RDF data. The Processing phase reads these data, splits them in case of large volumes, then continues parsing and recovery of certain errors.
+		In this phase a user action is action is required to enable/disable the error recovery.
+	    Finally, Output phase presents reports for error detection and recovered error as well as the parse tree.}
+		\label{Fig:Architecture}
+	\end{center}
+\end{figure}
 once a rule is matched with a sequence of input tokens, it raises a flag to the error listener API which later is listed in the final error report. 
 Reading of input tokens continues till the end of the file while searching for any match in order to identify potential syntax errors. 
-In {Figure \ref{Fig:Approach}}(b) lines surrounded with \emph{red color} depict the detected lines which contain syntax errors. To have a deep thought on the internal works of the parser to detect syntax errors using a parse tree, Figure \ref{Fig:approachParseTree} shows how each rule is a box containing either a correct syntax or an incorrect one, each rule is represented by a sub-tree having empty or one and more non-terminals (considered as rules in the grammar) and one and more terminals (they are lexical forms of input tokens). A sub-tree produces an syntax errors, if all of its terminals are formed one of error production rules, shown in \emph{red color} in Figure \ref{Fig:approachParseTree}. Hence both sub-trees 2\textsuperscript{nd}, and 4\textsuperscript{th} are rules with a sequence of tokens producing syntax errors.  Meanwhile other sub-tree 1\textsuperscript{st}, and 3\textsuperscript{rd}, and 5\textsuperscript{th} with terminals in \emph{green color}  are including  correct syntactic  forms.
+In {Figure \ref{Fig:Approach}}(b) lines surrounded with \emph{red color} depict the detected lines which contain syntax errors.
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+To have a deep thought on the internal works of the parser to detect syntax errors using a parse tree, Figure \ref{Fig:approachParseTree} shows how each rule is a box containing either a correct syntax or an incorrect one, each rule is represented by a sub-tree having empty or one and more non-terminals (considered as rules in the grammar) and one and more terminals (they are lexical forms of input tokens). A sub-tree produces an syntax errors, if all of its terminals are formed one of error production rules, shown in \emph{red color} in Figure \ref{Fig:approachParseTree}. Hence both sub-trees 2\textsuperscript{nd}, and 4\textsuperscript{th} are rules with a sequence of tokens producing syntax errors.  Meanwhile other sub-tree 1\textsuperscript{st}, and 3\textsuperscript{rd}, and 5\textsuperscript{th} with terminals in \emph{green color}  are including  correct syntactic  forms.
+
+
+\item \textbf {Healing a part of encountered syntax errors}:%%%%%%%%%%%%%%%%%%%%
+ { Figure} \ref{Fig:Architecture} shows this feature as one of the processing components. %%%%%%%%%%%%%%%%%%%%
+Firstly, it needs to be manually activated by the user, by default, it is disabled. The method of  syntax error recovery currently focuses on a certain type of errors which has only one predefined solution to correct them. Examples of such errors are  missing of a \emph{dot at the end of a triple}, missing a \emph{semi-colon after multiple predicates sharing same subject}, or missing a \emph{comma after multiple objects having same subject and predicate}. Lines surrounded with green color in {Figure \ref{Fig:Approach}}(c) represents some of healed lines from error at the end of the correction phase. 
+
+\item\textbf {Producing of an output}: in the output phase, demonstrated in Figure \ref{Fig:Architecture}, but in this case,  it is assumed that the user has activated the automatic correction feature.  
+{Figure \ref{Fig:Approach}}(d) describes how the output file after recovery  looks like. It shows lines containing errors are already recovered in an automatic fashion, whereas other  lines still are unhealed.
+Commonly, errors that cannot be recovered by RDF-Doctor without an intervention of the user, are those errors which can have several solutions, for example, a literal with multiple language tags like "me"@en@de, in addition, there exist errors with undefined or unknown recovery solution, for example, missing of a user-defined prefix declaration for a certain local namespace which cannot be guessed since it is only known by the user himself. 
+\end{enumerate} 
 \begin{figure}
 	\centering
 	  	\includegraphics[width=.8\textwidth]{images/approachParseTree.png}
@@ -55,14 +94,6 @@ In {Figure \ref{Fig:Approach}}(b) lines surrounded with \emph{red color} depict 
 		A syntax error can be detected on a non-terminal node when all of its terminals represent a sequence of tokens that is a statement including a syntax error. Red terminals represent error-inclusive statements and green ones for error-free statements.}
 		\label{Fig:approachParseTree}  
 \end{figure}
-
-\item \textbf {Healing a part of encountered syntax errors}: this feature firstly needs to be manually activated by the user, by default, it is disabled. The method of  syntax error recovery currently focuses on a certain type of errors which has only one predefined solution to correct them. Examples of such errors are  missing of a \emph{dot at the end of a triple}, missing a \emph{semi-colon after multiple predicates sharing same subject}, or missing a \emph{comma after multiple objects having same subject and predicate}. Lines surrounded with green color in {Figure \ref{Fig:Approach}}(c) represents some of healed lines from error at the end of the correction phase. 
-
-\item\textbf {Producing of an output}: in this example, it is assumed that the user has activated the automatic correction feature.  
-{Figure \ref{Fig:Approach}}(d) describes how the output file after recovery  looks like. It shows lines containing errors are already recovered in an automatic fashion, whereas other  lines still are unhealed .
-Commonly, errors that cannot be recovered by RDF-Doctor without an intervention of the user, are those errors which can have several solutions, for example, a literal with multiple language tags like "me"@en@de, in addition, there exist errors with undefined or unknown recovery solution, for example, missing of a user-defined prefix declaration for a certain local namespace which cannot be guessed since it is only known by the user himself. 
-\end{enumerate} 
-
 
 
 To functionally represent the approach of this study, Algorithm \ref{alg:algorithm-main} was engineered. 

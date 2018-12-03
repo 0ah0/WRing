@@ -1,21 +1,36 @@
 \chapter{Evaluation}
 \label{ch:evaluation}
-To evaluate RDF-Doctor, firstly, it was tested against standard test cases, including formats of correct and incorrect syntax in files, secondly, to get rid of bias, a random number of errors was generated using Poisson distribution and uniform random number generators for a period of time of 8 time instances to simulate a couple of syntax errors, produced by an ontology user, lastly, the performance of RDF-Doctor was measured when both the number of errors and the volumes of ontologies are varied. This chapter discusses all of such experiments in the following text. 
-\section{Implementation}
-Experiments were run on a Linux
-Ubuntu 18.04 machine with a 4th Gen Intel Core i5-
-4300U CPU, 3MB Cache, 2.90GHz with 8GB RAM
-1333MHz DDR3. RDF-Doctor was implemented using
-Java version 9. ANTLR framework version 4.7.1 was used to build the internal parser in RDF-Doctor, as well, as an imported library for compiling and running of it.  
 
-In the following sections, 3 experiments to evaluate RDF-Doctor are presented. Each section handles an experiment by exploring its objective, presenting its procedure, and finally, ending with demonstration and discussion of the  result.   
+This chapter discusses three different experiments that are conducted to check for effectiveness and efficiency of RDF-Doctor.
+First experiment checks the effectiveness of RDF-Doctor against set of test cases provided in~\cite{TurtleTests:Online}.
+In the second experiment, a random number of errors is generated using a Poisson Distribution for a period of eight instances of time while a Uniform Distribution randomly selects types of errors for each instance of time, respectively.
+%number generators for a period of time of 8 time instances to simulate a couple of syntax errors, produced by an ontology user, 
+Finally, the efficiency of RDF-Doctor is measured when both, the number of errors and the size of ontologies are changed. 
 
-\section{Validating with RDF Suite Test} In this experiment, RDF-Doctor was validated against RDF Suite Test, specifically Turtle serialization. Next text discusses the objective, shows the procedure, and finally, presents and discusses the result.     
+In the following sections, three experiments designed to evaluate RDF-Doctor are presented. 
+Each section describes a particular experiment by giving its objective, presenting the followed procedure, and discussing the achieved results.
+
+\section{Experiment Configuration}
+
+All experiments are run on a Linux Ubuntu 18.04 machine with a 4th Gen Intel Core i5-4300U CPU, 3MB Cache, 2.90GHz with 8GB RAM 1333MHz DDR3. 
+RDF-Doctor is implemented using Java version 9. 
+ANTLR framework version 4.7.1 is used to build the internal parser in RDF-Doctor.%, as well, as an imported library for compiling and running of it.  
+
+\section{Validating with RDF Suite Test} 
+In this experiment, RDF-Doctor was validated against RDF Suite Test, specifically Turtle serialization. 
+%Next text discusses the objective, shows the procedure, and finally, presents and discusses the result.  
+
 \subsection{Objective}
-The evaluation phase starts with \cite{TurtleTests:Online} where Test Suite files of Turtle serialization are found. There are multiple Test Suites for each of RDF serializations, recommend by W3 Consortium\footnote{https://www.w3.org/}. The proficiency of a parser for a certain serialization can be validated with these files found in a corresponding Test Suite. Therefore, the target of this experiment is to measure the proficiency of RDF-Doctor while testing with W3C Turtle Test Suite.
+
+There exists a number of Test Suites for each RDF serializations which are recommended by W3 Consortium (W3C) in ~\cite{TurtleTests:Online}.
+%The evaluation phase starts with where a Test Suite defined in the Turtle serialization. 
+These Test Suites can be used to check for the proficiency of a parser with respect to a certain serialization.% can be validated with these files found in a corresponding Test Suite. 
+Therefore, the target of this experiment is to measure the proficiency of RDF-Doctor while testing with the W3C Turtle Test Suite.
 
 \subsection{Procedure}
-Files at \cite{TurtleTests:Online} were prompted to validate a parser that parses a Turtle serialization, hence, it was used to test RDF-Doctor. Metrics of the experiment are both Precision and Recall, donated by equation \ref{eq:1} and \ref{eq:1} sequentially. The former measures the percentage of errors which correctly flagged as syntax errors, while the latter calculates the percentage of actual syntax errors which correctly recognized. Total number of files at \cite{TurtleTests:Online} is 275, divided to parts: files include  correct syntaxes; and files contain incorrect syntaxes, the latter is represented with 65 files, and the remaining are related to the former, as demonstrated by Table \ref{tab:TurtleSuit}. 
+
+Files at \cite{TurtleTests:Online} were prompted to validate a parser that parses a Turtle serialization, hence, it was used to test RDF-Doctor. 
+Metrics of the experiment are both Precision and Recall, donated by equation \ref{eq:1} and \ref{eq:1} sequentially. The former measures the percentage of errors which correctly flagged as syntax errors, while the latter calculates the percentage of actual syntax errors which correctly recognized. Total number of files at \cite{TurtleTests:Online} is 275, divided to parts: files include  correct syntaxes; and files contain incorrect syntaxes, the latter is represented with 65 files, and the remaining are related to the former, as demonstrated by Table \ref{tab:TurtleSuit}. 
  
 \begin{table}[]
 \centering
@@ -60,7 +75,7 @@ The test drives the result when dealing with either correct or incorrect Turtle 
 \end{table}
 \begin{figure}[ht]
 \begin{center}
-		\includegraphics[scale=0.7,angle=0]{images/Experiment01.png}
+		\includegraphics[scale=0.8,angle=0]{images/Experiment01.png}
 		\caption{\textbf{RDF-Doctor evaluation with Turtle Test Suite \cite{TurtleTests:Online}.} Each file in \cite{TurtleTests:Online} was classified of having a syntax error or not and then the final result was grouped into 4 categories: true positives (files with syntax errors are correctly identified); false positives (files without syntax errors are incorrectly identified); false negatives (files with syntax errors are incorrectly rejected); true negatives (files without syntax errors are correctly rejected).}
 		\label{Fig:Experiment01}
 \end{center}
@@ -102,7 +117,7 @@ To get rid of the generated bias, this experiment uses both Poisson distribution
 
 	\begin{figure}[ht]
 	\begin{center}
-		\includegraphics[scale=0.7,angle=0]{images/Experiment02-02.png}
+		\includegraphics[scale=0.6,angle=0]{images/Experiment02-02.png}
 		\setlength\belowcaptionskip{-5mm}
 		\caption{\textbf{RDF-Doctor evaluation of error detection when syntax errors are randomly distributed.} For every instance of time, result shows number of errors between the injected one which were correctly detected by RDF-Doctor with giving corresponding error messages, pointed with "detected", and those one which were undetected and unrecognized by RDF-Doctor, referred as "undetected".} 
 		\label{Fig:Experiment02-02}
@@ -140,7 +155,7 @@ Two types of ontologies are used: small; and medium size. For the former, FOAF  
 Figure \ref{Fig:Experiment03-01} drives the impact of number of errors and the volume size. When introducing 10 syntax error, 9 out 10 were detected and one was not detected for both FOAF and DBpedia. 25 out 30 injected syntax errors in FOAF and 26 out 30 injected syntax errors in DBpedia were detected, the rest are undetected. Subsequently, 61 syntax errors were inserted 6 and 11 syntax errors go undetected in FOAF, DBpedia, respectively, the remaining are detected with expressive error messages to help users in resolving such errors. 
 \begin{figure}[ht]
 \begin{center}
-		\includegraphics[scale=0.49,angle=0]{images/Experiment03-01.png}
+		\includegraphics[scale=0.55,angle=0]{images/Experiment03-01.png}
 				\setlength\belowcaptionskip{-5mm}
 
 		\caption{\textbf{Impact of number of errors and volume on RDF-Doctor.} FOAF, and DBpedia ontologies were used to evaluate RDF-Doctor, 10foaf, 30foaf, allfoaf are datasets of FOAF ontology, including with 10, 30, 61 random syntax errors, respectively, same is applicable for DBpedia. Detected errors are the errors which were properly identified by RDF-Doctor and the matched error messages were released, while undetected errors are those which not correctly recognized.}
