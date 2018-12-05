@@ -128,9 +128,9 @@ In case the error is related to the header, then the injection is applied into P
 
 \begin{figure}[ht]
 	\begin{center}
-		\includegraphics[scale=0.45,angle=0]{images/Experiment02-01.png}
+		\includegraphics[scale=0.55,angle=0]{images/Experiment02-01.png}
 		\setlength\belowcaptionskip{-5mm}
-		\caption{\textbf{The distribution of syntax errors.} Number and types of syntax errors between brackets for an interval of eight instances of time. 
+		\caption{\textbf{Distribution of syntax errors.} Number and types of syntax errors between brackets for an interval of eight instances of time. 
 		A Poisson Distribution with the parameter $\lambda$ = 5 models an average of five syntax errors per instance of time. 
 		Each instance of time shows value of $\lambda$, assuming the ontology engineer can generate between 1 to 10 syntax errors per instance of time. 
 		Also, a Uniform Distribution generates random numbers in the interval between 1 and 61, to select the error type as listed Appendix~\ref{ch:synErrCategories}. 
@@ -142,8 +142,7 @@ In case the error is related to the header, then the injection is applied into P
 
 	\begin{figure}[ht]
 	\begin{center}
-		\includegraphics[scale=0.3,angle=0]{images/Experiment02-02.png}
-		\setlength\belowcaptionskip{-5mm}
+		\includegraphics[scale=1,angle=0]{images/Experiment02-02.png}
 		\caption{\textbf{Error detection when syntax errors are randomly distributed.} 
 		For each instance of time, a number of errors which are detected or not detected by RDF-Doctor are shown.
 		%"detected", and those one which were undetected and unrecognized by RDF-Doctor, referred as "undetected".
@@ -155,7 +154,7 @@ In case the error is related to the header, then the injection is applied into P
 \subsection{Result and Discussion}
 
 Experimental results illustrated in Figure \ref{Fig:Experiment02-02} shows that RDF-Doctor in majority of the cases is able to correctly recognize syntax errors. 
-More specifically, in half of the instances time, appart from one syntax error not recognized, all of them are identified.
+More specifically, in half of the instances time, apart from one syntax error not recognized, all of them are identified.
 In time instance five, all errors are detected.
 However, there are some instances of time where more than one error is not recognized, such as time instance number 6\textsuperscript{th} with five undetected syntax errors.
 This can be due to fall most of the unrecognized syntax errors in this time instance since the insertion of the syntax errors was done randomly{this sentence is not clear, and you have to give a better reason, not only saying that they are generated randomly, bcz this applies for all}.
@@ -210,7 +209,7 @@ In all cases, for each error that is detected an expressive message is given to 
 
 \begin{figure}[ht]
 \begin{center}
-		\includegraphics[scale=0.3,angle=0]{images/Experiment03-01.png}
+		\includegraphics[scale=1,angle=0]{images/Experiment03-01.png}
 				\setlength\belowcaptionskip{-5mm}
 		\caption{\textbf{Impact of number of errors and the size on error detection.} 
 		FOAF and DBpedia ontologies are used to evaluate RDF-Doctor, 10foaf, 30foaf, allfoaf are datasets of FOAF ontology, including with 10, 30, 61 random syntax errors, respectively, same is applicable for DBpedia. Detected errors are the errors which were properly identified by RDF-Doctor and the matched error messages were released, while undetected errors are those which not correctly recognized.}
@@ -226,9 +225,9 @@ This comes as consequence of increasing number of unrecognized syntax errors, fo
 
 \begin{figure}[ht]
 \begin{center}
-		\includegraphics[scale=0.8,angle=0]{images/Experiment03-02.pdf}
+		\includegraphics[scale=0.8,angle=0]{images/Experiment03-02.png}
 		\setlength\belowcaptionskip{-5mm}
-		\setlength\abovecaptionskip{-10mm}
+		\setlength\abovecaptionskip{-50mm}
 		\caption{\textbf{Result of false positives when number of errors and ontology size are increased.} Unrecognized errors may generate more false positive errors than actual errors. 
 		%and when the number of errors increase, the false positives are comparably increased.
 		}
@@ -246,9 +245,9 @@ As a conclusion to this experiment, approximately more than 90\% of injected syn
 
 \begin{figure}[ht]
 \begin{center}
-		\includegraphics[scale=0.7,angle=0]{images/Experiment03-03.png}
+		\includegraphics[scale=1,angle=0]{images/Experiment03-03.png}
+		\setlength\abovecaptionskip{-20mm}
 		\setlength\belowcaptionskip{-5mm}
-		\setlength\abovecaptionskip{0mm}
 		\caption{\textbf{Performance evaluation when number of errors and ontology size is changes, respectively.} 
 		Performance is calculated with required processing time, i.e., in miliseconds (ms) in both cases: 1) 10, 30, and 61 injected syntax errors; 2) FOAF ontology with 631 triples and DBpedia ontology, with 30,790 triples.}
 \label{Fig:Experiment03-03}

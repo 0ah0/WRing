@@ -1,10 +1,26 @@
 \begin{appendices}
 
 
-\chapter{Parser Rules}
+\chapter{RDF-Doctor Grammar}
 \label{ch:appendix}
 
-\begin{lstlisting}[breaklines,basicstyle=\ttfamily]
+% Applies only when you use it
+\lstset{
+    basicstyle=\color{blue},%
+    breaklines=true,%                                      allow line breaks
+    moredelim=[s][\color{green!50!black}\ttfamily]{'}{'},% single quotes in green
+    moredelim=*[s][\color{black}\ttfamily]{options}{\}},%  options in black (until trailing })
+    commentstyle={\color{gray}\itshape},%                  gray italics for comments
+    morecomment=[l]{//},%                                  define // comment
+    emph={%
+        STRING%                                            literal strings listed here
+        },emphstyle={\color{blue}\ttfamily},%              and formatted in blue
+    alsoletter={:,|,;},%
+    morekeywords={:,|,;},%                                 define the special characters
+    keywordstyle={\color{black}},%                         and format them in black
+}
+
+\begin{lstlisting}
 grammar Turtle;
 
 @parser::members { // add members to check Namespace declaration

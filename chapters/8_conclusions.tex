@@ -2,16 +2,45 @@
 \label{ch:conclusions}
 
 \section{Conclusions}
-This chapter concludes this study. Mainly, the focus was to detect all syntax errors in RDF input. To achieve the referred goal, The ANTLR tool as a parser generator was used. As a use case for this study, RDF serialization formats of both Turtle and NTriples were investigated, where the grammar that describes there syntax was invented.
 
-In addition, to detect the syntax errors, error production rules were specified in the grammar. In case a sequence of input matches one of such rule, the parser will rise an error occurrence notification, then the error listeners class will save this error to a list of syntax errors. This list of errors later can help to recover some of these errors if it has one straight forward error which has a well-know syntax format. 
+This thesis presents RDF-Doctor, an approach for fault-tolerant and automatic error detection and recovery for RDF data.
+For error detection, RDF-Doctor primarily relies on a pre-defined set of grammar rules which cover a comprehensive list of syntactic errors occurring commonly in RDF data.
+The ANTLR framework is used to generate the parser based on the given grammar.
+A number of additional modules are developed to deal with a number of unrecognized errors.
+For each of the detected errors, RDF-Doctor provides friendly and precise messages, helping users to easily locate and correct them.
+Furthermore, RDF-Doctor using internal mechanism for automatic correct is able to recover a subset of syntax errors any manual intervention.
 
-According to our research in the related work in Chapter \ref{ch:related}, it can be clearly seen that there is a shortage of tools which list all the syntax errors in RDF input. This shortage is found in both RDF editors to create, modify RDF text and as well, in plug-ins which dealing with RDF syntax checking. To fill the gap, this study starts with searching the available possibilities to achieve the goal. Thanks for ANTLR to help us achieving the objectives by provides a grammar which can hold error production rules. 
+We performed three different empirical evaluation to asses the effectiveness and efficiency of RDF-Doctor on various scenarios, such as: 1) with a Suite of Tests pre-defined by W3C Consortium; 2) with a synthetic experiment simulating a working day of an ontology engineer, where the number and the type of syntax errors are randomly generated; and 3) by increasing the size of ontologies being parsed and the number of syntax errors.
+The achieved results provide evidence that the effectiveness of RDF-Doctor is higher for each error that is modeled in the grammar. 
+Furthermore, the efficiency is not impacted by the number and the type of errors, but from the size of the ontology, which is expended, since with an increase number of triples to be parsed, RDF-Doctor consumes more time. 
 
-As a use case, Turtle, one of RDF serialization formats, was used in this study. The grammar designed based on the syntax of turtle. However, it is easy to replace with another RDF serialization formats to achieve the same objective. Additionally, the grammar can be changed to generate a parser in a different programming language with the help of ANTLR framework.   
+
+%This chapter concludes this study. Mainly, the focus was to detect all syntax errors in RDF input. To achieve the referred goal, The ANTLR tool as a parser generator was used. As a use case for this study, RDF serialization formats of both Turtle and NTriples were investigated, where the grammar that describes there syntax was invented.
+
+%In addition, to detect the syntax errors, error production rules were specified in the grammar. In case a sequence of input matches one of such rule, the parser will rise an error occurrence notification, then the error listeners class will save this error to a list of syntax errors. This list of errors later can help to recover some of these errors if it has one straight forward error which has a well-know syntax format. 
+
+%According to our research in the related work in Chapter \ref{ch:related}, it can be clearly seen that there is a shortage of tools which list all the syntax errors in RDF input. This shortage is found in both RDF editors to create, modify RDF text and as well, in plug-ins which dealing with RDF syntax checking. To fill the gap, this study starts with searching the available possibilities to achieve the goal. Thanks for ANTLR to help us achieving the objectives by provides a grammar which can hold error production rules. 
+
+%As a use case, Turtle, one of RDF serialization formats, was used in this study. The grammar designed based on the syntax of turtle. However, it is easy to replace with another RDF serialization formats to achieve the same objective. Additionally, the grammar can be changed to generate a parser in a different programming language with the help of ANTLR framework.   
+
+\section{Limitations}
+
+- limitation only to the Turtle and N-Triples
+
+- automatic error correction support only a subset of errors
+
+- for particular errors, a high number of false-positive error are recognized.
+
 \section{Future Work}
+
 The semantic web is rapidly developed, by introducing new tools, apps, plugins, can be of different programming language. As well, there are several RDF serialization  formats have same shortage of fault-tolerant parser. 
 Since it a very wide and an open research field, a couple of ideas come to our mind which can be our next step in the future. 
+
+\subsection{Improve Error Detection}
+
+\subsection{Comprehensive Error Recovery}
+
+\subsection{Support other RDF Serializations}
 %TODO:{check here}
 %\subsection{Support of Other RDF Serializations}
   %   Designing parsers to support the different RDF serialization formats.
