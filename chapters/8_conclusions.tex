@@ -4,15 +4,14 @@
 \section{Conclusions}
 
 This thesis presents RDF-Doctor, an approach for fault-tolerant and automatic error detection and recovery for RDF data.
-For error detection, RDF-Doctor primarily relies on a pre-defined set of grammar rules which cover a comprehensive list of syntactic errors occurring commonly in RDF data.
+For error detection, RDF-Doctor primarily relies on a predefined set of grammar rules which cover a comprehensive list of syntactic errors occurring commonly in RDF data.
 The ANTLR framework is used to generate the parser based on the given grammar.
-A number of additional modules are developed to deal with a number of unrecognized errors.
-For each of the detected errors, RDF-Doctor provides friendly and precise messages, helping users to easily locate and correct them.
-Furthermore, RDF-Doctor using internal mechanism for automatic correct is able to recover a subset of syntax errors any manual intervention.
+For each of the detected errors, RDF-Doctor provides friendly and precise error messages, helping users to easily locate and correct them.
+Furthermore, RDF-Doctor using an internal mechanism for automatic error correction is able to recover a subset of syntax errors without user intervention.
 
-We performed three different empirical evaluation to asses the effectiveness and efficiency of RDF-Doctor on various scenarios, such as: 1) with a Suite of Tests pre-defined by W3C Consortium; 2) with a synthetic experiment simulating a working day of an ontology engineer, where the number and the type of syntax errors are randomly generated; and 3) by increasing the size of ontologies being parsed and the number of syntax errors.
+We performed three different empirical evaluation to asses the effectiveness and efficiency of RDF-Doctor on various scenarios, such experiments: 1) with a Suite of Tests predefined by W3C Consortium; 2) with a synthetic experiment simulating a working day of an ontology engineer, where the number and the type of syntax errors are randomly generated; and 3) by increasing the size of ontologies being parsed and the number of syntax errors.
 The achieved results provide evidence that the effectiveness of RDF-Doctor is higher for each error that is modeled in the grammar. 
-Furthermore, the efficiency is not impacted by the number and the type of errors, but from the size of the ontology, which is expended, since with an increase number of triples to be parsed, RDF-Doctor consumes more time. 
+Furthermore, the efficiency is not impacted by the number and the type of errors, but from the size of the ontology, which is expended, since with an increasing number of triples to be parsed, RDF-Doctor consumes more time. 
 
 
 %This chapter concludes this study. Mainly, the focus was to detect all syntax errors in RDF input. To achieve the referred goal, The ANTLR tool as a parser generator was used. As a use case for this study, RDF serialization formats of both Turtle and NTriples were investigated, where the grammar that describes there syntax was invented.
@@ -24,28 +23,28 @@ Furthermore, the efficiency is not impacted by the number and the type of errors
 %As a use case, Turtle, one of RDF serialization formats, was used in this study. The grammar designed based on the syntax of turtle. However, it is easy to replace with another RDF serialization formats to achieve the same objective. Additionally, the grammar can be changed to generate a parser in a different programming language with the help of ANTLR framework.   
 
 \section{Limitations}
+During the implementation of RDF-Doctor, an approach of injecting error production rules inside the grammar which the internal parser of RDF-Doctor built based on. Although this helps to detect numerous types of syntax error of RDF data, and to correct a subset of them, there is a couple of limitations, some of them were noticed during the evaluation phase. These limitations are discussed in the following text and it can be considered in future work:  
+\begin{itemize}
+    \item \textbf{Supporting only Turtle and N-Triples:} RDF-Doctor is limited to parse only those RDF data of Turtle and N-Triples serializations. There are use as use cases to prove the concept. 
+    \item \textbf{Restricting of automatic error correction:} only a subset of  detected syntax errors can be resolved. The study considers recovering from simple syntax errors which users commonly make them, such as missing of a dot at the triple end,  adding more than one dot at the triple end, and ending the triple end with a semicolon instead of a dot.   
 
-- limitation only to the Turtle and N-Triples
+    \item \textbf{Releasing of high number of false positives:}  when particular syntax errors are unrecognized, the internal parser of RDF-Doctor tries to recover from this situation by deleting, inserting or replacing of the unrecognized sequence of tokens, until it can match them with certain rules, but this usually leads to false positives (correct forms but they are considered as incorrect ones), also due to the high probability of matching these tokens with incorrect rules, the next following tokens are considered as syntax errors despite being correct syntax forms and that is the reason behind the increasing number of false positives.  
 
-- automatic error correction support only a subset of errors
+\end{itemize}
 
-- for particular errors, a high number of false-positive error are recognized.
 
 \section{Future Work}
 
-The semantic web is rapidly developed, by introducing new tools, apps, plugins, can be of different programming language. As well, there are several RDF serialization  formats have same shortage of fault-tolerant parser. 
-Since it a very wide and an open research field, a couple of ideas come to our mind which can be our next step in the future. 
+The semantic web field is rapidly researched, engineered, and developed and there will be a need for new tools and modern plugins that can be developed in different programming languages. Moreover, the diverse RDF serializations have the same shortage of fault-tolerant parsers and automatic error recovery tools. 
+Equally important a very wide usage of the field and being an open research, opens the road for a couple of new ideas and advanced approaches which will shape the future of the semantic web. All of what was mentioned motivates the future work continuation in the same field. The following points represent the next milestones in future research work based on the result of current study and its limitations.   
 
-\subsection{Improve Error Detection}
-
+\subsection{Error Detection Improvement}
+In order to improve syntax error detection of RDF data, next version of RDF-Doctor should able to recognized all types of syntax errors. This improvement can done by either: a new version of ANTLR framework that could recognized the syntax more precisely, with the grammar rules, and since the development of ANTLR framework has an active status that can be taken into consideration; or a new module in RDF-Doctor which will care those types of errors and skip them until  next recognized tokens are found and identified.  
 \subsection{Comprehensive Error Recovery}
+Instead of limiting RDF-Doctor error recovery from simple syntax errors, a comprehensive error recovery is planned. RDF-Doctor should able to resolved as much as possible of identified syntax error of the input RDF data. In this regards, a machine learning algorithm used supervised leaning methods can be one of the solution for that matter where the system learns from training data and over the time is becomes more precise in error correction.   
 
-\subsection{Support other RDF Serializations}
-%TODO:{check here}
-%\subsection{Support of Other RDF Serializations}
-  %   Designing parsers to support the different RDF serialization formats.
-
-%\subsection{Distrusted Parsing of RDF Serializations}
-  %   Developing to advanced parsers which parsing process in distributed manner.
-
+\subsection{ Other RDF Serializations Support}
+The current version of RDF-Doctor deals  only with Turtle and N-Triple serializations. Supporting other serializations, such as JSON-LD, and RDF/XML is one of the targets on the \emph{nextToDO} list. Furthermore, the next version should able to automatically identify the RDF serializations of the input RDF, then it can select the corresponding parser that handles this type of a serialization.     
+\subsection{ Other Programming Languages Support}
+RDF-Doctor is a  a Java-based tool, it can be integrated as a subsystem in another application or it can be used as a standalone software.  With the help of ANTLR framework, the used grammar with a little of changes can be the seed to build parsers in different programming languages, as it has been mentioned in Chapter \ref{ch:related}.    
 

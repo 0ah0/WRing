@@ -33,7 +33,7 @@ Therefore, the target of this experiment is to measure the proficiency of RDF-Do
 \centering
 \begin{tabular}{|l|l|l|l|}
 \hline
-\begin{tabular}[c]{@{}l@{}}File Content \end{tabular} & Detected  & Not detected & Total \\ \hline
+\begin{tabular}[c]{@{}l@{}}File Content \end{tabular} & Detected  & Undetected & Total \\ \hline
  Correct Syntax              &      185    &      25  & 210 \\ \hline
  Incorrect/Bad Syntax              &      53    &    12  & 65 \\ \hline
  Total            &      238   &       37 & 275  \\ \hline
@@ -45,37 +45,28 @@ Therefore, the target of this experiment is to measure the proficiency of RDF-Do
 %Files at \cite{TurtleTests:Online} were prompted to validate a parser that parses a Turtle serialization, hence, it was used to test RDF-Doctor. 
 The total number of files of the W3C Test Suite is 275, which we divided in two parts: 1) files that are syntactically correct; and 2) files that are syntactically incorrect.
 The first subset contains 210 correct files, whereas the second one contains 65 files, as represented in Table \ref{tab:TurtleSuit}.
-We computed the Precision and Recall, donated by equations \ref{eq:1} and \ref{eq:1}, to calculate the percentage of errors which are correctly flagged as syntax errors, and calculate the percentage of actual syntax errors which are correctly recognized, respectively. 
+We computed Precision, Recall, and Accuracy values, donated by equations \ref{eq:1}, \ref{eq:2}, and \ref{eq:3}, to calculate the percentage of errors which are correctly flagged as syntax errors, to calculate the percentage of actual syntax errors which are correctly recognized, and to calculate the percentage of being correct in either of identifying of the existing of syntax errors or rejecting of the error-free syntaxes, respectively. 
 
 %For evaluation, the precision and recall are computed using the equations \ref{eq:1} and \ref{eq:2} respectively.  
-\begin{align} 
-   Precision=  \frac{t_p}{t_p+f_p}\,;\qquad
-\qquad\parbox{4.0cm}{\footnotesize$\begin{aligned} t_p &= \text{ number of true positives}\\[-1.0ex] f_p &= \text{ number of false positives}\end{aligned}$}
-   \label{eq:1}
-\end{align}
-\begin{align}
-   Recall =  \frac{t_p}{t_p+f_n} \,;\qquad
-\qquad\parbox{4.0cm}{\footnotesize$\begin{aligned} t_p &= \text{ number of true positives}\\[-1.0ex] f_n &= \text{ number of true negatives}\end{aligned}$}
-   \label{eq:2}
-\end{align}
+
 
  
 \begin{table}[]
 \centering
 \begin{tabular}{|l|l|l|l|}
 \hline
-\begin{tabular}[c]{@{}l@{}}Classification of Error Types\end{tabular} & Detected & \begin{tabular}[c]{@{}l@{}}Not detected\end{tabular} & Total \\ \hline
- Escape Characters              &      0    &    4 &   4  \\ \hline
+\begin{tabular}[c]{@{}l@{}}Classification of Error Types\end{tabular} & Detected & \begin{tabular}[c]{@{}l@{}}Undetected\end{tabular} & Total \\ \hline
+ Bad String Escape              &      0    &    4 &   4  \\ \hline
  Bad Keywords             &      5   &    0 &   5  \\ \hline
- Bad Literals with langTag             &      2   &    0 &   2  \\ \hline
- Bad Local Name-space in IRI             &      2   &    3  &   5  \\ \hline
- Bad Namespace in IRI             &      2   &    0 &   2  \\ \hline
- N3 Extra             &      11   &    1 &   12  \\ \hline
- Bad Namespace in Directives             &      2   &    0 &   2  \\ \hline
+ Bad Language Tag             &      2   &    0 &   2  \\ \hline
+ Bad Local Namespace in Prefixed IRI             &      2   &    3  &   5  \\ \hline
+ Bad Prefix Label in Prefixed IRI             &      2   &    0 &   2  \\ \hline
+ Bad Syntax from N3 Notation             &      11   &    1 &   12  \\ \hline
+ Bad Prefix Label in Directives            &      2   &    0 &   2  \\ \hline
  Bad Number as a Literal             &      5   &    0 &   5  \\ \hline
- Bad Directives             &      4   &    0 &   4  \\ \hline
- Bad Strings             &      6   &    1 &   7  \\ \hline
- Bad Structures            &      12   &    0 &   12  \\ \hline
+ Bad Directive             &      4   &    0 &   4  \\ \hline
+ Bad String             &      6   &    1 &   7  \\ \hline
+ Bad Structure            &      12   &    0 &   12  \\ \hline
  Bad IRI            &      2   &    3 &   5  \\ \hline
  Total            &      53   &    12 &   65  \\ \hline
 \end{tabular}
@@ -88,8 +79,40 @@ We computed the Precision and Recall, donated by equations \ref{eq:1} and \ref{e
 %The test drives the result when dealing with either correct or incorrect Turtle syntax. 
 %While trying correct syntaxes should be recognized as correct, similarly in case of incorrect syntaxes plus exception errors should be fired.  
 As we can observe from results given in Table \ref{tab:TurtleSuit}, the majority of syntactically correct files, i.e. 88\%, are categorized correctly, i.e., as free of errors, while the remaining 12\% are considered as syntactically incorrect.
+\begin{align} 
+   Precision=  \frac{t_p}{t_p+f_p}\,;\qquad
+\qquad\parbox{4.0cm}{\footnotesize$\begin{aligned} t_p &= \text{ number of true positives}\\[-1.0ex] f_p &= \text{ number of false positives}\end{aligned}$}
+   \label{eq:1}
+\end{align}
+\begin{align}
+   Recall =  \frac{t_p}{t_p+f_n} \,;\qquad
+\qquad\parbox{4.0cm}{\footnotesize$\begin{aligned} t_p &= \text{ number of true positives}\\[-1.0ex] f_n &= \text{ number of false negatives}\end{aligned}$}
+   \label{eq:2}
+\end{align}
+\begin{align}
+   Accuracy =  \frac{t_p+t_n}{t_p+t_n+f_p+f_n} \,;\qquad
+\qquad\parbox{4.0cm}{\footnotesize$\begin{aligned} t_p &= \text{ number of true positives}\\[-1.0ex]
+t_n &= \text{ number of true negatives}\\[-1.0ex]
+f_p &= \text{ number of false positives}\\[-1.0ex]
+f_n &= \text{ number of false negatives}\end{aligned}$}
+   \label{eq:3}
+\end{align}
 %mostly of correct syntaxes with 88\%, while the remaining 12\% RDF-Doctor are not recognized and it consider them as errors. 
-On the other hand, when dealing with incorrect syntaxes, results show that 81,5\% of files which include incorrect syntaxes are detected and the appropriate error message is given, whereas the rest 17,5\%, are not recognized as errors, thus no error message is given\todo{where are precesion and recall calculated, please add them}.
+On the other hand, when dealing with incorrect syntaxes, results show that 81,5\% of files which include incorrect syntaxes are detected and the appropriate error message is given, whereas the rest 17,5\%, are not recognized as errors, thus no error message is given\todo{where are precision and recall calculated, please add them}. Additionally, Table \ref{tab:TurtleSuit}  represents a confusion matrix\footnote{https://medium.com/datadriveninvestor/simplifying-the-confusion-matrix-aa1fa0b0fc35} where its terminologies (true positives \textit{t\textsubscript{p}}, true negatives \textit{t\textsubscript{n}},
+false positives \textit{f\textsubscript{p}},
+false negatives \textit{f\textsubscript{n}} are included. If we refer to a cell as \emph{cell(row number, column number)}, then \emph{cell(1,1)}, \emph{cell(1,2)}  ,\emph{cell(2,1)} , and \emph{cell(2,2)} are corresponding to \textit{t\textsubscript{n}}, 
+\textit{f\textsubscript{n}}, 
+\textit{t\textsubscript{p}}, 
+and \textit{f\textsubscript{p}},
+respectively.
+
+Figure \ref{Fig:Experiment01} analytically explorers the result of RDF-Doctor evaluation  with Turtle Test Suite. To elaborate, \textit{t\textsubscript{n}}, 
+\textit{f\textsubscript{n}}, 
+\textit{t\textsubscript{p}}, 
+and \textit{f\textsubscript{p}} numbers classify the result in regards to finding a syntax error  or more in each file at \cite{TurtleTests:Online}, where \textit{t\textsubscript{n}} is the number of files without syntax errors which are correctly rejected, \textit{f\textsubscript{n}} is  the number of files  with  syntax  errors  which are  incorrectly  rejected, \textit{f\textsubscript{p}} is the number of
+ files without syntax errors  which are incorrectly identified, and finally, \textit{t\textsubscript{p}} is the number of files with syntax errors  which are correctly identified. With these numbers, all the variables in the equations: \ref{eq:1};  \ref{eq:2}; and \ref{eq:3} are available. Then, the calculation shows that Precision is about 0,82,  Recall is about 0,68, and Accuracy is about 0.78. These calculations are promising, even if more better result is expected. Nevertheless, if the result of this study produces the tool, then future research works will reshape and improve it.    
+ 
+ 
 \floatstyle{plain}
 \restylefloat{figure}
 \begin{figure}
@@ -100,6 +123,7 @@ On the other hand, when dealing with incorrect syntaxes, results show that 81,5\
 \end{center}
 \end{figure}
 
+ Table \ref{tab:detection} evaluates RDF-Doctor with the referred input, this table features a classification of error types which helps to group those types into categories to ease the research work, details about types of errors can be found in Table \ref{tab:syntaxErrorCate}. In order to evaluate the automatic error correction feature of RDF-Doctor, it was evaluated with the input of this experiment. The result shows that 5 types of errors can be faultlessly corrected, they are listed in Table \ref{tab:detection} with Serial Numbers (SN): 4, 39, 53, 54, and 55 and the type of syntax error that can be automatically corrected are : \emph{using of 'A' as a predicate instead of 'a'}, respectively.       
 
 \section{Experiment II}
 
@@ -142,7 +166,7 @@ In case the error is related to the header, then the injection is applied into P
 
 	\begin{figure}[ht]
 	\begin{center}
-		\includegraphics[scale=1,angle=0]{images/Experiment02-02.png}
+		\includegraphics[scale=0.9,angle=0]{images/Experiment02-02.png}
 		\caption{\textbf{Error detection when syntax errors are randomly distributed.} 
 		For each instance of time, a number of errors which are detected or not detected by RDF-Doctor are shown.
 		%"detected", and those one which were undetected and unrecognized by RDF-Doctor, referred as "undetected".
@@ -167,7 +191,7 @@ One possible solution for this is by optimizing RDF-Doctor with developing an ad
 
 \begin{figure}[ht]
 	\begin{center}
-		\includegraphics[scale=0.7,angle=0]{images/Experiment02-03.png}
+		\includegraphics[scale=0.9,angle=0]{images/Experiment02-03.png}
 				\setlength\belowcaptionskip{-5mm}
 		\caption{\textbf{Result of false positives during RDF-Doctor validating with randomly distributed syntax errors.} 
 		For each time instance, when number of syntax errors are randomly inserted, that may result in false positives since one of the unrecognized syntax errors can be in-between those inserted ones.} 
@@ -209,7 +233,7 @@ In all cases, for each error that is detected an expressive message is given to 
 
 \begin{figure}[ht]
 \begin{center}
-		\includegraphics[scale=1,angle=0]{images/Experiment03-01.png}
+		\includegraphics[scale=0.9,angle=0]{images/Experiment03-01.png}
 				\setlength\belowcaptionskip{-5mm}
 		\caption{\textbf{Impact of number of errors and the size on error detection.} 
 		FOAF and DBpedia ontologies are used to evaluate RDF-Doctor, 10foaf, 30foaf, allfoaf are datasets of FOAF ontology, including with 10, 30, 61 random syntax errors, respectively, same is applicable for DBpedia. Detected errors are the errors which were properly identified by RDF-Doctor and the matched error messages were released, while undetected errors are those which not correctly recognized.}
@@ -219,13 +243,9 @@ In all cases, for each error that is detected an expressive message is given to 
 \end{figure}
 
 
-Another essential point is number of false positives as shown in Figure \ref{Fig:Experiment03-02}. 
-It can be seen that the false positives are incremented while raising of the number of syntax errors.
-This comes as consequence of increasing number of unrecognized syntax errors, forcing the parser to try to recover from such errors by adding or removing some tokens, which in turn produces an increased number false positive errors.   
-
 \begin{figure}[ht]
 \begin{center}
-		\includegraphics[scale=0.8,angle=0]{images/Experiment03-02.png}
+		\includegraphics[scale=0.9,angle=0]{images/Experiment03-02.png}
 		\setlength\belowcaptionskip{-5mm}
 		\setlength\abovecaptionskip{-50mm}
 		\caption{\textbf{Result of false positives when number of errors and ontology size are increased.} Unrecognized errors may generate more false positive errors than actual errors. 
@@ -234,6 +254,10 @@ This comes as consequence of increasing number of unrecognized syntax errors, fo
    \label{Fig:Experiment03-02}
 \end{center}
 \end{figure}
+Another essential point is number of false positives as shown in Figure \ref{Fig:Experiment03-02}. 
+It can be seen that the false positives are incremented while raising of the number of syntax errors.
+This comes as consequence of increasing number of unrecognized syntax errors, forcing the parser to try to recover from such errors by adding or removing some tokens, which in turn produces an increased number false positive errors.   
+
 
 The performance of RDF-Doctor is presented in Figure \ref{Fig:Experiment03-03}. 
 It summarizes the impact of both, the number of errors and the ontology size on the RDF-Doctor performance.
@@ -245,7 +269,7 @@ As a conclusion to this experiment, approximately more than 90\% of injected syn
 
 \begin{figure}[ht]
 \begin{center}
-		\includegraphics[scale=1,angle=0]{images/Experiment03-03.png}
+		\includegraphics[scale=0.9,angle=0]{images/Experiment03-03.png}
 		\setlength\abovecaptionskip{-20mm}
 		\setlength\belowcaptionskip{-5mm}
 		\caption{\textbf{Performance evaluation when number of errors and ontology size is changes, respectively.} 

@@ -48,20 +48,6 @@ It receives the input text, and if it of a large-volume (for example, more than 
 In this section, some of use cases tackled in this study to detect syntax errors and correct some of the detected syntax errors are elaborated. 
 First, we start with a Turtle example which has no syntax errors, then some syntax errors are introduced to show the process of handling them. 
 
-\begin{lstlisting}[label=lst:startingRules, caption={Starting rules in the grammar file}] 
-start
-: statement*  EOF
-;
-statement
-: directive
-| triples '.'
-;
-\end{lstlisting}
-
-Listing \ref{lst:turtleExample} shows a Turtle example without syntax errors. 
-The first four lines are directives or prefixes declaration whereas in the rest of lines several triples are listed.  
-For that reason, our grammar in Appendix~\ref{ch:appendix} is initialized with the topmost node \textbf{start} which describes the coming rules by zero or more  \textbf{statement}(s). 
-In addition, each \textbf{statement} is either a directive or a triple as it is represented in \ref{lst:startingRules}.
 
 \begin{lstlisting}[label=lst:turtleExample, numbers=left, caption={RDF example in Turtle serialization format}]
 <@\textcolor{blue}{@prefix}@>  <@\textcolor{red}{rdf}@>: <@\textcolor{orange}{<http://www.w3.org/1999/02/22-rdf-syntax-ns\#>}@> .
@@ -76,6 +62,28 @@ In addition, each \textbf{statement} is either a directive or a triple as it is 
 <@\textcolor{red}{ex}@>:zoo1  <@\textcolor{red}{zoo}@>:host  <@\textcolor{red}{ex}@>:cat2 .
 \end{lstlisting}
 
+Listing \ref{lst:turtleExample} shows a Turtle example without syntax errors. 
+The first four lines are directives or prefixes declaration whereas in the rest of lines several triples are listed.  
+For that reason, our grammar in Appendix~\ref{ch:appendix} is initialized with the topmost node \textbf{start} which describes the coming rules by zero or more  \textbf{statement}(s). 
+In addition, each \textbf{statement} is either a directive or a triple as it is represented in Listing~\ref{lst:startingRules}.
+
+\begin{lstlisting}[label=lst:startingRules,
+caption={Starting rules in the grammar file}] 
+start
+: statement*  EOF
+;
+statement
+: directive
+| triples '.'
+;
+\end{lstlisting}
+
+To shed light on the generated parse tree for Listing~\ref{lst:turtleExample}, Figure \ref{Fig:implementationParseTreeLeft}
+and Figure \ref{Fig:implementationParseTreeRight}
+were depicted. The former shows how does RDF-Doctor parse the first two lines of  Listing~\ref{lst:turtleExample}, it can be seen that those lines come under \emph{prefixID} since they match Prefix patterns. Meanwile, the latter demonstrates a view of the parse tree for the first 3 lines after prefixes: lines 5, 6, and 7, as well as \emph{EndOfFile} (EOF) sequence. Line 5 matches \emph{triple} with only one subject \emph{ex:dog1}, but lines 6, and 7 match \emph{triple} with multiple predicates and objects and share the same subject \emph{ex:cat1}, same is applied on the parse tree.  
+
+
+
 
 
 \begin{figure}
@@ -86,13 +94,13 @@ In addition, each \textbf{statement} is either a directive or a triple as it is 
 
 
 
-After showing a part of grammar rules and views of the parse tree, some of real cases of handling error detection and error recovery will be presented:
+After showing a part of grammar rules and views of the parse tree, some of real use cases of injecting of an error production rule to match a syntax error pattern,  handling of the error detection and finally resolving the error  will be presented:
 
 \begin{enumerate}
     \item \textbf{Missing a dot at the end of a triple:} in the Turtle syntax, a triple must end with a dot. 
     In Listing~\ref{lst:missingDotEx}, the head rule, i.e., a \textbf{statement}, can either be a directive or a triple, both ending with a dot. 
     Equally important the last line which shows that triples without a dot can also be a sub-goal of this rule. 
-    This sub-goal is considered as a normal path in a parse tree, but once the parser detects it, it sends a notification to the error listener with an error message \emph{"Missing ’.’ at the end of a triple"}.  
+    This sub-goal is considered as a normal path in a parse tree, but once the parser detects it, it sends a notification to the error listener API with an error message \emph{"Missing ’.’ at the end of a triple"}.  
     \begin{figure}
 		\includegraphics[width=1\linewidth]{images/implementationParseTreeRight.png}
 	\caption{\textbf{Right-side view of parse tree  for listing \ref{lst:turtleExample}.} It is right-side sub-trees of the parent node \textbf{start} in the parse tree. Those nodes written in \emph{black} are non-terminals or heads of the grammar rules, remaining nodes are terminals or matched patterns of input tokens.}
@@ -100,18 +108,12 @@ After showing a part of grammar rules and views of the parse tree, some of real 
 
 \end{figure}
     
-\begin{lstlisting}[label=lst:missingDotEx,  caption={The grammar rule for Detection of a syntax error for a missing dot at the end of a triple.}] 
+\begin{lstlisting}[label=lst:missingDotEx,  caption={Grammar rules for detecting of syntax error of missing dot at the end of a triple.}] 
 statement
 : directive
 | triples '.'
 | <@\textcolor{red}{triples  \{notifyErrorListeners("Bad end of a triple with ','")\} }@>;
 \end{lstlisting}
-Once such error is saved by the Error Listener, the role of Error Detection Module is finished. 
-The next is the phase starts in the Error Correction Module to correct the error. 
-Since the list of syntax error is shared with Error Correction Module, it iterates all of these errors messages, if one of these messages in the error list matches, then it applies a predefined function to recover the error.  
-For instance, \textbf{addDot(lineNum, columnNum)} function is applied, as described in Listing \ref{lst:errorCorrectionlst}, since it matches the same error message and similarly, in case of \emph{"Missing  ’.’ at the end of Prefix directive"} message. 
-The task of this function is to reach the line which misses the dot, identify the lineNum and columNum values automatically correct the error by adding a dot in the end of the given triple. 
-
 \begin{lstlisting}[language=java, label=lst:errorCorrectionlst,  caption={Java-based handling for error recovery based on the error message in Error Correction Module.}] 
 while (iterator.hasNext()) {
 String line = iterator.next();
@@ -125,14 +127,21 @@ predicate, it should be repalced with 'a'"))
 <@\textcolor{violet}{changeA2a(lineNum, columnNum);}@>
 }
 \end{lstlisting}
+Once such an error is saved by the Error Listener API, the role of Error Detection Module is finished. 
+The next is the phase starts in the Error Correction Module to correct the error. 
+Since the list of syntax error is shared with Error Correction Module, it iterates all of these errors messages, if one of these messages in the error list matches, then it applies a predefined function to recover the error.  
+For instance, \textbf{addDot(lineNum, columnNum)} function is applied, as described in Listing \ref{lst:errorCorrectionlst}, since it matches the same error message and similarly, in case of \emph{"Missing  ’.’ at the end of Prefix directive"} message. 
+The task of this function is to reach the line which misses the dot, identifies the line number and column number, then finally automatically corrects the error by adding a dot at the end of the given triple. 
+
+
 
 \item \textbf{Misuse of 'A' as a predicate instead of 'a':} by mistake a user can wrongly use the character 'A' as a predicate instead of using 'a', which is the short version of the \emph{rdf:type}
 If we start substitution of sub-goals of triples, \textbf{verb} can be found as a terminal node in  substitution chain. 
-Syntactically, it is 'a', but if the user used 'A', then the parser will fire an error with a message "’A’ cannot be used as a predicate, it should be replaced with ’a’".
+Syntactically, it is 'a', but if the user used 'A', then the parser will fire an error with a message of \emph{"’A’ cannot be used as a predicate, it should be replaced with ’a’"}.
 Listing \ref{lst:errorCorrectionlst} also shows the handling of this error by executing \textbf{changeA2a(lineNum, columnNum)} function where the same error message is matched. 
-This function can access Turtle input with the referred lineNum and columNum, then it replaces 'A' with 'a' to correct that error. 
+This function can access Turtle input with the referred line number and column number, then it replaces 'A' with 'a' to correct the error. 
 
-\begin{lstlisting}[label=lst:MissuseAex ,  caption={The grammar rule for detecting the misuse of 'A' as a predicate instead of 'a' in the grammar.}] 
+\begin{lstlisting}[label=lst:MissuseAex ,  caption={Grammar rules for detecting misuse of 'A' as a predicate instead of 'a'.}] 
 statement
 : directive
 | triples '.'
@@ -152,20 +161,20 @@ it should be replaced with 'a'")\}} @>
 \end{lstlisting}
 
 \item \textbf{Bad syntax of a language tag in a literal:} 
-Turtle formats has the ability to specify the language of a literal (which can be only placed as an object) by the using the character '@' followed by alphabetic characters, for example, "en", "fr", "de" are tags for English, French, German languages, respectibely. 
-\textbf{"Cat"@en}, and \textbf{"Katze"@de} are some examples of literals which use the language tags.
+Turtle formats has the ability to specify the language of a literal (which can be only placed as an object) by the using the character '@' followed by alphabetic characters, for example, "en", "fr", "de" are tags for English, French, German languages, respectively. 
+\textbf{"Cat"@en}, and \textbf{"Katze"@de} are some examples of literals which use the language tags, the first is for English, whereas the last is for German. 
 
 
 It might happen that a user instead of providing a language tag for a literal, he or she wrongly types a number, such as \textbf{"cat"@1}.
 This should be considered as a syntax error in Turtle format. 
-Listing~\ref{lst:badlaguageTag} handles the sequence of rules in the grammar to make a parser firing a syntax error when such case is encountered. 
+Listing~\ref{lst:badlaguageTag} handles grammar rules to make a parser firing a syntax error when such case is encountered. 
 
 The hierarchical structure of the rules can be traversed, starting with \textbf{triples} head rule until it reaches the last two lines.
 It specifies that an RDF literal can be a string followed by BAD\_LANGTAG\_AS\_NUMBER (which '@' character followed by numbers). 
 When the parser finds such a pattern in the input, it delivers a syntax error to the error listener. 
 Unfortunately, no error correction can be applied here, since the user intention is not easily known.  
 
-\begin{lstlisting}[label=lst:badlaguageTag,  caption={Starting rules in the grammar file8}] 
+\begin{lstlisting}[label=lst:badlaguageTag,  caption={Grammar rules for detecting incorrect language tag with a number instead of characters.}] 
 triples
 : subject predicateObjectList
 ;
