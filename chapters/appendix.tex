@@ -1,14 +1,11 @@
+\let\cleardoublepage\clearpage
 \begin{appendices}
-
-
 \chapter{RDF-Doctor Grammar}
 \label{ch:appendix}
-
 % Applies only when you use it
 \lstset{
     basicstyle=\color{black}\ttfamily,%
     breaklines=true,%                                      allow line breaks
-    moredelim=[s][\color{green!50!black}\ttfamily]{'}{'},% single quotes in green
     moredelim=*[s][\color{black}\ttfamily]{options}{\}},%  options in black (until trailing })
     commentstyle={\color{gray}\itshape},%                  gray italics for comments
     morecomment=[l]{//},%                                  define // comment
@@ -23,19 +20,20 @@
 \begin{lstlisting}
 grammar Turtle;
 @parser::members { 
-// add members to check Namespace declaration
+// Add member functions to check Namespace declaration
 public List<String> symbols = new ArrayList<String>();
 boolean isExistNS(String in ) { 
-// custom constructor
+// Custom constructor
 	boolean foundNS = false ; 
 		if(symbols.contains(in.split(":")[0]+':')) foundNS=true;
 	return foundNS;
 }
 }
-// start of grammar rules with 'start' root node
+// Start of grammar rules with 'start' root node
 start
     : statement*  EOF
     ;
+// statement is either a prefix declaration of a triple
 statement
     : directive
     |  IRIREF IRIREF IRIREF  graphLabel '.' {notifyErrorListeners("Turtle is not NQOUDS");}
@@ -482,21 +480,23 @@ fragment Y
 fragment Z
     :('z'|'Z')
     ;	
+    
+    
+    
 \end{lstlisting}
 
-\chapter{RDF Syntax Errors Categories }
+
+
+
+\chapter{RDF Syntax Errors Categories}
 \label{ch:synErrCategories}
 
  \begin{table}[H]
  	\caption{\textbf{Categories of syntax errors of N-Triple and Turtle serializations.} These categories are extracted from files of Turtle Test Suite \cite{TurtleTests:Online}, including   incorrect syntactic forms.}
  \label{tab:syntaxErrorCate}
  	\centering
-\includegraphics[width=5.5in]{images/bigTable.pdf}
+\includegraphics[width=5.5in]{images/firstPageBigTable.pdf}
 \end{table}
 
 \includepdf[pages=2-3,pagecommand={},width=\textwidth,noautoscale=true,offset=80 30]{images/bigTable.pdf}
-%\begin{figure}
-% \centering 
-% \includegraphics[scale=0.7,angle=0]{i%mages/bigTable.pdf}
-%\end{figure}
 \end{appendices}

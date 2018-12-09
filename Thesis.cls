@@ -211,8 +211,7 @@
       \\[0.5cm]
       {\LARGE  \par \authornames \par}
       \smallskip
-      {\large \par Matriculation number: 2915575}
-      {\large \par E-mail: ahemaid@gmx.com}
+      {\large \par Matriculation number: 2915574}
       \bigskip
       \bigskip
       {\large \par First Evaluator: Prof. Dr. Jens Lehmann}
@@ -224,11 +223,15 @@
  \begin{figure}[h!]
  	\noindent
  	\begin{subfigure}{}
- 		\includegraphics[width=26mm]{images/logo-eis.png}
+ 	 		\includegraphics[scale=.25]{images/fraunhofer.png}
+ 	\end{subfigure}
+ 		\hfill
+ 	\begin{subfigure}{}
+ 		\includegraphics[scale=.11]{images/logo-eis.png}
  	\end{subfigure}
  	\hfill
  	\begin{subfigure}{}
- 		\includegraphics[width=40mm]{images/uni-bonn-logo_.jpg}
+ 		\includegraphics[scale=.28]{images/uni-bonn-logo_.png}
  	\end{subfigure}
  \end{figure}
     \end{center}

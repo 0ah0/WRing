@@ -98,7 +98,7 @@ f_n &= \text{ number of false negatives}\end{aligned}$}
    \label{eq:3}
 \end{align}
 %mostly of correct syntaxes with 88\%, while the remaining 12\% RDF-Doctor are not recognized and it consider them as errors. 
-On the other hand, when dealing with incorrect syntaxes, results show that 81,5\% of files which include incorrect syntaxes are detected and the appropriate error message is given, whereas the rest 17,5\%, are not recognized as errors, thus no error message is given\todo{where are precision and recall calculated, please add them}. Additionally, Table \ref{tab:TurtleSuit}  represents a confusion matrix\footnote{https://medium.com/datadriveninvestor/simplifying-the-confusion-matrix-aa1fa0b0fc35} where its terminologies (true positives \textit{t\textsubscript{p}}, true negatives \textit{t\textsubscript{n}},
+On the other hand, when dealing with incorrect syntaxes, results show that 81,5\% of files which include incorrect syntaxes are detected and the appropriate error message is given, whereas the rest 17,5\%, are not recognized as errors, thus no error message is given. Additionally, Table \ref{tab:TurtleSuit}  represents a confusion matrix\footnote{https://medium.com/datadriveninvestor/simplifying-the-confusion-matrix-aa1fa0b0fc35} where its terminologies (true positives \textit{t\textsubscript{p}}, true negatives \textit{t\textsubscript{n}},
 false positives \textit{f\textsubscript{p}},
 false negatives \textit{f\textsubscript{n}} are included. If we refer to a cell as \emph{cell(row number, column number)}, then \emph{cell(1,1)}, \emph{cell(1,2)}  ,\emph{cell(2,1)} , and \emph{cell(2,2)} are corresponding to \textit{t\textsubscript{n}}, 
 \textit{f\textsubscript{n}}, 
@@ -117,7 +117,7 @@ and \textit{f\textsubscript{p}} numbers classify the result in regards to findin
 \restylefloat{figure}
 \begin{figure}
 \begin{center}
-		\includegraphics[scale=0.6,angle=0,trim=4 4 4 4,clip]{images/Experiment01.png}
+		\includegraphics[scale=.8,angle=0]{images/Experiment01.png}
 		\caption{\textbf{RDF-Doctor evaluation with Turtle Test Suite \cite{TurtleTests:Online}.} Each file in \cite{TurtleTests:Online} was classified of having a syntax error or not and then the final result was grouped into 4 categories: true positives (files with syntax errors are correctly identified); false positives (files without syntax errors are incorrectly identified); false negatives (files with syntax errors are incorrectly rejected); true negatives (files without syntax errors are correctly rejected).}
 		\label{Fig:Experiment01}
 \end{center}

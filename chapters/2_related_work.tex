@@ -32,8 +32,7 @@ In our work, a general approach that can work for all RDF serialization formats 
  
  \begin{figure}[ht]
 		\begin{center}
-			\setlength\belowcaptionskip{-7mm}
-			\includegraphics[scale=0.8,angle=0]{images/errorW3RDFValidator.png}
+			\includegraphics[scale=0.7,angle=0]{images/errorW3RDFValidator.png}
 			\caption{\textbf{Validation results of the W3C RDF validation tool \cite{W3C:Validation:Online} after parsing an RDF/XML text, included two syntax errors.} The original RDF/XML document has two syntax errors since "rdf1" and "dc12" have no prefix declarations, but the results under "Fatal Error Messages" show only the first found error and neglects the other.}
 			\label{Fig:errorW3RDFValidator}
 		\end{center}
@@ -47,14 +46,14 @@ Considering its powerful capability of validating numerous RDF serialization for
 
  \begin{figure}[ht]
 		\begin{center}
-			\setlength\belowcaptionskip{-10mm}
 			\includegraphics[scale=0.7,angle=0]{images/VRPErrorResult.png}
 			\caption{\textbf{Results of Validating RDF Parser (VRP) \cite{karsten:Thesis:2000} after parsing an RDF/XML file.} Two errors are injected to the original RDF data. After validation process, four error messages are shown, two of them are meaningful, whereas the other two messages have no meaning.}
 			\label{Fig:VRPErrorResult}
 		\end{center}
 	\end{figure}
 	
-	
+\vspace*{-\baselineskip}
+
 \subsection{Classification of Parsing Approaches}
 
 Approaches for validating various RDF serializations use the following core algorithms or methods as a significant part of their implementations. 
@@ -70,9 +69,12 @@ The online version of IDLab Turtle Validator \cite{IDLab:Validation:Online} uses
 The same approach was used to build a Turtle Editor with syntax validation in~\cite{petersenturtleeditor}. 
 However, this approach is slow when parsing and its behaviour is unpredictable when dealing with large files. 
 
-\item \textbf{Shape expressions approach:} in ~\cite{prud2014shape}, a Turtle parser was developed based on shape expressions. 
-Shape expressions validates RDF through declaring of constraints on the RDF data, if the declared constraints are violated, then RDF data is invalid, otherwise, it is valid. Furthermore, Shape expressions describes the RDF graph based on regular expressions. 
+\item \textbf{Shape expressions approach:} in ~\cite{prud2014shape}, a Turtle parser was developed based on shape expressions\footnote{https://www.w3.org/2001/sw/wiki/ShEx}. 
+Shape expressions describe the RDF graph based on regular expressions and validates RDF through declaring of constraints on the RDF data, if the declared constraints are violated, then RDF data is invalid, otherwise, it is valid. Furthermore, multiple tools we developed using the same approach in different programming languages, such as ShEx.js\footnote{https://github.com/shexSpec/shex.js}, ShExJava\footnote{http://shexjava.lille.inria.fr/}, Shaclex\footnote{http://labra.weso.es/shaclex/}, ShEx Ruby\footnote{https://ruby-rdf.github.io/shex/}, PyShEx\footnote{https://github.com/hsolbrig/PyShEx} built in JavaScript, Java, Scala, Ruby, Python, respectively.
+\item \textbf{Other parsing approach:} those tools having another parsing method than the 3 listed above or unknown to us fall under this category. Raptor\footnote{http://librdf.org/raptor/} is a C-based open source library, it includes parsers and serializers for a wide range of RDF serializations, it can be used as a standalone Rapper\footnote{http://librdf.org/raptor/rapper.html} RDF parser. Also, Protege\footnote{https://protege.stanford.edu/} is a free, open source RDF editor, can work either as a desktop\_based or a web\_based application, supports as well several RDF serializations. Moreover, another variety of RDF parsers or tools: \cite{humfrey2010easyrdf},~\cite{RDF4J:Online},~\cite{krech2002rdflib} likewise come
+under  this category and the 2 last-mentioned parsers were also failed to show more than the first syntax error.            
 \end{itemize} 
+\vspace*{-5mm}
 
 The previous three approaches failed to list more than the first one error at the same time. 
 Moreover, an essential while processing a large number of RDF data is the performance, which is a weak point in the browser based tools such those implemented in JavaScript.
@@ -81,17 +83,17 @@ Moreover, an essential while processing a large number of RDF data is the perfor
 
 Releasing user-friendly and meaningful error messages is of a great benefit to help the user to easily identify and correct the errors. 
 \begin{itemize}
-    \item \textbf{Non-expressive and meaningless error messages:} the parsing tools under the Shape expressions approach like~\cite{prud2014shape} show less expressive and unfriendly error messages.
+    \item \textbf{Non-expressive and meaningless error messages:} the parsing tools under the shape expressions approach like~\cite{prud2014shape} show less expressive and unfriendly error messages.
     \item \textbf{Expressive error and meaningful messages:} the parsing tools which utilize a ARP-parser-dependable approach like~\cite{N3Parser:Online},~\cite{Mybluemix:Validation:Online},~\cite{McBride:2002:JSW:613357.613755} or a N3-parser-dependable approach like~\cite{N3Parser:Online},~\cite{IDLab:Validation:Online},~\cite{petersenturtleeditor} are presenting more expressive and user-friendly error messages including its location in a proper way. 
     
 \end{itemize}
 
 \section{Error Recovery Approaches}
-Automatic error recovery or correction will be valuable to resolve from common syntax errors. 
-For example, a number of programming languages need a semicolon at the end of the line. 
-There are also few tools which can correct, such errors without the involvement of the programmer. 
-In the same way it will be useful to have this option of automatic correction after parsing of various serialization formats of RDF. 
-Further, while surveying the existing RDF parsing tools, a tool proposed or provided, such a feature was not found.  
+The existing of the automatic error recovery or correction feature is valuable to resolve from common syntax errors in RDF data.  Our survey of research papers and tools in relation to an auto-correction of RDF syntax errors shows that such a feature is not exit in either theoretically or practically. %For example, a number of programming languages need a semicolon at the end of the line. 
+%There are also few tools which can correct, such errors without the involvement of the programmer. 
+%In the same way it will be useful to have this option of automatic correction after parsing of various serialization formats of RDF. 
+However, Halilaj et al in \cite{Git4Voc:article} pointed out to the need of this feature and explored its benefits when it is available.
+Further, while searching other tools or approaches which have the same feature in other fields, \cite{AutoCorrection:Fix-it} was found.  \cite{AutoCorrection:Fix-it} reports about a Review Bot tool that can automatically review a source code using static analysis output, and correct encountered syntax errors using the parser tree. Their approach is applicable in our case, but since a subset of common syntax errors are statically corrected in the current version of RDF-Doctor based on the collected error messages.    
 
 \section{Summary}
 
