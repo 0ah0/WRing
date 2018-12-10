@@ -1,52 +1,52 @@
+
 \chapter{Introduction}
 \label{ch:introduction}
 
-\par 
 The objective of the Semantic Web vision is to enable data from heterogeneous datasources to be interconnected in order to establish a Global Information Source. 
 The Resource Description Framework (RDF) is a common modeling language used for developing ontolgies to conceptualize and represent information about existing resources in the Semantic Web.
 In addition, a number of software applications from diverse fields, such as Big Data, Machine Learning, and Data Science, are generating data from their legacy systems in the RDF language. 
 On the other hand, new applications are developed relying their data management mechanisms completely on RDF.
-To facilitate the exchanging of data between software applications, several serializations formats, such as RDF{/}XML, Turtle, N-Triples, and JSON-LD \footnote{\url{https://www.w3.org/TR/rdf-syntax-grammar/}, \url{https://www.w3.org/TR/turtle/}, \url{https://www.w3.org/TR/n-triples/}, and \url{https://www.w3.org/2018/jsonld-cg-reports/json-ld/}}, are proposed over the years.
+To facilitate the exchanging of data between software applications, several serializations formats, such as RDF{/}XML, Turtle, N-Triples, and JSON-LD \footnote{\url{https://www.w3.org/TR/rdf-syntax-grammar/}, \url{https://www.w3.org/TR/turtle/}, \url{https://www.w3.org/TR/n-triples/}, and \url{https://www.w3.org/2018/jsonld-cg-reports/json-ld/}}, have been proposed over the years.
 These formats address different requirements, such that: 1) RDF{/}XML is tailored for parsing with existing XML tools and libraries; 2) Turtle, for being more human-readable; 3) N-Triples aims at simplifying parsing procedures; and 4) JSON-LD, to allow encoding of the RDF data in the JSON format.
 A fundamental pre-condition to consume the RDF data encoded in so-called RDF documents, is that they are syntactically correct.
 Several approaches are presented to deal with the syntax validation of the RDF documents.
-However, most of available approaches which check for syntactic errors in RDF, fail to detect more than one error at the same time, in particular when data are serialized in Turtle or N-Triples format, respectively. 
+However, most available approaches which check for syntactic errors in RDF fail to detect more than one error at the same time, in particular when data are serialized in Turtle or N-Triples format, respectively. 
 Therefore, we observe a need for an approach able to identify all syntactic errors simultaneously which allow producing of qualitative RDF documents from the syntactic perspective.
 
 In this thesis, we present RDF-Doctor, a comprehensive approach for error detection and correction of RDF documents.
-The motivation of this study is mainly encouraged by the  tremendous RDF data representation and usage in either Turtle and N-Triples serialization formats.
+The motivation of this study was mainly encouraged by the  tremendous RDF data representation and usage in both Turtle and N-Triples serialization formats.
 RDF-Doctor is capable of detecting an exhaustive number of syntactic errors, particularly, in Turtle or N-Triple format, respectively. 
 In addition, our approach is able to automatically correct a subset of already found errors.
-Besides that, RDF-Doctor offers user-friendly messages to facilitate manual correction for common and frequently encountered errors, such as missing a colon, a dot, or not-defined prefix.  
+Additionally, RDF-Doctor offers user-friendly messages to facilitate manual correction for common and frequently encountered errors, such as missing a colon or a dot, or a non-defined prefix.  
 
 %The following text in this chapter are divided in a couple of sections to express our motivation of the study, present the problem statement, presents the challenges, list our research contributions, and finally outline how this thesis is structured.  
 
 \section{Motivation}
 
 %This study was motivated by real world application where exists demand for dealing wit, have as a requirement for their operating, syntax checking of RDF data when it comes as an input. 
-Let us suppose a group of uses, Bob, Hani, and Sarah, working together in developing an ontology for representing the knowledge about a particular domain as illustrated in Figure~\ref{Fig:Motivation}.
-The ontology will be used on a data processing system to support classification and analysis of data generated from heterogeneous sources. 
+Let us suppose a group of users, Bob, Hani, and Sarah, are working together in developing an ontology for representing the knowledge about a particular domain as illustrated in Figure~\ref{Fig:Motivation}.
+The ontology will be used in a data processing system to support classification and analysis of data generated from heterogeneous sources. 
 Since all involved users are experienced ontology engineers, they prefer to realize the ontology development using plain text editors.
-To exchange and distribute their changes, they use a version control system, such as Git.
-Any change made to ontology is initially verified against syntax errors, where in case of found errors, the system will stop processing the input data and return a report of errors to the user. 
+To exchange and distribute their changes, they use a version control system, such as Git \footnote{\url{https://git-scm.com/}}.
+Any change made to ontology is initially verified against syntax errors. Where in the case of found errors, the system will stop processing the input data and return a report of errors to the user. 
 Existing tools used for syntax checking, assert that the input is syntax-error-free. 
-If the ontology has more than one error, these tools naturally stop parsing, and report only the first error to the user, associated with other information about the error, such an error message, row, and column number, where the error is occurred.
+If the ontology has more than one error, these tools naturally stop parsing and report only the first error to the user with other information about the error, such as an error message, row and column number, and where the error occurred.
 
-Commonly, an ontology after each change may have more than one syntactic error.
-The procedure of correcting them is as follows, when the first error is encountered, the system reports the error.
-Next, the user, reads the message and locates the error within the ontology file. 
-After that, the user corrects the error, and resubmits its version with recent modifications.
-The system checks for syntax, and again it detects another error, causing to the user to repeat the same procedure of error correction.
+Probably, an ontology after each change may have more than one syntactic error.
+The procedure of correcting them is as follows: When the first error is encountered, the system reports the error.
+Thereafter the user reads the error message and locates the error within the ontology file. 
+Next, the user corrects the error and resubmits its version with recent modifications.
+The system checks for syntax and again detects another error, causing to the user to repeat the same procedure of error correction.
 This will continue until the ontology file is free of errors.
-However, it might happen that during the correction phase, users can introduce new errors.
-Therefore, this procedure is time consuming, error-prone and tedious to all involved users in the ontology development process.
+However, it might happen that during the correction phase users can introduce new errors.
+Therefore, this procedure is time consuming, error-prone, and tedious to all involved users in the ontology development process.
 %Subsequently, the reported error is commonly corrected by the user to be sent again for re-checking of the syntax. To make it more complex, suppose the user has 10 syntax errors in his RDF input, then, the previous process steps of an input checking, an pause of parsing, an error notifying, and an error correction by the user has to be repeated for 10 times.  Furthermore, when the number of syntax errors increases, the number of error processing and correction processes increases by the same value. Also, imagine what is the consumed time and the work overload to process an input RDF data contains hundreds or thousands of errors.  
 
 	\begin{figure}[ht]
 			\includegraphics[width=0.9\textwidth]{images/motivation.pdf}
-			\caption{\textbf{Motivation example.} Typical scenario where different ontology engineers send their ontology versions to the system for syntax validation before further data processing.
-			Both Sarah and Bob have one syntax error or more, but they receive on error at time and they have to manually resolve it.
-			On the other hand, the version of Hani passed with no syntax errors and goes to the next phase for further processing.}
+			\caption{\textbf{Motivation example.} A typical scenario where different ontology engineers send their ontology versions to the system for syntax validation before further data processing.
+			Both Sarah and Bob have one or more syntax errors, but they receive one error at time and they have to manually resolve it.
+			On the other hand,  Hani's version passed with no syntax errors and went to the next phase for further processing.}
 			\label{Fig:Motivation}
 	\end{figure}
 
@@ -56,8 +56,8 @@ Therefore, this procedure is time consuming, error-prone and tedious to all invo
 
 %\section{Objectives}
 \section{Problem Description and Challenges} 	
-Ideally, ontology engineers should be able to retrieve and easily correct easily any existing error in their ontology version.
-At the conceptual level, this thesis addresses the problem of comprehensive and simultaneous error detection and resolving for the RDF documents.
+Ideally, ontology engineers should be able to retrieve and easily correct any existing error in their ontology version.
+At the conceptual level, this thesis addresses the problem of comprehensive and simultaneous error detection and resolving for RDF documents.
 Therefore, the approach should assist ontology engineers on identifying syntactic issues and automatically fix them.
 In addition, for any error that is not possible to automatically correct, a user-friendly and understandable message should be provided.
 
@@ -81,20 +81,20 @@ These challenges include: 1) finding the exact position in a given RDF document,
 %In this study, the research work set out to syntactically check RDF data. 
 The main contributions of the proposed approach are listed in the following:
 \begin{enumerate}
-	\item  {\bf Identifying of exiting syntax errors in RDF Documents:} is a major goal and contribution with the intention to investigate RDF Documents and search for potential syntax errors. 
+	\item  {\bf Identifying existing syntax errors in RDF Documents:} This is a major goal and contribution with the intention to investigate RDF Documents and search for potential syntax errors. 
 	The proposed approach is powered by ANTLR framework \cite{ANTLR:Website:Online}, a powerful parser generator, with the objective of establishing an RDF parser that enables simultaneous listing of all discovered syntax errors. 
 	The fundamental aspect of the approach is the injection of the grammar identification rules inside the parser. 
 	Once, the parser detects a presence of so-called tokens in an RDF input matching one of the given grammar rules that represent a syntax error, it sends an error notification to the error listener component, where error lists are stored.
-	\item {\bf Reporting syntax errors with user-friendly and expressive messages:} where either normal users or ontology engineers are assisted with meaningful error messages. 
+	\item {\bf Reporting syntax errors with user-friendly and expressive messages:} Either normal users or ontology engineers are assisted with meaningful error messages. 
 	Following the principle from the ancient Greek philosopher, Socrates: “Understanding a question is half an answer”\cite{Socrates:quote:Online}, similarly, an understandable error message helps to recover from an error. 
-	Our approach is based on both: the regular expression and grammar rules, where each rule represents either a sequence of correct syntax tokens or a sequence of incorrect ones. 
-	In case of the latter, we encoded a predefined information about each error, hence, a customized error message can be formulated in an meaningful and convenient way and delivered on-the-fly to the error listener.  
-	\item {\bf Automatic error recovery of a subset of syntax errors:}, which basically includes syntax errors similar to those in well-know programming languages, such as missing a dot, adding more than one dots, or missing semicolon. 
-	A particular rule is designed to limit repeatable conflicts notifications while correcting errors and to control the eligibility of an error to be corrected. 
-	The rule is check for the presence of a specific error in a predefined error correction list.
+	Our approach is based on both the regular expression and grammar rules, where each rule represents either a sequence of correct syntax tokens or a sequence of incorrect ones. 
+	In the case of the latter, we encoded  predefined information about each error, hence, a customized error message can be formulated in a meaningful and convenient way and delivered on-the-fly to the error listener.  
+	\item {\bf Automatic error recovery of a subset of syntax errors:} This includes syntax errors similar to those in well-know programming languages, such as missing a dot, adding more than one dots, or missing a semicolon. 
+	A particular rule is designed to limit repeatable conflict notifications while correcting errors and to control the eligibility of an error to be corrected. 
+	The rule is to check for the presence of a specific error in a predefined error correction list.
 	It includes fundamentally common errors with information about the necessary actions for recovery procedure. 
-	For instance, missing of a dot or a semicolon are common mistakes during editing of RDF Documents, and these errors can automatically corrected by our approach.
-	However, there exists several errors, such as missing of a prefix declaration, that cannot be corrected since the details of that missing prefix are obscure and unknown.     
+	For instance, missing a dot or a semicolon are common mistakes during editing of RDF Documents, and these errors can automatically corrected by our approach.
+	However, there exists several errors such as missing of a prefix declaration, that cannot be corrected since the details of that missing prefix are obscure and unknown.     
 \end{enumerate}
 
 \section {Thesis Structure}
@@ -103,17 +103,18 @@ The thesis is structured into seven chapters.
 It starts with the \emph{Introduction}, where a general overview of the study, the motivation, the problem description and the challenges, as well as contributions are presented. 
 The remainder of the thesis is organized as follows:
 \begin{itemize}
-	\item { \textbf{Chapter \ref{ch:preliminaries}:} describes the background knowledge which comprises relevant concepts and terminology required to understand the work that has been conducted in this thesis.}
+	\item { \textbf{Chapter \ref{ch:preliminaries}:} Describes the background knowledge which comprises relevant concepts and terminology required to understand the work that has been conducted in this thesis.}
 	
-	\item {\textbf{Chapter \ref{ch:related}:}} discusses the existing approaches from the state of the art related parsing of the RDF documents. 
+	\item {\textbf{Chapter \ref{ch:related}:}} Discusses the existing approaches from the state of the art related parsing of the RDF documents. 
 		
-	\item {\textbf{Chapter \ref{ch:approach}:}} presents the proposed approach along with its distinctive characteristics and important features. 
+	\item {\textbf{Chapter \ref{ch:approach}:}} Presents the proposed approach along with its distinctive characteristics and important features. 
 	
-	\item {\textbf{Chapter \ref{ch:implementation}:}} demonstrates the actual implementation of our approach, including the architecture and its modules.
+	\item {\textbf{Chapter \ref{ch:implementation}:}} Demonstrates the actual implementation of our approach, including the architecture and its modules.
 	
-	\item {\textbf{Chapter \ref{ch:evaluation}:}} shows the evaluation part where the approach is tested in three different scenarios and the obtained results are discussed.
+	\item {\textbf{Chapter \ref{ch:evaluation}:}} Shows the evaluation part where the approach is tested in three different scenarios and the obtained results are discussed.
 
-	\item {\textbf{Chapter \ref{ch:conclusions}:}} presents the conclusion of our work realized in this thesis and provides a number of potential future directions.
+	\item {\textbf{Chapter \ref{ch:conclusions}:}} 
+	Presents the conclusion of our work realized in this thesis and provides a number of potential future directions.
 \end{itemize}
 
 
