@@ -45,7 +45,7 @@ The last value \textbf{``Rhein"} is a literal or a string. %What is given is a s
 \end{figure}
 RDF data can be represented in a number of different serialization formats.
 %as was mentioned in Chapter \ref{ch:introduction} and since their syntax are used as use cases to be parsed with RDF-Doctor , 
-In the next two subsections, Turtle and N-Triples are used as two common serialization formats. 
+In the next two subsections, Turtle and N-Triples are used as two common serializations. 
 
 \subsection{Turtle Serialization}
 Terse RDF Triple Language (Turtle) \cite{W3C:Turtle:Online} is one of the serialization formats which uses triples for data representation. 
@@ -94,7 +94,7 @@ Prefixes are used to make Turtle a user-friendly language and to reduce the redu
 \end{figure}
 
 In the following, the basic rules defined in the Turtle serialization are outlined:
-
+\vspace{-3mm}
 \begin{itemize}
     \item Each directive (a declaration of Prefix or Base) or triple ends with a dot.
     \item Figure \ref{Fig:TurtleandNtripleElements} shows elements of a triple and their possible forms as follows: \textbf{Subject} can be either a blank node or URI. A \textbf{Predicate} is only a URI, and an \textbf{Object} can be either an URI, a Literal, or a blank node.
@@ -115,7 +115,7 @@ In the following, the basic rules defined in the Turtle serialization are outlin
 \end{itemize} 
 
 \subsection{N-Triple Serialization}
-N-Triples \cite{W3C:Ntriples:Online} is the simplest serialization format that organizes RDF data in a form of triples; However, it is hard to be read by users since long absolute URIs are mostly used to represent \textbf{Subjects}, \textbf{Predicates}, and \textbf{Objects}. 
+N-Triples \cite{W3C:Ntriples:Online} is the simplest serialization format that organizes RDF data in a form of triples; However, it is hard to be followed by users since long absolute URIs are mostly used to represent \textbf{Subjects}, \textbf{Predicates}, and \textbf{Objects}. 
 Figure \ref{Fig:NTriplesStructure} shows an N-Triple example where the only three following elements are serialized: \textbf{Absolute URIs}; \textbf{Blank Nodes}; and \textbf{Literals}. 
 
 N-Triple is considered as a subset of Turtle serialization. 
@@ -224,19 +224,18 @@ In more details, the parsing process is based on ~\cite{ANTLR:Tool:Online}, whic
 		\label{Fig:ANTLR}
 	\end{center}
 \end{figure}
-
-
+\vspace{-5mm}
 \begin{enumerate}
 		\item  {\bf Writing a grammar file:} Commonly, a grammar called a \emph{Parsing Expression Grammar} (PEG) is required to build a parser. 
 		ANTLR requires a context-free grammar, crafted with the Extended Backus-Naur Form (EBNF). 
 		EBNF consists of a sequence of rules which describe the syntax and the semantics of an input which needs to be parsed. 
 		Both terminals or non-terminals are types of head rules. 
-		On the one hand, terminals are leaf elements with no grammatical structure, e.g., words or numbers. On the other hand, non-terminals have a definite grammatical structure and name, e.g., triples or prefixes. 
+		On the one hand, terminals are leaf elements with no grammatical structure, e.g., words or numbers. On the other hand, non-terminals have a definite grammatical structure and name, e.g., triples. 
 
 		\item {\bf Generation of recognizer target-based classes by ANTLR:} A crucial feature of ANTLR is its capability of automatic generation of the parser source code for a variety of the programming languages like \cite{ANTLR:Website:Online}: Java, C\#, Python (2 and 3), JavaScript, Go, C++, and Swift.
 		
 		\item {\bf Feeding an input file for parsing:} As an input, ANTLR can parse text documents without additional libraries. 
-		Users send their input files for parsing where the parsing process will be achieved based on the crafted grammar in the first step.
+		Users send their input files for parsing where the parsing process will be achieved based on the crafted grammar.
 		
 		\item {\bf Parsing procedure:} {Figure \ref{Fig:ANTLR} } illustrates this step as a cooking phase where all required materials and ingredients are now available. 
 		The materials are: 1) the auto-generated parser, and 2) the ANTLR library. 

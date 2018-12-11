@@ -71,7 +71,7 @@ start
 ;
 statement
 : directive
-| triples '.'
+| triples `.'
 ;
 \end{lstlisting}
 
@@ -96,7 +96,7 @@ After showing a part of the grammar rules and views of the parse tree, some of t
     \item \textbf{Missing a dot at the end of a triple:} In the Turtle syntax, a triple must end with a dot. 
     In Listing~\ref{lst:missingDotEx}, the head rule, i.e., a \textbf{statement}, can either be a directive or a triple both ending with a dot. 
     Equally important the last line which shows that triples without a dot can also be a sub-goal of this rule. 
-    This sub-goal is considered as a normal path in a parse tree, but once the parser detects it, it sends a notification to the error listener API with an error message \emph{``Missing ’.’ at the end of a triple"}.  
+    This sub-goal is considered as a normal path in a parse tree, but once the parser detects it, a notification is sent to the error listener API with an error message ``Missing ’.’ at the end of a triple".  
     \begin{figure}
 		\includegraphics[width=1\linewidth]{images/implementationParseTreeRight.png}
 	\caption{\textbf{Right-side view of parse tree  for listing \ref{lst:turtleExample}.} Shown here is the right side of the sub-trees of the parent node \textbf{start} in the parse tree. Those nodes written in \emph{black} are non-terminals or heads of the grammar rules. The remaining nodes are terminals or matched patterns of input tokens.}
@@ -107,57 +107,57 @@ After showing a part of the grammar rules and views of the parse tree, some of t
 \begin{lstlisting}[label=lst:missingDotEx,  caption={Grammar rules for detecting of syntax error of missing dot at the end of a triple.}] 
 statement
 : directive
-| triples '.'
-| <@\textcolor{red}{triples  \{notifyErrorListeners(``Bad end of a triple with ','")\} }@>;
+| triples `.'
+| <@\textcolor{red}{triples  \{notifyErrorListeners(``Bad end of a triple with `,'")\} }@>;
 \end{lstlisting}
 \begin{lstlisting}[language=java, label=lst:errorCorrectionlst,  caption={Java-based handling for error recovery based on the error message in Error Correction Module.}] 
 while (iterator.hasNext()) {
 String line = iterator.next();
 // select the action based on the error message
-if (line.contains(``Missing '.' at the end of Prefix
-directive")||line.contains(``Missing '.' at the end 
+if (line.contains(``Missing `.' at the end of Prefix
+directive")||line.contains(``Missing `.' at the end 
 of a triple"))
 <@\textcolor{violet}{addDot(lineNum, columnNum);}@>
-else if (line.contains(``'A' cannot be used as
-predicate, it should be repalced with 'a'"))
+else if (line.contains(```A' cannot be used as
+predicate, it should be repalced with `a'"))
 <@\textcolor{violet}{changeA2a(lineNum, columnNum);}@>
 }
 \end{lstlisting}
 Once such an error is saved by the Error Listener API, the role of Error Detection Module is finished. 
 The next phase starts in the Error Correction Module to correct the error. 
 Since the list of syntax error is shared with Error Correction Module, it iterates all of these errors messages. If one of these messages in the error list matches, then it applies a predefined function to recover the error.  
-For instance, \textbf{addDot(lineNum, columnNum)} function is applied, as described in Listing \ref{lst:errorCorrectionlst}, since it matches the same error message and similarly, in case of \emph{``Missing  ’.’ at the end of Prefix directive"} message. 
+For instance, \textbf{addDot(lineNum, columnNum)} function is applied, as described in Listing \ref{lst:errorCorrectionlst}, since it matches the same error message and similarly, in the case of ``Missing  ’.’ at the end of Prefix directive" message. 
 The task of this function is to reach the line which misses the dot, identify the line number and column number, then finally automatically correct the error by adding a dot at the end of the given triple. 
 
 
 
-\item \textbf{Misuse of 'A' as a predicate instead of 'a':} By mistake, a user can wrongly use the character 'A' as a predicate instead of using 'a', which is the short version of the \emph{rdf:type}.
+\item \textbf{Misuse of `A' as a predicate instead of `a':} By mistake, a user can wrongly use the character `A' as a predicate instead of using `a', which is the short version of the \emph{rdf:type}.
 If we start substitution of sub-goals of triples, \textbf{verb} can be found as a terminal node in  substitution chain. 
-Syntactically, it is 'a', but if the user used 'A', then the parser will fire an error with a message of \emph{``’A’ cannot be used as a predicate, it should be replaced with ’a’"}.
+Syntactically, it is `a', but if the user used `A', then the parser will fire an error with a message of ``’A’ cannot be used as a predicate, it should be replaced with ’a’".
 Listing \ref{lst:errorCorrectionlst} also shows the handling of this error by executing \textbf{changeA2a(lineNum, columnNum)} function where the same error message is matched. 
-This function can access Turtle input with the referred line number and column number, then it replaces 'A' with 'a' to correct the error. 
+This function can access Turtle input with the referred line number and column number, then it replaces `A' with `a' to correct the error. 
 
-\begin{lstlisting}[label=lst:MissuseAex ,  caption={Grammar rules for detecting misuse of 'A' as a predicate instead of 'a'.}] 
+\begin{lstlisting}[label=lst:MissuseAex ,  caption={Grammar rules for detecting misuse of `A' as a predicate instead of `a'.}] 
 statement
 : directive
-| triples '.'
+| triples `.'
 ;
 triples
 : subject predicateObjectList
 ;
 predicateObjectList
-: verb objectList (';' (verb objectList)?)*
+: verb objectList (`;' (verb objectList)?)*
 ;
 verb
-:'a'
-| <@\textcolor{red}{'A' \{notifyErrorListeners(``'A' cannot be used as predicate,         }@> 
+:`a'
+| <@\textcolor{red}{`A' \{notifyErrorListeners(```A' cannot be used as predicate,         }@> 
 <@\textcolor{red}{
-it should be replaced with 'a'")\}} @>
+it should be replaced with `a'")\}} @>
 ;
 \end{lstlisting}
 
 \item \textbf{Bad syntax of a language tag in a literal:} 
-In the Turtle serialization, the language of a literal can be specified (which can be only placed as an object) by the using the character '@' followed by alphabetic characters. For example, ``en", ``fr", ``de" are tags for English, French, German languages, respectively. 
+In the Turtle serialization, the language of a literal can be specified (which can be only placed as an object) by the using the character `@' followed by alphabetic characters. For example, ``en", ``fr", ``de" are tags for English, French, German languages, respectively. 
 \textbf{``Cat"@en}, and \textbf{``Katze"@de} are some examples of literals which use the language tags, the first is for English, whereas the last is for German. 
 
 
@@ -166,7 +166,7 @@ This would be considered a syntax error in Turtle format.
 Listing~\ref{lst:badlaguageTag} handles grammar rules to make a parser firing a syntax error when such case is encountered. 
 
 The hierarchical structure of the rules can be traversed starting with \textbf{triples} head rule until it reaches the last two lines.
-It specifies that an RDF literal can be a string followed by BAD\_LANGTAG\_AS\_NUMBER (which '@' character followed by numbers). 
+It specifies that an RDF literal can be a string followed by \emph{BAD\_LANGTAG\_AS\_NUMBER} (which `@' character followed by numbers). 
 When the parser finds such a pattern in the input, it delivers a syntax error to the error listener. 
 Unfortunately, no error correction can be applied here since the user intention is not easily known.  
 
@@ -175,10 +175,10 @@ triples
 : subject predicateObjectList
 ;
 predicateObjectList
-: verb objectList (';' (verb objectList)?)*
+: verb objectList (`;' (verb objectList)?)*
 ;
 objectList
-: object (',' object)*
+: object (`,' object)*
 ;
 object
 : literal
@@ -187,11 +187,11 @@ literal
 : rdfLiteral
 ;
 rdfLiteral
-: String (LANGTAG | '^^' iri)?
+: String (LANGTAG | `^^' iri)?
 | <@\textcolor{red}{ String  BAD\_LANGTAG\_AS\_NUMBER  \{notifyErrorListeners(``Language tag cannot be a numeric value")\} }@>
 ;
 BAD_LANGTAG_AS_NUMBER : 
-'@' [0-9]+
+`@' [0-9]+
 ;
 \end{lstlisting}
 \end{enumerate}

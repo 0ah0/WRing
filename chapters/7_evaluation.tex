@@ -3,7 +3,7 @@
 
 This chapter discusses three different experiments that were conducted to check for effectiveness and efficiency of RDF-Doctor.
 The first experiment checks the effectiveness of RDF-Doctor against set of test cases provided in~\cite{TurtleTests:Online}.
-In the second experiment, a random number of errors is generated using a Poisson Distribution for a period of eight instances of time while a Uniform Distribution randomly selects types of errors for each instance of time, respectively.
+In the second experiment, a random number of errors is generated using a Poisson Distribution for a period of 8 time instances while a Uniform Distribution randomly selects types of errors for each time instance, sequentially.
 %number generators for a period of time of 8 time instances to simulate a couple of syntax errors, produced by an ontology user, 
 Finally, the efficiency of RDF-Doctor is measured when both, the number of errors and the size of ontologies are changed. 
 
@@ -31,12 +31,12 @@ Therefore, the target of this experiment is to measure the proficiency of RDF-Do
 
 \begin{table}[]
 \centering
-\begin{tabular}{|l|l|l|l|}
+\begin{tabular}{|l|c|c|c|}
 \hline
-\begin{tabular}[c]{@{}l@{}}File Content \end{tabular} & Detected  & Undetected & Total \\ \hline
+ \multicolumn{1}{|c|}{\textbf{File Content}}  &{\textbf{Detected}}  &{\textbf{Undetected}} &{\textbf{Total}} \\ \hline
  Correct Syntax              &      185    &      25  & 210 \\ \hline
  Incorrect/Bad Syntax              &      53    &    12  & 65 \\ \hline
- Total            &      238   &       37 & 275  \\ \hline
+ \multicolumn{1}{|c|}{\textbf{Total}}            &      238   &       37 & 275  \\ \hline
 \end{tabular}
 \caption{\textbf{Evaluation summary of RDF-Doctor for both correct and incorrect syntactic forms.} ``Detected" for Correct Syntax means that RDF-Doctor is able to recognize them as correct syntactic forms, whereas, for those which are not correctly recognized classify under ``Undetected" Similarly, ``Detected" in Incorrect/Bad Syntax referred to recognized syntactic forms  as incorrect forms by releasing corresponding error messages, but ``Undetected" specifies  incorrect syntactic forms  which are not recognized and might generate false positives.}
 \label{tab:TurtleSuit}
@@ -53,9 +53,9 @@ We computed Precision, Recall, and Accuracy values, donated by equations \ref{eq
  
 \begin{table}[]
 \centering
-\begin{tabular}{|l|l|l|l|}
+\begin{tabular}{|l|c|c|c|}
 \hline
-\begin{tabular}[c]{@{}l@{}}Classification of Error Types\end{tabular} & Detected & \begin{tabular}[c]{@{}l@{}}Undetected\end{tabular} & Total \\ \hline
+\multicolumn{1}{|c|}{\textbf{Classification of Error Types}} &{\textbf{Detected}} & {\textbf{Undetected}} & {\textbf{Total}} \\ \hline
  Bad String Escape              &      0    &    4 &   4  \\ \hline
  Bad Keywords             &      5   &    0 &   5  \\ \hline
  Bad Language Tag             &      2   &    0 &   2  \\ \hline
@@ -68,7 +68,7 @@ We computed Precision, Recall, and Accuracy values, donated by equations \ref{eq
  Bad String             &      6   &    1 &   7  \\ \hline
  Bad Structure            &      12   &    0 &   12  \\ \hline
  Bad IRI            &      2   &    3 &   5  \\ \hline
- Total            &      53   &    12 &   65  \\ \hline
+ \multicolumn{1}{|c|}{\textbf{Total}}            &      53   &    12 &   65  \\ \hline
 \end{tabular}
 \caption{\textbf{Evaluation of RDF-Doctor against detection of incorrect syntactic forms in Turtle Test Suite \cite{TurtleTests:Online}.} The test focuses on the files, including  an incorrect Turtle syntax,  ”Detected” pointed to recognized syntactic forms as incorrect forms with releasing corresponding error messages, but ``Undetected” specifies incorrect syntactic forms which are not recognized and might generate false positives.}
 \label{tab:detection}
@@ -104,13 +104,13 @@ false negatives \textit{f\textsubscript{n}}) are included. If we refer to a cell
 \textit{f\textsubscript{n}}, 
 \textit{t\textsubscript{p}}, 
 and \textit{f\textsubscript{p}},
-respectively.
+suitably.
 
 Figure \ref{Fig:Experiment01} analytically explorers the result of RDF-Doctor evaluation  with Turtle Test Suite. To elaborate, \textit{t\textsubscript{n}}, 
 \textit{f\textsubscript{n}}, 
 \textit{t\textsubscript{p}}, 
 and \textit{f\textsubscript{p}} numbers classify the result in regards to finding a syntax error  or more in each file at \cite{TurtleTests:Online}, where \textit{t\textsubscript{n}} is the number of files without syntax errors which are correctly rejected, \textit{f\textsubscript{n}} is  the number of files  with  syntax  errors  which are  incorrectly  rejected, \textit{f\textsubscript{p}} is the number of
- files without syntax errors  which are incorrectly identified, and finally, \textit{t\textsubscript{p}} is the number of files with syntax errors  which are correctly identified. With these numbers, all the variables in the equations: \ref{eq:1};  \ref{eq:2}; and \ref{eq:3} are available. Then, the calculation shows that Precision is about 0.82,  Recall is about 0.68, and Accuracy is about 0.78. These calculations are promising, even if a better result is expected. Nevertheless, if the result of this study produces the tool, then future research will reshape and improve it.    
+ files without syntax errors  which are incorrectly identified, and finally, \textit{t\textsubscript{p}} is the number of files with syntax errors  which are correctly identified. With these numbers, all the variables in the equations: \ref{eq:1};  \ref{eq:2}; and \ref{eq:3} are available. Then, the calculation shows that Precision is about 0.82,  Recall is about 0.68, and Accuracy is about 0.78. These calculations are promising, even if a better result is expected. Nevertheless, if the result of this study produces the tool, then future research will reshape it.    
  
  
 \floatstyle{plain}
@@ -124,7 +124,7 @@ and \textit{f\textsubscript{p}} numbers classify the result in regards to findin
 \end{center}
 \end{figure}
 
- Table \ref{tab:detection} evaluates RDF-Doctor with the referred input. This table features a classification of error types which helps to group those types into categories to ease the research work. Details about types of errors can be found in Appendix~\ref{tab:syntaxErrorCate}. In order to evaluate the automatic error correction feature of RDF-Doctor. The input of this experiment was used. The result shows that 5 types of errors can be faultlessly corrected. They are listed in Table \ref{tab:detection} with Serial Numbers (SN): 4, 39, 53, 54, and 55 and the type of syntax error that can be automatically corrected are: \emph{using of 'A' as a predicate instead of 'a'}, respectively.       
+ Table \ref{tab:detection} evaluates RDF-Doctor with the referred input. This table features a classification of error types which helps to group those types into categories to ease the research work. Details about types of errors can be found in Appendix~\ref{ch:synErrCategories}. In order to evaluate the automatic error correction feature of RDF-Doctor. The input of this experiment was used. The result shows that 5 types of errors can be faultlessly corrected. They are listed in Table \ref{tab:detection} with Serial Numbers (SN): 4, 39, 53, 54, and 55 and the type of syntax error that can be automatically corrected are: 1) using of `A' as a predicate instead of `a'; 2) missing a colon in prefix or base declarations; 3) missing  a dot at the end of a triple; 4) adding more than one dot a the triple end; and 5) ending a triple with a semi-colon instead of a dot, correspondingly.       
 
 \section{Experiment II}
 
@@ -138,7 +138,7 @@ While doing that, the engineer may introduce a number of syntactic errors, which
 
 \begin{figure}[ht]
 	\begin{center}
-		\includegraphics[scale=0.55,angle=0]{images/Experiment02-01.png}
+		\includegraphics[width=1\linewidth,angle=0]{images/Experiment02-01.png}
 		\vspace*{-3mm}
 		\caption{\textbf{Distribution of syntax errors.} The Number and types of syntax errors between brackets for an interval of eight instances of time. 
 		A Poisson Distribution with the parameter $\lambda$ = 5 models an average of five syntax errors per instance of time. 
@@ -156,12 +156,12 @@ The Poisson and Uniform Distribution are used to simulate the number and the typ
 The average number of syntax errors per instance of time is represented by $\lambda$ parameter. 
 For example, $\lambda$ = 5, means that five syntax errors are occurred per hour on average.  
 %As an input for a Poisson distribution, 10 syntax errors per instance of time was supplied. 
-The Uniform Distribution is used to randomly select the error types from a comprehensive list of errors as given in Appendix~\ref{tab:syntaxErrorCate}.
+The Uniform Distribution is used to randomly select the error types from a comprehensive list of errors as given in Appendix~\ref{ch:synErrCategories}.
 %Hence, for each instance of time we calculate value of $\lambda$, then the output value drives how many number of syntax errors are entitled for that instance of time.
 %Next, Those syntax errors are arbitrarily selected from the type of errors range [1-61], drawn by rows of Table . 
 Moreover, the exact location for injecting syntax errors within the RDF file is realized using the Uniform Distribution where a random line number is generated.
 The error is successfully applied if the randomly selected location is appropriate for the error type; Otherwise, one of the lines for its neighborhood is selected. 
-In case the error is related to the header, the injection is applied into Prefix and Base directives.  
+If the error is related to the header (the top of the file where directives are normally located), the injection is applied into a region of directives.  
 
 	\begin{figure}[ht]
 	\begin{center}
@@ -182,19 +182,19 @@ In case the error is related to the header, the injection is applied into Prefix
 Experimental results illustrated in Figure \ref{Fig:Experiment02-02} show that RDF-Doctor in a majority of the cases is able to correctly recognize syntax errors. 
 More specifically, in half of the instances time, apart from one syntax error not recognized, all of them are identified.
 In time instance number 5, all errors are detected.
-However, there are some instances of time where more than one error is not recognized, such as time instance number 6 with five undetected syntax errors.
-This can be due to  most of the unrecognized syntax errors in this time instance since the insertion of the syntax errors was done randomly.
-\todo{this sentence is not clear, and you have to give a better reason, not only saying that they are generated randomly, bcz this applies for all}.
+However, there are some instances of time where more than one error is not recognized, such as time instance number 7 with five undetected syntax errors.
+The reason behind a high number of undetected syntax errors is that most of the unrecognized syntax errors by RDF-Doctor are involved in the injected errors during that time instance. The proper solution for such an issue can be achieved by improving the recognition ability of RDF-Doctor of all kinds of syntax errors.
+
 
 Figure \ref{Fig:Experiment02-03} illustrates a comparison of the number of the injected errors versus the number of false positives of this experiment. 
-As we can observe, the number of false positive is higher than actual errors which may result due the probability of the existence of one or more unrecognized syntax errors which are coming from the libraries of the ANTLR framework. 
-One possible solution for this is by to optimize RDF-Doctor by developing an additional layer to internally handle these type of errors aside from  the error specification in production rules for a particular grammar.
+As we can observe, the average number of false positives is high which may result due the probability of the existence of one or more unrecognized syntax errors which are coming from the libraries of the ANTLR framework. 
+One possible solution for this is by to optimize RDF-Doctor by developing an additional layer to internally handle these type of errors aside from  the error production rules for a particular grammar.
 
 %rest of the times instances show zero or few errors, except the time instance number 6\textsuperscript{th}, , this can be due to fall most of the unrecognized syntax errors in this time instance since the insertion of the syntax errors was done randomly.  
 
 \begin{figure}[ht]
 	\begin{center}
-		\includegraphics[scale=0.9,angle=0]{images/Experiment02-03.png}
+		\includegraphics[width=0.9\linewidth,angle=0]{images/Experiment02-03.png}
 				\vspace*{-4mm}
 
 		\caption{\textbf{Result of false positives during RDF-Doctor validating with randomly distributed syntax errors.}
@@ -210,7 +210,7 @@ One possible solution for this is by to optimize RDF-Doctor by developing an add
 This experiment evaluates the behaviour and the performance RDF-Doctor by changing the number of syntax errors and the size of ontologies. 
 
 \subsection{Objective}
-The objective of was to check the effect on the behaviour and the performance of our approach whenever the number of errors increases.
+The objective was to check the effect on the behaviour and the performance of our approach whenever the number of errors increases.
 Furthermore, we evaluated the performance of RDF-Doctor when the size of the ontologies is changed, to simulate real world scenarios where ontologies continue growing over the time.
 
 %We are studying the effect of growing of number of syntax errors, as well as, the size of ontologies when it is changed. 
@@ -221,7 +221,7 @@ Furthermore, we evaluated the performance of RDF-Doctor when the size of the ont
 We used two types of ontologies; small and medium sized. 
 The Friend of a Friend Vocabulary (FOAF)~\footnote{\url{http://www.foaf-project.org/}} is used as a small ontology with a total number of 631 triples. 
 As a medium sized ontology, we used DBpedia~\footnote{\url{https://wiki.dbpedia.org/develop/datasets/dbpedia-version-2016-10}} version 2016-10 with a total number of 30,790 triples. 
-In both ontologies three different numbers of syntax errors were introduced i.e., 10, 30, 61. These syntax errors were randomly injected using the same procedure where the Uniform Distribution is utilized.
+In both ontologies three different numbers of syntax errors were introduced i.e., 10, 30, 61. These syntax errors were randomly injected using  the same way as in the previous experiment where the Uniform Distribution is utilized.
 Additionally, to avoid any impact on the current overload of the processor during the execution time, we ran our experiment five times for each case and calculated the average processing time.
 
  \begin{figure}[ht]
@@ -234,13 +234,11 @@ Additionally, to avoid any impact on the current overload of the processor durin
 \end{center}
 \end{figure}
 \subsection{Result and Discussion}
-	\todo{update the figures in this fig.}
-
 Figure \ref{Fig:Experiment03-01} illustrates the performance of the number of errors and the ontology size. 
 After introducing 10 syntax errors, 9 out of 10 were detected and one was not detected for both FOAF and DBpedia ontologies. 
 In the second case, 25 out of 30 injected errors were detected in FOAF, and 26 out of 30 injected errors in DBpedia were detected. 
 Finally, of 61 injected errors, 6 in FOAF and 11 DBpedia were not detected.
-In all cases, for each error that was detected, an expressive message was given to help users to resolve them. 
+In all the cases, for each error that was detected, an expressive message was given to help users to resolve them. 
 
 
 
@@ -257,7 +255,7 @@ In all cases, for each error that was detected, an expressive message was given 
 \end{figure}
 Another essential point is the number of false positives as shown in Figure \ref{Fig:Experiment03-02}. 
 It can be seen that the false positives are incremented while raising the number of syntax errors.
-This comes as a consequence of increasing the number of unrecognized syntax errors, forcing the parser to try to recover from such errors by adding or removing some tokens, which in turn produces an increased number false positive errors.   
+This comes as a consequence of increasing the number of unrecognized syntax errors, forcing the parser to try to recover from such errors by adding or removing some tokens, which in turn produces an increased number false positives.   
 
 
 The performance of RDF-Doctor is presented in Figure \ref{Fig:Experiment03-03}. 

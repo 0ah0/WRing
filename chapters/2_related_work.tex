@@ -19,7 +19,7 @@ Hence, a tool that can prominently list all errors included in the RDF data is o
 Despite the existence of several theoretical models and practical tools that have been invented in the same field, we can hardly find  research that cares for finding more than one syntax error inside RDF data. 
 During our journey of searching the existing tools that provide such a service, the W3C RDF validation tool \cite{W3C:Validation:Online} was firstly checked.
 It is a web tool available online for the purpose of parsing and validating RDF/XML codes. 
-It uses the ARP parser of Jena \cite{McBride:2002:JSW:613357.613755} as its core; However, it fails in detection of multiple syntax errors and shows only the first encountered error as it is shown in Figure \ref{Fig:errorW3RDFValidator}.
+It uses an Another RDF Parser (ARP) parser of Jena \cite{McBride:2002:JSW:613357.613755} as its core; However, it fails in detection of multiple syntax errors and shows only the first encountered error as it is shown in Figure \ref{Fig:errorW3RDFValidator}.
  
 In 2000, a Validating RDF Parser (VRP) \cite{karsten:Thesis:2000} was developed by K. Tolle. In his thesis, 
 VRP is a Java-based parsing tool with included features for semantically and syntactically checking dedicated for RDF/XML format. 
@@ -61,17 +61,21 @@ In the following, these core methods and their relations with concrete tools are
 
 \begin{itemize}[noitemsep] 
 
-\item \textbf{ARP-parser-dependable approach:} Both W3C RDF validation tool~\cite{W3C:Validation:Online} and RDF Validator and Converter~\cite{Mybluemix:Validation:Online} use the ARP parser of Jena framework \cite{McBride:2002:JSW:613357.613755}. 
+\item \textbf{ARP-parser-dependable approaches:} Both W3C RDF validation tool~\cite{W3C:Validation:Online} and RDF Validator and Converter~\cite{Mybluemix:Validation:Online} use the ARP parser of Jena framework \cite{McBride:2002:JSW:613357.613755}. 
 The former validates only RDF/XML format whereas the later focuses more on triple-based serialization formats validating them and converting from one format to another. 
 
-\item \textbf{N3-parser-dependable approach:} This is mainly used by N3 parser~\cite{N3Parser:Online}, a JavaScript-based syntax validator, developed for checking the syntax of Turtle and N-Triple formats. 
+\item \textbf{N3-parser-dependable approaches:} This is mainly used by N3 parser~\cite{N3Parser:Online}, a JavaScript-based syntax validator, developed for checking the syntax of Turtle and N-Triple formats. 
 The online version of IDLab Turtle Validator \cite{IDLab:Validation:Online} uses N3 parser and it is integrated as a NodeJS plug-in. 
 The same approach was used to build a Turtle Editor with syntax validation in~\cite{petersenturtleeditor}. 
 However, this approach is slow when parsing, and its behaviour is unpredictable when dealing with large files. 
 
-\item \textbf{Shape expressions approach:} In ~\cite{prud2014shape}, a Turtle parser was developed based on shape expressions \footnote{\url{https://www.w3.org/2001/sw/wiki/ShEx}}. 
+\item \textbf{Shape expressions approaches:} In ~\cite{prud2014shape}, a Turtle parser was developed based on shape expressions \footnote{\url{https://www.w3.org/2001/sw/wiki/ShEx}}. 
 Shape expressions describe the RDF graph based on regular expressions and validates RDF through declaring of constraints on the RDF data, if the declared constraints are violated, then RDF data is invalid, otherwise, it is valid. Furthermore, multiple tools we developed using the same approach in different programming languages, such as ShEx.js~\footnote{\url{https://github.com/shexSpec/shex.js}}, ShExJava~\footnote{\url{http://shexjava.lille.inria.fr/}}, Shaclex \footnote{\url{http://labra.weso.es/shaclex/}}, ShEx Ruby~\footnote{\url{https://ruby-rdf.github.io/shex/}}, PyShEx~\footnote {\url{https://github.com/hsolbrig/PyShEx}} built in JavaScript, Java, Scala, Ruby, Python, sequentially.
-\item \textbf{Other parsing approach:} Tools with another parsing method than the 3 listed above or unknown to us fall under this category. Raptor \footnote{\url{http://librdf.org/raptor/}} is a C-based open source library which includes parsers and serializers for a wide range of RDF serializations. It can be used as a standalone Rapper \footnote{\url{http://librdf.org/raptor/rapper.html}} RDF parser. Also, Protege \footnote{\url{https://protege.stanford.edu/}},  is a free open source RDF editor, can work either as a desktop-based or a web-based application. It also supports several RDF serializations. Moreover, another variety of RDF parsers or tools: \cite{humfrey2010easyrdf},~\cite{RDF4J:Online},~\cite{krech2002rdflib} come
+
+\item \textbf{Other parsing approaches:} Tools with another parsing method than the 3 listed above or unknown to us fall under this category. Raptor \footnote{\url{http://librdf.org/raptor/}} is a C-based open source library which includes parsers and serializers for a wide range of RDF serializations. 
+It can be used as a standalone RDF parser. 
+Also, Protege \footnote{\url{https://protege.stanford.edu/}}, is a free open source RDF editor, can work either as a desktop-based or a web-based application. 
+It also supports several RDF serializations. Moreover, another variety of RDF parsers or tools: \cite{humfrey2010easyrdf},~\cite{RDF4J:Online},~\cite{krech2002rdflib} come
 under  this category and the 2 last-mentioned parsers also failed to show more than the first syntax error.            
 \end{itemize} 
 \vspace*{-5mm}

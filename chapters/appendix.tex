@@ -18,25 +18,28 @@
 }
 
 \begin{lstlisting}
+// title of the grammar
 grammar Turtle;
+// functions in Java as a target programming language for RDF-Doctor parser
 @parser::members { 
-// Add member functions to check Namespace declaration
+// Add member functions to check a Namespace declaration
 public List<String> symbols = new ArrayList<String>();
 boolean isExistNS(String in ) { 
-// Custom constructor
 	boolean foundNS = false ; 
 		if(symbols.contains(in.split(":")[0]+':')) foundNS=true;
 	return foundNS;
 }
 }
-// Start of grammar rules with 'start' root node
+// the beginning of the grammar rules with 'start' root node
 start
     : statement*  EOF
     ;
-// statement is either a prefix declaration of a triple
+// 'statement' is a rule for either a triple or a prefix
 statement
     : directive
-    |  IRIREF IRIREF IRIREF  graphLabel '.' {notifyErrorListeners("Turtle is not NQOUDS");}
+    |  IRIREF IRIREF IRIREF  graphLabel '.'
+// 'notifyErrorListeners' is a function to announce the existence of an error with its corresponding error message, same is applied for next rules
+    {notifyErrorListeners("Turtle is not NQOUDS");}
     | triple '.'
     | triple {notifyErrorListeners("Missing '.' at the end of a triple");}
     | triple ',' {notifyErrorListeners("Bad end of a triple with ','");}
@@ -44,6 +47,7 @@ statement
     | triple ('.')+ ('.')+ {notifyErrorListeners("Too many DOT");}
     | errors		
     ;
+// 'directive' is a rule for either a base or a prefix declaration
 directive
     : sparqlPrefix
     | sparqlBase 
@@ -53,6 +57,7 @@ directive
     | sparqlPrefix '.' {notifyErrorListeners("Extraneous '.' at the end of SPARQL prefix directive");}
     | sparqlBase '.' {notifyErrorListeners("Extraneous '.' at the end of SPARQL base directive");}
     ;
+// a rule to match certain incorrect syntax patterns
 errors	
     : iri '=' iri '.' {notifyErrorListeners("'=' sign cannot be used in Turtle");}
  	| iri '<=' iri '.'  {notifyErrorListeners("'<=' symbol cannot be used in Turtle");}
@@ -69,7 +74,8 @@ errors
  	;
  unkonwnDecl 	
     : '@keywords' ('a'|CHARS)*  '.' {notifyErrorListeners("@keywords is unkown directive in Turtle");}
-	;	
+	;
+// a rule for a prefix declaration to match  correct and incorrect forms
 prefixID
     : '@prefix' CHARS '.' ':' IRIREF '.' {notifyErrorListeners("Prefix-label cannot end with '.' ");}
     | '@prefix' '.' CHARS ':' IRIREF '.' {notifyErrorListeners("Prefix-label cannot start with '.' ");}
@@ -80,6 +86,7 @@ prefixID
     | '@prefix'   IRIREF '.' {notifyErrorListeners("Missing Prefix-label in Prefix directive");}
     | '@prefix' CHARS*  IRIREF '.'  {notifyErrorListeners("Missing ':' in Prefix directive");}
     ;
+// a rule for a base declaration to match  correct and incorrect forms
 base
     : '@base' IRIREF '.'
     | '@base' IRIREF ('.')+ ('.')+ {notifyErrorListeners("Too many DOT ");}
@@ -96,12 +103,14 @@ sparqlPrefix
     | PNAME_NS IRIREF {notifyErrorListeners("Missing Prefix keyword, use 'PREFIX'");}
     | KW_PREFIX  IRIREF  {notifyErrorListeners("Missing Prefix-label in Prefix directive");}
     ;
+// declare keywords
 KW_BASE 
     : B A S E 
     ;
 KW_PREFIX 
     : P R E F I X 
     ;
+// rules for a triple with correct and incorrect forms
 triple
     : subject predicateObjectList
     | blankNodePropertyList predicateObjectList?
@@ -118,6 +127,7 @@ predicateObjectList
 objectList
     : object (',' object)*
     ;
+// a rule for a predicate in a triple with correct and incorrect forms
 verb
     :   'a' 
     | predicate
@@ -128,6 +138,7 @@ verb
     | literal {notifyErrorListeners("Predicate cannot be a literal");}
     | BlankNode {notifyErrorListeners("Predicate cannot be a blank node");}
     ;
+// a rule for a subject in a triple with correct and incorrect forms
 subject
     : iri
     | BlankNode
@@ -143,6 +154,7 @@ subject
 predicate
     : iri
     ;
+// a rule for an object in a triple with correct and incorrect forms
 object
     : iri
     | BlankNode
@@ -152,6 +164,7 @@ object
     | literal
     | 'a' {notifyErrorListeners("'a' cannot be used as an object");}   
     ;
+// a rule for literal replacing an object  with correct and incorrect forms
 literal
     : rdfLiteral
     | NumericLiteral
@@ -185,9 +198,11 @@ rdfLiteral
     | (BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE | BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE | BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE | BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE) {notifyErrorListeners("Bad Literal Escape");}
     |  String (LANGTAG | '^^' iri)?
     ;
+// a rule for BooleanLiteral which can be either true or false
 BooleanLiteral
     : 'true' | 'false'
     ;
+// a rule for incorrect literal patterns
 BadLiteral 
     : NumericLiteral ('.')+ CHARS 
     | NumericLiteral CHARS 
@@ -196,6 +211,7 @@ BadLiteral
 String
     : STRING_LITERAL_QUOTE | STRING_LITERAL_SINGLE_QUOTE | STRING_LITERAL_LONG_SINGLE_QUOTE | STRING_LITERAL_LONG_QUOTE
     ;
+// a rule for IRI to match either incorrect or correct patterns
 iri
     : ':' BAD_PN_LOCAL_STARTS_WITH_TILDE {notifyErrorListeners("Bad syntax of Prefixed IRI, the local prefix namespace cannot contain '~'");}
     |    PN_LOCAL_BAD_WITH_DASH {notifyErrorListeners("Bad syntax of Prefixed IRI, the local prefix namespace cannot start with dash");}
@@ -212,15 +228,17 @@ BlankNode
     : BLANK_NODE_LABEL 
     | ANON
     ;
-CHARS
-    : [a-zA-Z]+ [0-9]*
-	;
+// a rule to skip spaces, tabs and empty lines
 WS
     : ([\t\r\n\u000C] | ' ') + -> skip
     ;
+// a rule to skip comments starting with '#'
 COMMENT				  
 	: '#' ~[\r\n]* -> skip;
 // LEXER rules
+CHARS
+    : [a-zA-Z]+ [0-9]*
+	;
 PN_PREFIX
     : PN_CHARS_BASE ((PN_CHARS | '.')* PN_CHARS)?
     ;
@@ -275,6 +293,47 @@ STRING_LITERAL_QUOTE
 STRING_LITERAL_SINGLE_QUOTE
     : '\'' (~ [\u0027\u005C\u000A\u000D] | ECHAR | UCHAR | '"')* '\''
     ;
+// rules for IRI to match incorrect forms 
+BAD_IRIREF_WITH_SPACE
+ 	:  '<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '\n>'
+	| '<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '\u0020>'
+	| '<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* ANON_WS+ (PN_CHARS |'.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)*'>'
+	;
+BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS
+	:'<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '\u003C>'
+	| '<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '\u003E>'
+	;
+BAD_IRIREF_WITH_PARENTHESES 
+    : '<' (PN_CHARS | '.' | ':' | '/' | '{'| '}' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '>'
+	;
+// rules for incorrect literals
+BAD_STRING_LITERAL_SINGLE_QUOTE   
+    : '\'\'\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)* '\'' 
+	| '\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)* '\'\'\'' 
+	;
+BAD_STRING_LITERAL_QUOTE      
+	: '"""' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 
+	| '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"""' 
+	| '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '\'' 
+	| '\'' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 	
+	| '"''\'' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '""' 			
+	;  	  
+BAD_STRING_LITERAL_LONG_SINGLE_QUOTE
+	: '\'\'\'' (('\'' | '\'\'')? ([^'\\] | ECHAR | UCHAR | '"'))* '"""'
+	;
+BAD_STRING_LITERAL_LONG_QUOTE
+	: '"""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR | '\''))* '\'\'\''
+	|  '"""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR | '\''))* '"' '\''
+	|  '"' '\'' (~ ["\\] | ECHAR | UCHAR | '\'')* '""'
+	;
+BAD_STRING_LITERAL_LONG_QUOTE_TOO_MANY
+	: '"""'  (~ ["\\] | ECHAR | UCHAR )* '""""'
+	| '""""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR ))* '"""' 
+	;	
+BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY
+	: '\'\'\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)*  '\'\'\'\''
+	| '\'\'\'\''(~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)*  '\'\'\''
+	;
 BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR
     : '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* BAD_UCHAR (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 
     ;
@@ -302,6 +361,7 @@ BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE
 BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE
     : '"""'  (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)*   ILLEGAL_ESCAPE (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)*   '"""'
     ;
+// a rule for Unicode characters
 fragment UCHAR
     : '\\u' HEX HEX HEX HEX | '\\U' HEX HEX HEX HEX HEX HEX HEX HEX
     ;
@@ -331,6 +391,7 @@ PN_CHARS
 PN_LOCAL
     : (PN_CHARS_U | ':' | [0-9] | PLX) ((PN_CHARS | '.' | ':' | PLX)* (PN_CHARS | ':' | PLX))?
     ;
+// rules for incorrect fragments within Prefixed-Names
 BAD_PN_LOCAL_STARTS_WITH_PERCENT
     :   '%' (PN_CHARS_U | ':' | [0-9]) ((PN_CHARS | '.' | ':' )* (PN_CHARS | ':' ))?
     ;
@@ -358,50 +419,10 @@ NONHEX
 PN_LOCAL_ESC
     : '\\' ('_' | '~' | '.' | '-' | '!' | '$' | '&' | '\'' | '(' | ')' | '*' | '+' | ',' | ';' | '=' | '/' | '?' | '#' | '@' | '%')
     ;
-// check if the IRI has a newline or space  
-BAD_IRIREF_WITH_SPACE
- 	:  '<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '\n>'
-	| '<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '\u0020>'
-	| '<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* ANON_WS+ (PN_CHARS |'.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)*'>'
-	;
-BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS
-	:'<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '\u003C>'
-	| '<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '\u003E>'
-	;
-BAD_IRIREF_WITH_PARENTHESES 
-    : '<' (PN_CHARS | '.' | ':' | '/' | '{'| '}' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '>'
-	;
-BAD_STRING_LITERAL_SINGLE_QUOTE   
-    : '\'\'\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)* '\'' 
-	| '\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)* '\'\'\'' 
-	;
-BAD_STRING_LITERAL_QUOTE      
-	: '"""' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 
-	| '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"""' 
-	| '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '\'' 
-	| '\'' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 	
-	| '"''\'' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '""' 			
-	;  	  
-BAD_STRING_LITERAL_LONG_SINGLE_QUOTE
-	: '\'\'\'' (('\'' | '\'\'')? ([^'\\] | ECHAR | UCHAR | '"'))* '"""'
-	;
-BAD_STRING_LITERAL_LONG_QUOTE
-	: '"""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR | '\''))* '\'\'\''
-	|  '"""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR | '\''))* '"' '\''
-	|  '"' '\'' (~ ["\\] | ECHAR | UCHAR | '\'')* '""'
-	;
-BAD_STRING_LITERAL_LONG_QUOTE_TOO_MANY
-	: '"""'  (~ ["\\] | ECHAR | UCHAR )* '""""'
-	| '""""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR ))* '"""' 
-	;	
-BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY
-	: '\'\'\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)*  '\'\'\'\''
-	| '\'\'\'\''(~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)*  '\'\'\''
-	;
 ILLEGAL_ESCAPE
 	: ('\\' ~[ubtnfr"'\\] ) [a-zA-Z]+ 
 	;
-// Rules for the alphabet capital and small-letters 
+// rules for the alphabet capital and small-letters
 fragment A
     :('a'|'A')
     ;
@@ -480,23 +501,25 @@ fragment Y
 fragment Z
     :('z'|'Z')
     ;	
-    
-    
-    
 \end{lstlisting}
-
-
-
 
 \chapter{RDF Syntax Errors Categories}
 \label{ch:synErrCategories}
-
+\vspace{-5mm}
  \begin{table}[H]
  	\caption{\textbf{Categories of syntax errors of N-Triple and Turtle serializations.} These categories are extracted from files of Turtle Test Suite \cite{TurtleTests:Online}, including   incorrect syntactic forms.}
  \label{tab:syntaxErrorCate}
  	\centering
-\includegraphics[width=5.5in]{images/firstPageBigTable.pdf}
+\includegraphics[width=5.5in]{images/bigTablePage1.png}
 \end{table}
 
-\includepdf[pages=2-3,pagecommand={},width=\textwidth,noautoscale=true,offset=80 30]{images/bigTable.pdf}
+ \begin{figure}[H]
+ 	\centering
+\includegraphics[width=5.5in]{images/bigTablePage3.png}
+\end{figure}
+ \begin{figure}[H]
+ 	\centering
+\includegraphics[width=5.5in]{images/bigTablePage7.png}
+\end{figure}
+%\includepdf[pages=2-3,pagecommand={},width=\textwidth,noautoscale=true,offset=80 30]{images/bigTable.pdf}
 \end{appendices}

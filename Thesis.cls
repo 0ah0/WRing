@@ -160,15 +160,15 @@
 \department  {\texorpdfstring{\href{http://www.informatik.uni-bonn.de/}
                 {Computer Science Department}}
                 {Computer Science Department}}
-\DEPARTMENT  {\texorpdfstring{\href{http://www.informatik.uni-bonn.de/}
+\DEPARTMENT  {\texorpdfstring{\href{hhttp://sda.cs.uni-bonn.de/}
                 {COMPUTER SCIENCE DEPARTMENT}}
                 {COMPUTER SCIENCE DEPARTMENT}}
-\group       {\texorpdfstring{\href{http://eis.iai.uni-bonn.de/}
-                {Enterprise Information Systems }}
-                {Enterprise Information Systems }}
-\GROUP       {\texorpdfstring{\href{http://eis.iai.uni-bonn.de/}
-                {ENTERPRISE INFORMATION SYSTEMS}}
-                {ENTERPRISE INFORMATION SYSTEMS}}
+\group       {\texorpdfstring{\href{http://sda.cs.uni-bonn.de/}
+                {Smart Data Analytics}}
+                {Smart Data Analytics}}
+\GROUP       {\texorpdfstring{\href{http://sda.cs.uni-bonn.de/}
+                {Smart Data Analytics}}
+                {Smart Data Analytics}}
 \faculty     {\texorpdfstring{\href{http://www.informatik.uni-bonn.de/)}
                 {INSTITUT F{\"U}R INFORMATIK III}}
                 {INSTITUT F{\"U}R INFORMATIK III}}
@@ -216,7 +216,7 @@
       \bigskip
       {\large \par First Evaluator: Prof. Dr. Jens Lehmann}
       {\large \par Second Evaluator: Dr. Steffen Lohmann}
-      {\large \par Supervisor: Lavdim Halilaj}
+      {\large \par Supervisor: Dr. Lavdim Halilaj}
        \vfill
       {\Large \@date \par}
       \vfill
@@ -227,7 +227,7 @@
  	\end{subfigure}
  		\hfill
  	\begin{subfigure}{}
- 		\includegraphics[scale=.11]{images/logo-eis.png}
+ 		\includegraphics[scale=.20]{images/Smart-Data-Analytics.png}
  	\end{subfigure}
  	\hfill
  	\begin{subfigure}{}

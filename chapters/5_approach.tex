@@ -16,7 +16,7 @@ This section covers the core component of the approach, then discusses the main 
 The core component inside RDF-Doctor is the ANTLR framework. It is used to automatically generate a parser based our developed grammar, including predefined error production rules to match sequences of tokens that contains RDF syntax errors.
 %In order to find a parser which can accept the error production rules in its grammar, our choice was to use ANTLR framework to automatically generate the required parser.
 %Equally important lots of handy features in ANTLR motivate its usage in the proposed solution to generate the internal parser, and also as an imported library for compiling and  running  of RDF-Doctor. 
-The ANTLR framework has several important features: 1) a given grammar can equip with error production rules and when a couple of tokens match such rules, the parser will fire an error notification; 2) it uses a parse tree to parse input tokens and the view of this parse tree can be delivered as one of the outputs to the user at the end of parsing process; and 3)it supports the auto-generation of parsers in different programming languages.
+The ANTLR framework has several important features: 1) a given grammar can equip with error production rules and when a couple of tokens match such rules, the parser will fire an error notification; 2) it uses a parse tree to parse input tokens and the view of this parse tree can be delivered as one of the outputs to the user at the end of parsing process; and 3) it supports the auto-generation of parsers in different programming languages.
 %which is an one-to-many added value, where one grammar file can automatically generate of the programming languages.
 
 %\begin{itemize}
@@ -65,20 +65,22 @@ Moreover, certain options can be selected by the user before submitting the file
 	    Finally, the Output phase presents reports for error detection and recovered error, as well as a parse tree.}
 		\label{Fig:Architecture}
 	\end{center}
+					      \vspace{-3mm}
+
 \end{figure}
 once a rule is matched with a sequence of input tokens, it raises a flag to the error listener API which later is listed in the final error report. 
 Reading of input tokens continues until the end of the file while searching for any match in order to identify potential syntax errors. 
 In {Figure \ref{Fig:Approach}}(b) lines surrounded with \emph{red color} depict the detected lines which contain syntax errors.
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
-To have a deep thought on the internal works of the parser to detect syntax errors using a parse tree. Figure \ref{Fig:approachParseTree} shows how each sub-tree of the root node (acts as the starting rule) is a rule containing either a correct syntax or an incorrect one. Each rule is represented by a sub-tree being empty or one and more non-terminals (considered as rules in the grammar) and one and more terminals (they are lexical forms of input tokens). A sub-tree produces an syntax error, if all of its terminals (shown in \emph{red color} in Figure \ref{Fig:approachParseTree}) formulate an error production rule of grammar rules. Hence in both sub-trees 2\textsuperscript{nd} and 4\textsuperscript{th} from left-to-right over Figure \ref{Fig:approachParseTree} are rules with a sequence of tokens producing syntax errors.  Meanwhile other sub-tree 1\textsuperscript{st},  3\textsuperscript{rd}, and 5\textsuperscript{th} with terminals in \emph{green color}  are including  correct syntactic  forms.
+To have a deep thought on the internal works of the parser to detect syntax errors using a parse tree. Figure \ref{Fig:approachParseTree} shows how each sub-tree of the root node (acts as the starting rule) is a rule containing either a correct syntax or an incorrect one. Each rule is represented by a sub-tree being empty or one and more non-terminals (considered as rules in the grammar) and one and more terminals (they are lexical forms of input tokens). A sub-tree produces an syntax error, if all of its terminals (shown in \emph{red color} in Figure \ref{Fig:approachParseTree}) formulate an error production rule of grammar rules. Hence in both sub-trees second and fourth from left-to-right over Figure \ref{Fig:approachParseTree} are rules with a sequence of tokens producing syntax errors.  Meanwhile other sub-tree first, third, and fifth with terminals in \emph{green color}  are including  correct syntactic  forms.
 
 
 \item \textbf {Healing a subset of encountered syntax errors}:%%%%%%%%%%%%%%%%%%%%
  { Figure} \ref{Fig:Architecture} shows this feature as the  4\textsuperscript{th} of processing components. %%%%%%%%%%%%%%%%%%%%
-Firstly, it needs to be manually activated by the user, since it is disabled by default. Secondly, the method of syntax error recovery currently focuses on a certain type of errors which has only one predefined solution to correct them. Examples of such errors are  missing  a dot at the end of a triple, missing a semi-colon after multiple predicates sharing same subject, or missing a comma after multiple objects having same subject and predicate. Lines surrounded with \emph{green color} in {Figure~\ref{Fig:Approach}}(c) represent some of the healed lines from error at the end of the correction phase. 
+Firstly, it needs to be manually activated by the user, since it is disabled by default. Secondly, the method of syntax error recovery currently focuses on a certain type of errors which has only one predefined solution to correct them. Examples of such errors are  missing  a dot at the end of a triple, missing a semi-colon after multiple predicates sharing same subject, or missing a comma after multiple objects having same subject and predicate. Lines surrounded with \emph{green color} in {Figure~\ref{Fig:Approach}}(c) represent some of the healed lines from error at the  end-stage of the error correction phase. 
 
-\item\textbf {Producing of the output}: The output phase, demonstrated in Figure \ref{Fig:Architecture}, assumed the activation of automatic correction feature by the user. Additionally, {Figure \ref{Fig:Approach}}(d) describes how the output file looks like at the end of this phase.    It shows lines containing errors are already recovered, whereas other lines still are unhealed. Commonly, errors that cannot be recovered by RDF-Doctor without user intervention, are those errors which can have several solutions, for example, a literal with multiple language tags like ``me"@en@de which shows a string with two language tags and since the solution would be an omission of one of them but the intention of the user is unknown in this sense. In addition, there exist errors with undefined or unknown recovery solution, for example, missing of a user-defined prefix declaration for a certain local namespace which cannot be guessed since it is only known by the user himself. 
+\item\textbf {Producing of the output}: The output phase, demonstrated in Figure \ref{Fig:Architecture}, assumed the activation of automatic correction feature by the user. Additionally, {Figure \ref{Fig:Approach}}(d) describes how the output file looks like at the end of this phase. It shows lines containing errors are already recovered whereas other lines still are unhealed. Commonly, errors that cannot be recovered by RDF-Doctor without user intervention are those errors which can have several solutions. For example, a literal with multiple language tags like ``me"@en@de which shows a string with two language tags and since the solution would be an omission of one of them but the intention of the user is unknown in this sense. In addition, there exist errors with undefined or unknown recovery solution, an example would be a missing user-defined prefix declaration for a certain local namespace which cannot be guessed since it is only known by the user himself. 
 \end{enumerate} 
 \begin{figure}
 	\centering
@@ -93,8 +95,7 @@ Firstly, it needs to be manually activated by the user, since it is disabled by 
 
 To functionally represent the approach of this study, Algorithm \ref{alg:algorithm-main} was engineered. 
 It shows the abstract behaviour of RDF-Doctor where \textbf{syntaxRules} variable combines both correct syntax rules and incorrect ones. 
-A \textbf{while loop} carries on until reaching the current end of file or chunk, if a large file is separated into several chunks. 
-The \textbf{ruleToBeMatched} variable incloses one rule of either correct or incorrect production rules, formed by the supplied tokens. While the variable \textbf{currentTokens} stores a sequence of current supplied tokens to check to which rule, it belongs.  
+A \textbf{while loop} carries on until reaching the current end of file or chunk. If a large file is separated into several chunks. The \textbf{ruleToBeMatched} variable incloses one rule of either correct or incorrect production rules, formed by the supplied tokens. While the variable \textbf{currentTokens} stores a sequence of supplied tokens to check to which rule it belongs.  
 
 Since the crucial step is to find encountered syntax errors, \textbf{ruleToBeMatched} is evaluated to check if its content is matched any of \textbf{incorrectSyntaxRules}. If this the case, then the content of \textbf{currentTokens} is considered as a syntax error, and the parser sends an error notification to any subscribed error listener API, in order to further process of the collected errors. 
 
@@ -147,10 +148,10 @@ A suite of Turtle syntax errors are presented in ~\cite{TurtleTests:Online} play
 \includegraphics[width=5.5in]{images/TrimmedBigTable.pdf}
 		\setlength\abovecaptionskip{-10mm}
 	\caption{\textbf{Categories of a subset of syntax errors of N-Triple and Turtle serializations}.
-	This table is a part of Appendix~\ref{tab:syntaxErrorCate} which shows one sample of each category. The serial numbers take the same order of rows in the referred table. 
+	This table is a part of Appendix~\ref{ch:synErrCategories} which shows one sample of each category. The serial numbers take the same order of rows in the referred table. 
 	Position represents a term related to Turtle and N-Triple serializations where the actual syntax error is located.}
 	\label{tab:trimmedTable}
 \end{table*}
 
 
-In table \ref{tab:trimmedTable}, we have categorized types of syntax errors into multiple categories. These categories are taking from the filenames in~\cite{TurtleTests:Online} with some modification to become meaningful. The table shows each category with one error sample and an error position where the actual syntax error is located. Indeed, this helps much in designing of the grammar rules and also to identify which of them can be automatically corrected. Details including more samples of these categories are provided in Appendix~\ref{tab:syntaxErrorCate}.     
+In table \ref{tab:trimmedTable}, we have categorized types of syntax errors into multiple categories. These categories are taking from the filenames in~\cite{TurtleTests:Online} with some modification to become meaningful. The table shows each category with one error sample and an error position where the actual syntax error is located. Indeed, this helps much in designing of the grammar rules and also to identify which of them can be automatically corrected. Details including more samples of these categories are provided in Appendix~\ref{ch:synErrCategories}.     
